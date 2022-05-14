@@ -1,10 +1,9 @@
-import logo from './Logo_Login.png';
 import './App.css';
+import Login from './page/Login.js'
 
 function App() {
   return (
     <div className="App">
-      <Header></Header>
       <Login></Login>
     </div>
   );
@@ -20,8 +19,3 @@ function Header() {
   )
 }
 
-function Login() {
-  return(
-    <img src={logo} ></img>
-  )
-}
