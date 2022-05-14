@@ -8,52 +8,47 @@ import Grid from '@mui/material/Grid';
 
 
 function Login() {
-    return(
-      <div className='LoginContainer'>
-        <img src={logo} ></img>
-  
-        <TextField label="Email" 
-        name="email" 
-        required 
-        fullWidth
-        autoFocus
-        sx={{mt:1}}
-        />
-  
-        <TextField label="PW" 
-        type="password" 
-        name="password" 
-        required 
-        fullWidth
-        sx={{mt:3}}
-        />
-  
-        <Grid container>
-          <Grid item>
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              sx={{mt:1}}
-              label="로그인 정보 저장"
+    return (
+      <div className='body'>
+        <div className='LoginContainer'>
+          <img src={logo} ></img>
+          <Grid container xs={10}>
+            <TextField label="Email" 
+              name="email" 
+              required 
+              fullWidth
+              autoFocus
+              // sx={{mt:1}}
             />
           </Grid>
-        </Grid>
-        
-        <Button type="submit" 
-          fullWidth 
-          variant="contained"
-          sx={{mt:1, mb:1}}
-        >로그인</Button>
-  
-        <Grid container>
-          <Grid item xs={3}>
-            <Link>비밀번호 재설정</Link>
+          <Grid container xs={10}>
+            <TextField label="PW" 
+              type="password" 
+              name="password" 
+              required 
+              fullWidth
+              // sx={{mt:1}}
+            />
           </Grid>
-          <Grid item xs={2}>
-            <Link>회원가입</Link>
+          <Grid container xs={10}>
+            <Button type="submit" 
+              fullWidth
+              variant="contained"
+              sx={{mt:1}}
+            >로그인</Button>
           </Grid>
-        </Grid>
+          <Grid container xs={10}>
+            <Grid item xs={3}>
+              <Link>비밀번호 재설정</Link>
+            </Grid>
+            <Grid item xs={2}>
+              <Link>회원가입</Link>
+            </Grid>
+          </Grid>
+        </div>
       </div>
     )
+    
 }
 
-  export default Login;
+export default Login;
