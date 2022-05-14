@@ -3,7 +3,19 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 
-function SignUp() {
+import {useMutation} from '@apollo/client';
+import { SIGN_UP } from '../queries/queries';
+
+export default function SignUp() {
+    const [signUp, {loading, error, data}] = useMutation(SIGN_UP, {
+        variables: {
+            name: "??",
+            email: "??",
+            hashedPW: "??"
+        }
+    });
+    //signUp 함수 호출하면 실행됨
+
     return(
         <div className='body'>
             <div className='SignUpContainer'>
@@ -56,5 +68,3 @@ function SignUp() {
         </div>
     )
 }
-
-  export default SignUp;
