@@ -1,10 +1,9 @@
 import logo from '../Logo_Login.jpg';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
+import { useQuery } from '@apollo/client';
 import { LOGIN } from '../queries/queries';
 
 
