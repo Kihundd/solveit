@@ -18,7 +18,7 @@ const slideImages = [
 ];
 const Slideshow = () => {
     return (
-      <div className="slide-container">
+      <div className="slide-container" style={{'border':'2px solid #c4c4c4'}}>
         <Slide>
          {slideImages.map((slideImage, index)=> (
             <div className="each-slide" key={index}>
