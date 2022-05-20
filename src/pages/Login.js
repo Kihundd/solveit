@@ -6,12 +6,16 @@ import Grid from '@mui/material/Grid';
 import { useLazyQuery } from '@apollo/client';
 import { LOGIN } from '../queries/queries';
 import { useEffect, useState } from 'react';
+import useForm from '../hooks/useForm';
 
 export default function Login() {
 
   const [formData, setFormData] = useState({email:'test@email.com', password: 'test'});
   const [login, {data, loading, error}] = useLazyQuery(LOGIN);
   const [response, setResponse] = useState([false]);
+
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   const checkEmail = (e) => {
     var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
@@ -22,30 +26,52 @@ export default function Login() {
     console.log('비밀번호 유효성 검사 :: ', regExp.test(e.target.value))
   };
 
+  const {add, handleSubmit} = useForm();
+
   const handleInput = e => {
     setFormData({...formData, [e.target.name]: e.target.value})
   };
   
-  const handleSubmit = async e => {
-    e.preventDefault();
-    await Login({variables: {
-      email: formData.email,
-      hashedPW: formData.password
-    }, fetchPolicy: 'no-cache'
+  // const handleSubmit = async e => {
+  //   e.preventDefault();
+  //   await login({variables: {
+  //     email: formData.email,
+  //     hashedPW: formData.password
+  //   }, fetchPolicy: 'no-cache'
+  //   });
+  // };
+
+  const onSuccess = async (data) => {
+    console.log(data);
+    await login({variables: {
+        email: data.email,
+        hashedPW: data.password
+      }, fetchPolicy: 'no-cache'
     });
   };
+
+  const onFail = (data, error) => {
+    console.log(error);
+    if(error['email'] != null) {
+      setEmailError("Email must contains @!");
+    }
+    if(error['password'] != null) {
+      setPasswordError("A password should be at least 4");
+    }
+  }
 
   useEffect(() => {
     console.log(data);
     if(data !== undefined) {
       document.cookie = `token=${data.login.jwt}`;
       setResponse([true, data.login]);
+      console.log('LogIn');
     }
   }, [data]);
 
   return (
     <div className='body'>
-      <form className='LoginContainer' onSubmit={handleSubmit}>
+      <form className='LoginContainer' onSubmit={e => handleSubmit(e, onSuccess, onFail)}>
         <img src={logo} ></img>
         <Grid container>
           <TextField label="Email" 
@@ -54,9 +80,13 @@ export default function Login() {
             required 
             fullWidth
             autoFocus
-            onChange={handleInput}
-            defaultValue={formData.email}
-            onBlur={checkEmail}
+            onFocus={_ => setEmailError("")}
+            helperText={emailError}
+            error={emailError === ""? false: true}
+            {...add({name:'email', contains: '@', value: 'test@test.com'})}
+            // onChange={handleInput}
+            // defaultValue={formData.email}
+            // onBlur={checkEmail}
             // sx={{mt:1}}
           />
         </Grid>
@@ -66,9 +96,13 @@ export default function Login() {
             name="password" 
             required 
             fullWidth
-            onChange={handleInput}
-            defaultValue={formData.password}
-            onBlur={checkPassword}
+            onFocus={_ => setPasswordError("")}
+            helperText={passwordError}
+            error={passwordError === ""? false: true}
+            {...add({name:'password', minlength: 4, value: 'test'})}
+            // onChange={handleInput}
+            // defaultValue={formData.password}
+            // onBlur={checkPassword}
             // sx={{mt:1}}
           />
         </Grid>
