@@ -9,7 +9,7 @@ function Menu() {
             <Navbar bg="white" variant="light" className='Nav-Container'>
                 {/* <Container> */}
                 <Nav className="me-auto">
-                    <Grid container xs >
+                    <Grid container >
                         <Nav.Link >문제 목록</Nav.Link>
                         <Nav.Link >문제 생성</Nav.Link>
                         <Nav.Link >문제 관리</Nav.Link>

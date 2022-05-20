@@ -5,7 +5,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import HomeList from './HomeList.css';
+import { useState } from 'react'
 
 function generate(element) {
   return [0, 1, 2].map((value) =>
@@ -20,8 +20,8 @@ const Demo = styled('div')(({ theme }) => ({
 }));
 
 export default function InteractiveList() {
-  const [dense, setDense] = React.useState(false);
-  const [secondary, setSecondary] = React.useState(false);
+  const [dense, setDense] = useState(false);
+  const [secondary, setSecondary] = useState(false);
 
   return (
     // <Box sx={{ flexGrow: 1, maxWidth: 752 }}>
