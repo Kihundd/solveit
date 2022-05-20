@@ -6,7 +6,7 @@ import Grid from '@mui/material/Grid';
 import { useLazyQuery } from '@apollo/client';
 import { LOGIN } from '../queries/queries';
 import { useEffect, useState } from 'react';
-import useForm from '../hooks/useForm';
+import useForm from '../Hooks/useForm';
 
 export default function Login() {
 
@@ -44,8 +44,8 @@ export default function Login() {
   const onSuccess = async (data) => {
     console.log(data);
     await login({variables: {
-        email: data.email,
-        hashedPW: data.password
+        ID: data.email.value,
+        hashedPW: data.password.value
       }, fetchPolicy: 'no-cache'
     });
   };
@@ -61,9 +61,9 @@ export default function Login() {
   }
 
   useEffect(() => {
-    console.log(data);
+
     if(data !== undefined) {
-      document.cookie = `token=${data.login.jwt}`;
+      document.cookie = `token=${data.login}`;
       setResponse([true, data.login]);
       console.log('LogIn');
     }
@@ -75,7 +75,7 @@ export default function Login() {
         <img src={logo} ></img>
         <Grid container>
           <TextField label="Email" 
-            type="email"
+            type="text"
             name="email" 
             required 
             fullWidth
@@ -107,7 +107,7 @@ export default function Login() {
           />
         </Grid>
         <Grid container>
-          <Button type="button" onClick={handleSubmit} 
+          <Button type="submit" 
             fullWidth
             variant="contained"
             sx={{mt:1}}
