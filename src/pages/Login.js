@@ -28,7 +28,7 @@ export default function Login() {
   
   const handleSubmit = async e => {
     e.preventDefault();
-    await Login({variables: {
+    await login({variables: {
       email: formData.email,
       hashedPW: formData.password
     }, fetchPolicy: 'no-cache'
