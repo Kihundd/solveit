@@ -4,6 +4,8 @@ import Menu from './Menu';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import styled from '@emotion/styled';
+import {useState} from 'react';
+import { Routes, Route } from 'react-router-dom'
 // import {Link, useNavigate } from 'react-router-dom'
 
 
@@ -11,6 +13,7 @@ import styled from '@emotion/styled';
 function Header() {
     
     // let navigate =useNavigate();
+    const [user, setUser] = useState({name: 'sungkihun'})
 
     return (
       <div>
@@ -21,6 +24,9 @@ function Header() {
           </Grid>
           <Grid item xs={1}>
           <Link href="/SignUp" underline="none" color="inherit">회원가입</Link>
+          </Grid>
+          <Grid item xs={1}>
+            <Link href="/Profile" underline="none" color="inherit">{user.name}</Link>
           </Grid>
         </Grid>
 

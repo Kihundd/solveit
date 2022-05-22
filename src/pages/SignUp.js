@@ -6,10 +6,11 @@ import { useMutation } from '@apollo/client';
 import { SIGN_UP } from '../queries/queries';
 import { useState, useEffect } from 'react';
 import useForm from '../Hooks/useForm';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function SignUp() {
-
+    const navigate = useNavigate();
     const [signUp, {loading, error, data}] = useMutation(SIGN_UP);
     const [success, setSuccess] = useState(false);
     const [msg, setMsg] = useState("");

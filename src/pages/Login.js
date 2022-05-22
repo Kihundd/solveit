@@ -17,14 +17,14 @@ export default function Login() {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-  const checkEmail = (e) => {
-    var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
-    console.log('이메일 유효성 검사 :: ', regExp.test(e.target.value))
-  }
-  const checkPassword = (e) => {
-    var regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,10}$/
-    console.log('비밀번호 유효성 검사 :: ', regExp.test(e.target.value))
-  };
+  // const checkEmail = (e) => {
+  //   var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
+  //   console.log('이메일 유효성 검사 :: ', regExp.test(e.target.value))
+  // }
+  // const checkPassword = (e) => {
+  //   var regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,10}$/
+  //   console.log('비밀번호 유효성 검사 :: ', regExp.test(e.target.value))
+  // };
 
   const {add, handleSubmit} = useForm();
 
@@ -61,7 +61,6 @@ export default function Login() {
   }
 
   useEffect(() => {
-
     if(data !== undefined) {
       document.cookie = `token=${data.login}`;
       setResponse([true, data.login]);
@@ -84,8 +83,7 @@ export default function Login() {
             helperText={emailError}
             error={emailError === ""? false: true}
             {...add({name:'email', contains: '@', value: 'test@test.com'})}
-            // onChange={handleInput}
-            // defaultValue={formData.email}
+          
             // onBlur={checkEmail}
             // sx={{mt:1}}
           />
@@ -116,10 +114,10 @@ export default function Login() {
         </Grid>
         <Grid container>
           <Grid item xs={3}>
-            <Link>비밀번호 재설정</Link>
+            <Link href="/">비밀번호 재설정</Link>
           </Grid>
           <Grid item xs={2}>
-            <Link>회원가입</Link>
+            <Link href="/SignUp">회원가입</Link>
           </Grid>
         </Grid>
         
