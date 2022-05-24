@@ -13,7 +13,8 @@ export const LOGIN = gql`
     query Login($ID: String!, $hashedPW: String!) {
         login(ID: $ID, hashedPW: $hashedPW)
     }
-`
+`;
+
 export const USER_INFO = gql`
     query Profile($ID: String!) {
         profile(ID: $ID) {
@@ -24,23 +25,33 @@ export const USER_INFO = gql`
             favorites
         }
     }
-`
+`;
+
 export const My_Coupon = gql`
-query myCoupons {
-    myCoupons {
-        coupon {
-            id
-            name
-            explanation
+    query myCoupons {
+        myCoupons {
+            coupon {
+                id
+                name
+                explanation
+            }
+            count
         }
-        count
     }
-}
-`
+`;
+
 export const Log = gql`
     query Log{
         category
         correct
         wrong
     }
-`
+`;
+
+export const NICKNAME = gql`
+    query GetMyname($ID: String) {
+        profile(ID: $ID) {
+            nickname
+        }
+    }
+`;

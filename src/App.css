@@ -78,3 +78,9 @@
   float: left;
 } */
 
+.header-name {
+  cursor: pointer;
+}
+.header-name:hover {
+  color: #0a58ca;
+}
