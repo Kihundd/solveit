@@ -6,7 +6,8 @@ import Grid from '@mui/material/Grid';
 import { useLazyQuery } from '@apollo/client';
 import { LOGIN } from '../queries/queries';
 import { useEffect, useState } from 'react';
-import useForm from '../Hooks/useForm';
+import useForm from '../hooks/useForm';
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
 
@@ -28,6 +29,8 @@ export default function Login() {
 
   const {add, handleSubmit} = useForm();
 
+  const navigate = useNavigate();
+
   const handleInput = e => {
     setFormData({...formData, [e.target.name]: e.target.value})
   };
@@ -42,12 +45,17 @@ export default function Login() {
   // };
 
   const onSuccess = async (data) => {
-    console.log(data);
-    await login({variables: {
+    const response = await login({variables: {
         ID: data.email.value,
         hashedPW: data.password.value
       }, fetchPolicy: 'no-cache'
     });
+
+    if(response.data.login !== null) {
+      document.cookie = `token=${response.data.login}`;
+      navigate('/');
+      // setResponse([true, response.data.login]);
+    }
   };
 
   const onFail = (data, error) => {
@@ -59,15 +67,6 @@ export default function Login() {
       setPasswordError("A password should be at least 4");
     }
   }
-
-  useEffect(() => {
-    if(data !== undefined) {
-      document.cookie = `token=${data.login}`;
-      setResponse([true, data.login]);
-      console.log('LogIn');
-      console.log(data);
-    }
-  }, [data]);
 
   return (
     <div className='body'>
