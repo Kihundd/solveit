@@ -10,6 +10,7 @@ import { NICKNAME } from '../queries/queries';
 import Button from '@mui/material/Button';
 import { stepConnectorClasses } from '@mui/material';
 import jsCookies from 'js-cookies';
+import MenuList from './MenuList'
 
 // import {Link, useNavigate } from 'react-router-dom'
 
@@ -102,7 +103,7 @@ function Header() {
             </Link>
           </Grid>
           <Grid item xs={6}>
-            <Menu></Menu>
+            <MenuList></MenuList>
           </Grid>
         </Grid>
       </ div>
