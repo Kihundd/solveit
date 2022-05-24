@@ -55,3 +55,6 @@ export const NICKNAME = gql`
         }
     }
 `;
+
+
+

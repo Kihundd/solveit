@@ -4,6 +4,7 @@ import SignUp from './pages/SignUp'
 import Home from './pages/Home'
 import Profile from './pages/Profile'
 import MyCoupon from './pages/MyCoupon'
+import CreateTest from './pages/CreateTest'
 import { Routes, Route, Link} from 'react-router-dom'
 
 
@@ -18,6 +19,9 @@ function App() {
         <Route path="/SignUp" element={ <SignUp /> } />
         <Route path="/Profile" element={ <Profile /> } />
         <Route path="/MyCoupon" element={ <MyCoupon /> } />
+        <Route path="/CreateTest" element={ <CreateTest /> } />
+
+
       </Routes>
       
     </div>
