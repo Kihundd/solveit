@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Chart from 'react-apexcharts'
 
 class AnswerRate extends Component {
-
+  
   constructor(props) {
     super(props);
 

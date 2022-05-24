@@ -9,9 +9,38 @@ export const SIGN_UP = gql`
         }
     }
 `;
-
 export const LOGIN = gql`
     query Login($ID: String!, $hashedPW: String!) {
         login(ID: $ID, hashedPW: $hashedPW)
+    }
+`
+export const USER_INFO = gql`
+    query Profile($ID: String!) {
+        profile(ID: $ID) {
+            ownerId
+            nickname
+            image
+            point
+            favorites
+        }
+    }
+`
+export const My_Coupon = gql`
+query myCoupons {
+    myCoupons {
+        coupon {
+            id
+            name
+            explanation
+        }
+        count
+    }
+}
+`
+export const Log = gql`
+    query Log{
+        category
+        correct
+        wrong
     }
 `

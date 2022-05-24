@@ -65,6 +65,7 @@ export default function Login() {
       document.cookie = `token=${data.login}`;
       setResponse([true, data.login]);
       console.log('LogIn');
+      console.log(data);
     }
   }, [data]);
 
