@@ -13,12 +13,13 @@ import { Routes, Route } from 'react-router-dom'
 function Header() {
     
     // let navigate =useNavigate();
-    const [user, setUser] = useState({name: 'sungkihun'})
+    const [name, setName] = useState("user")
+    
 
     return (
       <div>
         <Grid container spacing={0} >
-          <Grid item xs={9}></Grid>
+          <Grid item xs={5}></Grid>
           <Grid item xs={1}>
             <Link href="/Login" underline="none" color="inherit">로그인</Link>
           </Grid>
@@ -26,7 +27,10 @@ function Header() {
           <Link href="/SignUp" underline="none" color="inherit">회원가입</Link>
           </Grid>
           <Grid item xs={1}>
-            <Link href="/Profile" underline="none" color="inherit">{user.name}</Link>
+            <Link href="/Profile" underline="none" color="inherit">{name}</Link>
+          </Grid>
+          <Grid item xs={1}>
+            <Link href="/MyCoupon" underline="none" color="inherit">myCoupons</Link>
           </Grid>
         </Grid>
 
