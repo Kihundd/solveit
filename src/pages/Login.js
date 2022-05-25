@@ -6,7 +6,8 @@ import Grid from '@mui/material/Grid';
 import { useLazyQuery } from '@apollo/client';
 import { LOGIN } from '../queries/queries';
 import { useEffect, useState } from 'react';
-import useForm from '../hooks/useForm';
+import useForm from '../Hooks/useForm';
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
 
@@ -17,16 +18,18 @@ export default function Login() {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-  const checkEmail = (e) => {
-    var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
-    console.log('이메일 유효성 검사 :: ', regExp.test(e.target.value))
-  }
-  const checkPassword = (e) => {
-    var regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,10}$/
-    console.log('비밀번호 유효성 검사 :: ', regExp.test(e.target.value))
-  };
+  // const checkEmail = (e) => {
+  //   var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
+  //   console.log('이메일 유효성 검사 :: ', regExp.test(e.target.value))
+  // }
+  // const checkPassword = (e) => {
+  //   var regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,10}$/
+  //   console.log('비밀번호 유효성 검사 :: ', regExp.test(e.target.value))
+  // };
 
   const {add, handleSubmit} = useForm();
+
+  const navigate = useNavigate();
 
   const handleInput = e => {
     setFormData({...formData, [e.target.name]: e.target.value})
@@ -42,12 +45,17 @@ export default function Login() {
   // };
 
   const onSuccess = async (data) => {
-    console.log(data);
-    await login({variables: {
-        email: data.email,
-        hashedPW: data.password
+    const response = await login({variables: {
+        ID: data.email.value,
+        hashedPW: data.password.value
       }, fetchPolicy: 'no-cache'
     });
+
+    if(response.data.login !== null) {
+      document.cookie = `token=${response.data.login}`;
+      navigate('/');
+      // setResponse([true, response.data.login]);
+    }
   };
 
   const onFail = (data, error) => {
@@ -60,22 +68,13 @@ export default function Login() {
     }
   }
 
-  useEffect(() => {
-    console.log(data);
-    if(data !== undefined) {
-      document.cookie = `token=${data.login.jwt}`;
-      setResponse([true, data.login]);
-      console.log('LogIn');
-    }
-  }, [data]);
-
   return (
     <div className='body'>
       <form className='LoginContainer' onSubmit={e => handleSubmit(e, onSuccess, onFail)}>
         <img src={logo} ></img>
         <Grid container>
           <TextField label="Email" 
-            type="email"
+            type="text"
             name="email" 
             required 
             fullWidth
@@ -84,8 +83,7 @@ export default function Login() {
             helperText={emailError}
             error={emailError === ""? false: true}
             {...add({name:'email', contains: '@', value: 'test@test.com'})}
-            // onChange={handleInput}
-            // defaultValue={formData.email}
+          
             // onBlur={checkEmail}
             // sx={{mt:1}}
           />
@@ -107,7 +105,7 @@ export default function Login() {
           />
         </Grid>
         <Grid container>
-          <Button type="button" onClick={handleSubmit} 
+          <Button type="submit" 
             fullWidth
             variant="contained"
             sx={{mt:1}}
@@ -116,10 +114,10 @@ export default function Login() {
         </Grid>
         <Grid container>
           <Grid item xs={3}>
-            <Link>비밀번호 재설정</Link>
+            <Link href="/">비밀번호 재설정</Link>
           </Grid>
           <Grid item xs={2}>
-            <Link>회원가입</Link>
+            <Link href="/SignUp">회원가입</Link>
           </Grid>
         </Grid>
         
