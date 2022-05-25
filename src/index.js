@@ -15,11 +15,7 @@ import {setContext} from '@apollo/client/link/context';
 import { onError } from "@apollo/client/link/error";
 
 const httpLink = createHttpLink({
-<<<<<<< HEAD
-  uri: 'http://3.36.229.240:4000',
-=======
   uri: 'http://3.36.229.240:4000/',
->>>>>>> 63b39241001a6c730a329c56502ea31b0baf1a3e
 });
 
 const authLink = setContext((_, {headers}) => {
@@ -49,21 +45,6 @@ const client = new ApolloClient({
 });
 
 
-<<<<<<< HEAD
-const root = ReactDOM.createRoot(
-  document.getElementById('root')
-);
-root.render(  
-<React.StrictMode>
-  <ApolloProvider client={client}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </ApolloProvider>
-</React.StrictMode>
-);
-
-=======
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
@@ -74,7 +55,6 @@ root.render(
     </ApolloProvider>
   </React.StrictMode>,
 );
->>>>>>> 63b39241001a6c730a329c56502ea31b0baf1a3e
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 reportWebVitals();

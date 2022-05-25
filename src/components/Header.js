@@ -17,7 +17,6 @@ import MenuList from './MenuList'
 
 
 function Header() {
-    
     // let navigate =useNavigate();
     const [name, setName] = useState("");
     const [isLogin, setIsLogin] = useState(false);

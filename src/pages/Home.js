@@ -16,7 +16,6 @@ function Home() {
                     <HomeList></HomeList>
                 </Grid>
             </Grid>
-            
         </div>
         
     )
