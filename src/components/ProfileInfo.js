@@ -2,7 +2,7 @@ import {useQuery} from '@apollo/client'
 import {USER_INFO} from '../queries/queries'
 import {useEffect, useState} from 'react'
 import TextField from '@mui/material/TextField';
-import { Grid, Button, Input, Avatar } from '@mui/material';
+import { Grid, Button, Input, Avatar, Container } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 
 
@@ -35,41 +35,24 @@ function ProfileInfo() {
     if(loading) return <p>Loading...</p>;
     if(error) return <p>Error!</p>; 
 
-    
-
     const handleChange = (e) => {
         setItem(e.target.value);
     };
 
     return (
-        <div>
+        <Container>
             <Grid container>
                 <Grid item xs={10}></Grid>
                 <Grid item xs={2}>
-                    <Button variant="contained" size="small">저장</Button> 
+                <Button variant="contained" size="small">저장</Button> 
                 </Grid>
             </Grid>
-            <div style={{float:"left", width: "30%"}}>
-                 <Grid container>
-                    <Grid item xs={12}>
-                        <Avatar
-                            alt="Img"
-                            src="../Logo1.png"
-                            sx={{ width: 150, height: 150 }}
-                        />
-                        {/* <p>{data.profile.image}</p> */}
-                    </Grid>
-                    <Grid item xs={12}>
-                        <label htmlFor="contained-button-file">
-                            <Input accept="image/*" id="contained-button-file" multiple type="file" />
-                            <Button variant="contained" component="span">
-                                사진등록
-                            </Button>
-                        </label>
-                    </Grid>
-                 </Grid>
-            </div>
-            <Grid container>
+            <Grid container spacing={3}>
+                <Grid item xs={5}>
+                    <ProfileImg />
+                </Grid>
+                <Grid item xs={7}>
+                    <Grid container>
                 <Grid item xs={5}></Grid>
                 <Grid item xs={1}>{data.profile.tier}0</Grid>
                 <Grid item xs={6}>
@@ -117,6 +100,15 @@ function ProfileInfo() {
                     <button>상점</button>
                 </Grid>
             </Grid>
+
+                </Grid>
+
+
+
+                
+            </Grid>
+            
+            
             
             
             
@@ -126,8 +118,34 @@ function ProfileInfo() {
             
             
 
-        </div>
+        </Container>
     )
 }
 
 export default ProfileInfo
+
+function ProfileImg() {
+    return(
+        <>
+        <Grid container>
+                        <Grid item xs={12}>
+                            <Avatar
+                                alt="Img"
+                                src="../Logo1.png"
+                                sx={{ width: 150, height: 150 }}
+                            />
+                            {/* <p>{data.profile.image}</p> */}
+                        </Grid>
+                        <Grid item xs={12}>
+                            <label htmlFor="contained-button-file">
+                                <Input accept="image/*" id="contained-button-file" multiple type="file" />
+                                <Button variant="contained" component="span">
+                                    사진등록
+                                </Button>
+                            </label>
+                        </Grid>
+                    </Grid>
+        </>
+        
+    )
+}

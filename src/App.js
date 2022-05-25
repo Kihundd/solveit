@@ -5,6 +5,7 @@ import Home from './pages/Home'
 import Profile from './pages/Profile'
 import MyCoupon from './pages/MyCoupon'
 import CreateTest from './pages/CreateTest'
+import TestList from './pages/TestList'
 import { Routes, Route, Link} from 'react-router-dom'
 
 
@@ -20,7 +21,7 @@ function App() {
         <Route path="/Profile" element={ <Profile /> } />
         <Route path="/MyCoupon" element={ <MyCoupon /> } />
         <Route path="/CreateTest" element={ <CreateTest /> } />
-
+        <Route path="/TestList" element={ <TestList /> } />
 
       </Routes>
       
