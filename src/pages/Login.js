@@ -6,7 +6,7 @@ import Grid from '@mui/material/Grid';
 import { useLazyQuery } from '@apollo/client';
 import { LOGIN } from '../queries/queries';
 import { useEffect, useState } from 'react';
-import useForm from '../Hooks/useForm';
+import useForm from '../hooks/useForm';
 import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
