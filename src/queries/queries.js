@@ -14,7 +14,6 @@ export const LOGIN = gql`
         login(ID: $ID, hashedPW: $hashedPW)
     }
 `;
-
 export const USER_INFO = gql`
     query Profile($ID: String!) {
         profile(ID: $ID) {
@@ -26,7 +25,14 @@ export const USER_INFO = gql`
         }
     }
 `;
-
+export const STATISTICS = gql`
+    query Statistics($ID: String!) {
+        statistics(ID: $ID) {
+            try_count
+            correct_count
+        }
+    }
+`;
 export const My_Coupon = gql`
     query myCoupons {
         myCoupons {
@@ -39,7 +45,6 @@ export const My_Coupon = gql`
         }
     }
 `;
-
 export const Log = gql`
     query Log{
         category
@@ -47,7 +52,6 @@ export const Log = gql`
         wrong
     }
 `;
-
 export const NICKNAME = gql`
     query GetMyname($ID: String) {
         profile(ID: $ID) {
@@ -55,6 +59,3 @@ export const NICKNAME = gql`
         }
     }
 `;
-
-
-

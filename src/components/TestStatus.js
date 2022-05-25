@@ -7,21 +7,34 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { useQuery } from '@apollo/client';
+import { useState } from 'react';
+import { STATISTICS } from '../queries/queries';
 
 
 
 function createData(name, data) {
     return { name, data };
 }
-const rows = [
-    createData('푼 문제 수', 0),
-    createData('맞은 문제 수', 0),
-    createData('틀린 문제 수', 0),
-    createData('부적절한 글', 0),
-    createData('공유한 문제집 수', 0),
-];
+
 
 function TestStatus() {
+    const [user, setUser] = useState("test@test.com");
+    const { data, loading, error } = useQuery(STATISTICS, {
+        variables:{ID: user}
+    });
+    console.log(data);
+    if(loading) return <p>Loading...</p>;
+    if(error) return <p>Error!</p>; 
+    const rows = [
+        createData('푼 문제수', 0),
+        createData('맞은 문제 수', 0),
+        // createData('틀린 문제 수', 0),
+        // createData('부적절한 글', 0),
+        // createData('공유한 문제집 수', 0),
+    ];
+    
+
     return(
         <div>
             <TableContainer component={Paper}>

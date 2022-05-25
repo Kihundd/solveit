@@ -11,7 +11,7 @@ function Profile() {
             <ProfileHeader />
             <div style={{width:"80%", margin:"0 auto", border: "2px solid #c4c4c4"}}>
                 <div>
-                    <h5>프로필 정보</h5>
+                    <h6>프로필 정보</h6>
                     <ProfileInfo></ProfileInfo>
                 </div>
                 <div style={{borderTop: "2px solid #c4c4c4"}}>
@@ -30,7 +30,7 @@ function Profile() {
                     <Grid container>
                         <Grid item xs={2}></Grid>
                         <Grid item xs={6}>
-                            <SutdyChart />
+                            {/* <SutdyChart /> */}
                         </Grid>
                     </Grid>
                     

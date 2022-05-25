@@ -84,3 +84,7 @@
 .header-name:hover {
   color: #0a58ca;
 }
+.PHeader {
+  border-bottom: 2px solid #c4c4c4;
+  
+}
