@@ -19,13 +19,13 @@ function createData(name, data) {
 
 
 function TestStatus() {
-    const [user, setUser] = useState("test@test.com");
-    const { data, loading, error } = useQuery(STATISTICS, {
-        variables:{ID: user}
-    });
-    console.log(data);
-    if(loading) return <p>Loading...</p>;
-    if(error) return <p>Error!</p>; 
+    // const [user, setUser] = useState("test@test.com");
+    // const { data, loading, error } = useQuery(STATISTICS, {
+    //     variables:{ID: user}
+    // });
+    // console.log(data);
+    // if(loading) return <p>Loading...</p>;
+    // if(error) return <p>Error!</p>; 
     const rows = [
         createData('푼 문제수', 0),
         createData('맞은 문제 수', 0),

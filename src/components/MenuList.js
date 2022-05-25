@@ -1,40 +1,32 @@
-// import React, {useState} from 'react';
-import { Navbar, Container, Nav } from 'react-bootstrap';
-// import Logo from './Logo'
-import Grid from '@mui/material/Grid';
+import {Link, Container, Grid} from "@mui/material";
 
 function MenuList() {
     return (
-        <div className="nav-container">
-            <Navbar bg="white" variant="light" className='Nav-Container'>
-                {/* <Container> */}
-                <Nav className="me-auto">
-                    <Grid container >
-                        <Grid item xs={2}>
-                            <Nav.Link >문제 목록</Nav.Link>
-                        </Grid>
-                        <Grid item xs={2}>
-                            <Nav.Link href="/CreateTest">문제 생성</Nav.Link>
-                        </Grid>
-                        <Grid item xs={2}>
-                            <Nav.Link >문제 관리</Nav.Link>
-                        </Grid>
-                        <Grid item xs={2}>
-                            <Nav.Link >문제 게시판</Nav.Link>
-                        </Grid>
-                        <Grid item xs={2}>
-                            <Nav.Link >문제 랭킹</Nav.Link>
-                        </Grid>
-                        <Grid item xs={2}>
-                            <Nav.Link >상점</Nav.Link>
-                        </Grid>
-                        
+            <Container maxwidth="xl">
+                <Grid container spacing={3}>
+                    <Grid item xs={12}></Grid>
+                    <Grid item xs={12}></Grid>
+                    <Grid item xs={12}></Grid>
+                    <Grid item xs={2}>
+                        <Link href="/TestList" underline="none" color="inherit">문제 목록</Link>
                     </Grid>
-                    
-                </Nav>
-                {/* </Container> */}
-            </Navbar>
-        </div>
+                    <Grid item xs={2}>
+                        <Link href="/CreateTest" underline="none" color="inherit" >문제 생성</Link>
+                    </Grid>
+                    <Grid item xs={2}>
+                        <Link underline="none" color="inherit">문제 관리</Link>
+                    </Grid>
+                    <Grid item xs={2}>
+                        <Link underline="none" color="inherit">문제 게시판</Link>
+                    </Grid>
+                    <Grid item xs={2}>
+                        <Link underline="none" color="inherit">문제 랭킹</Link>
+                    </Grid>
+                    <Grid item xs={2}>
+                        <Link underline="none" color="inherit">상점</Link>
+                    </Grid>
+                </Grid>
+            </Container>
     )
 }
 export default MenuList

@@ -1,14 +1,12 @@
 import Logo from './Logo';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import {useEffect, useState} from 'react';
 import { Routes, Route } from 'react-router-dom'
 import { useQuery } from '@apollo/client';
 import { NICKNAME } from '../queries/queries';
-import Button from '@mui/material/Button';
-import { stepConnectorClasses } from '@mui/material';
+import { Container, Link, Button, Box } from '@mui/material';
 import jsCookies from 'js-cookies';
 import MenuList from './MenuList'
 
@@ -50,11 +48,16 @@ function Header() {
 
     return (
       <div>
-        <Grid container spacing={0} >
-          <Grid item xs={5}></Grid>
-          {
+        <Container maxWidth="xl">
+        <Grid container spacing={2} >
+          
+          <Grid item xs={12}>
+            <Box sx={{ height: '3vh'}}>
+{
             isLogin?
               <>
+              <Grid container>
+                <Grid item xs={10}></Grid>
                 <Grid item xs={1}>
                   <Button
                     id="basic-button"
@@ -80,31 +83,42 @@ function Header() {
                     <MenuItem onClick={handleLogout}>로그아웃</MenuItem>
                   </Menu>
                 </Grid>
+                </Grid>
               </>:
               <>
-                <Grid item xs={1}>
-                  <Link href="/Login" underline="none" color="inherit">로그인</Link>
-                </Grid>
-                <Grid item xs={1}>
-                  <Link href="/SignUp" underline="none" color="inherit">회원가입</Link>
+                <Grid container maxWidth="xl">
+                  <Grid item xs={9}></Grid>
+                  <Grid item xs={1}>
+                    <Link href="/Login" underline="none" color="inherit">로그인</Link>
+                  </Grid>
+                  <Grid item xs={1}>
+                    <Link href="/SignUp" underline="none" color="inherit">회원가입</Link>
+                  </Grid>
                 </Grid>
               </>
           }
-          {/* <Grid item xs={1}>
-            <Link href="/MyCoupon" underline="none" color="inherit">myCoupons</Link>
-          </Grid> */}
-        </Grid>
-
-        <Grid container >
-          <Grid item xs={4}>
-            <Link href="/">
-              <Logo></Logo>
-            </Link>
+            </Box>
           </Grid>
-          <Grid item xs={6}>
-            <MenuList></MenuList>
-          </Grid>
+          <Grid item xs={12}></Grid>
         </Grid>
+        </Container>
+        
+        <Container maxWidth="xl" >
+          <Grid container spacing={2}>
+            <Grid item xs={3}>
+              <Link href="/">
+                <Logo></Logo>
+              </Link>
+            </Grid>
+            <Grid item xs={9}>
+              <MenuList></MenuList>
+            </Grid>
+          </Grid>
+          
+        </Container>
+        
+          
+        
       </ div>
 
     )
