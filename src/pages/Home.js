@@ -2,7 +2,7 @@ import Header from '../components/Header';
 import Slide from '../components/Slide'
 import HomeList from '../components/HomeList'
 import Grid from '@mui/material/Grid';
-
+import AnswerListInput from '../components/AnwerListInput';
 function Home() {
     return (
         <div>
@@ -16,6 +16,7 @@ function Home() {
                     <HomeList></HomeList>
                 </Grid>
             </Grid>
+            
         </div>
         
     )
