@@ -87,3 +87,7 @@
 .PHeader {
   border-bottom: 2px solid #c4c4c4;
 }
+
+.m-8 {
+  margin: 8px
+}

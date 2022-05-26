@@ -1,23 +1,35 @@
-import { Button, Grid, TextField, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { Button, Grid, TextField, ToggleButton, ToggleButtonGroup, Stack } from "@mui/material";
 import { useState, useEffect } from 'react'
 import _ from 'lodash';
-import useEnhancedEffect from "@mui/material/utils/useEnhancedEffect";
-import { toUnitless } from "@mui/material/styles/cssUtils";
+import CheckIcon from '@mui/icons-material/Check';
+
 
 export default function ({isSave, handleSave}) {
-    const [num, setAnswerNum] = useState('1');
+    const [num, setAnswerNum] = useState(['1']);
     const [candNum, setCandNum] = useState(4);
     const [cands, setCands] = useState(["","","",""]);
     const [paragraph, setParagraph] = useState("");
     const [explanation, setExplation] = useState("");
+    const [exclusive, setExclusive] = useState(true);
 
     const handleExChange = e => {
         setExplation(e.target.value);
     }
   
     const handleSelect = (e, newSelect) => {
-      setAnswerNum(newSelect);
+        console.log(newSelect);
+        setAnswerNum(newSelect);
     };
+
+    const handleExclusiveChange = () => {
+        if(exclusive === true) {
+            setAnswerNum([]);
+            setExclusive(false);
+        } else {
+            setAnswerNum('');
+            setExclusive(true);
+        }
+    }
 
     useEffect(()=>{
         if(isSave === true) {
@@ -86,22 +98,37 @@ export default function ({isSave, handleSave}) {
                 }
             </Grid>
             
-            <Grid item xs={1}>
-                <TextField
-                    id="outlined-number"
-                    label="보기 수"
-                    type="number"
-                    defaultValue={4}
-                    onChange={handleCandNum}
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                />
+            <Grid item xs={3}>
+                <Grid container direction="row">
+                    <Grid item xs={3}>
+                    <TextField
+                        id="outlined-number"
+                        label="보기 수"
+                        type="number"
+                        defaultValue={4}
+                        onChange={handleCandNum}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                    />
+                    </Grid>
+                    <Grid item xs={6}>
+                    <span>복수 정답</span>
+                    <ToggleButton
+                        value="check"
+                        label="복수 정답"
+                        selected={!exclusive}
+                        onChange={() => {handleExclusiveChange();}}>
+                            <CheckIcon />
+                    </ToggleButton>
+                    </Grid>
+                </Grid>
             </Grid>
-            <Grid item xs={11}>
+            <Grid item xs={9}>
+                <span>정답: </span>
                 <ToggleButtonGroup 
                     value={num}
-                    exclusive
+                    exclusive={exclusive}
                     onChange={handleSelect}
                     aria-label="anwerNum"
                 >
