@@ -6,6 +6,8 @@ import Profile from './pages/Profile'
 import MyCoupon from './pages/MyCoupon'
 import CreateTest from './pages/CreateTest'
 import TestList from './pages/TestList'
+import Test from './pages/Test'
+import TestInfo from './pages/TestInfo'
 import { Routes, Route, Link} from 'react-router-dom'
 
 
@@ -22,7 +24,8 @@ function App() {
         <Route path="/MyCoupon" element={ <MyCoupon /> } />
         <Route path="/CreateTest" element={ <CreateTest /> } />
         <Route path="/TestList" element={ <TestList /> } />
-
+        <Route path="/TestInfo/:testId" element={ <TestInfo /> } />
+        <Route path="/Test/:testId" element={ <Test />} />
       </Routes>
       
     </div>
