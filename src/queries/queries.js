@@ -59,4 +59,19 @@ export const NICKNAME = gql`
         }
     }
 `;
-
+// export const TESTLIST = gql`
+//     query GetTestList() {
+//         test(~~) {
+//             questionIds
+//             name
+//             ownerId
+//             tryCnt
+//         }
+//     }
+// `
+// export const TEST_INFO = gql`
+//     query GetTestInfomation() {
+//         name
+//         content
+//     }
+// `
