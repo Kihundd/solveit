@@ -9,6 +9,7 @@ import MultipleChoice from "./MultipleChoice";
 import { CATEGORIES, CREATE_QUESTION } from "../../queries/test_queries";
 import { useQuery, useMutation } from "@apollo/client";
 import ShortAnswer from "./ShortAnswer";
+import FillBlank from "./FillBlank";
 
 const MULTIPLE_CHOICE = "MULTIPLE_CHOICE";
 const FILL_BLANK = "FILL_BLANK";
@@ -16,7 +17,7 @@ const SHORT_ANSWER = "SHORT_ANSWER";
 const CODING_TEST = "CODING_TEST";
 
 export default function () {
-    const [type, setType] = useState(MULTIPLE_CHOICE);
+    const [type, setType] = useState(FILL_BLANK);
     const [category, setCategory] = useState('');
     const [name, setName] = useState('');
     const [difficulty, setDifficulty] = useState(2.5);
@@ -36,8 +37,15 @@ export default function () {
             return  <ShortAnswer
                 isSave={isSave}    
                 handleSave={info => handleSave(info)}
-            />
-        } else return <></>
+                />;
+        } else if(type === FILL_BLANK) {
+            return <FillBlank
+                isSave={isSave}
+                handleSave={info => handleSave(info)}
+                />;
+        }
+        
+        return <></>
     }
 
     const handleTypeChange = (event) => {
@@ -53,6 +61,7 @@ export default function () {
     }
 
     const handleSave = async info => {
+        //TODO: validation
         setIsSave(false);
         const input = {
             ...info,
@@ -61,6 +70,7 @@ export default function () {
             questionCategory: Number(category),
             questionDifficulty: difficulty * 2,
         };
+        console.log(input);
 
         const response = await createQuestion({variables: {input}});
         console.log(response);
@@ -157,11 +167,11 @@ export default function () {
                     </Grid>
                 </Box>
                 {renderBody()}
-                <Grid item xs={2}>
-                    <Button variant="text">취소</Button>
-                </Grid>
-                <Grid item xs={2}>
-                    <Button variant="contained" onClick={handleOnSave}>저장</Button>
+                <Grid item container xs={12} justifyContent='flex-end'>
+                    <Stack spacing={2} direction="row">
+                        <Button variant="contained" onClick={handleOnSave}>저장</Button>
+                        <Button variant="text">취소</Button>
+                    </Stack>
                 </Grid>
             </Grid>      
         </Grid>
