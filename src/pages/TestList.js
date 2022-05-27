@@ -1,4 +1,4 @@
-import Header from '../components/Header'
+import Header from '../components/home/Header'
 import { Grid, Box, Container, Button, Link } from '@mui/material'
 import TestTable from '../components/TestTable'
 import PageButton from '../components/PageButton'
@@ -12,7 +12,7 @@ function TestList() {
             <Container maxWidth="xl" className='bodyContainer'>
                 <Grid container spacing={2}>
                     <Grid item xs={3}>
-                        <Box sx={{border: '2px solid #c4c4c4', height: '40vh'}}>
+                        <Box sx={{border: '2px solid #c4c4c4', height: '60vh'}}>
                                 <Grid container spacing={2}>
                                     <Grid item xs={7}>
                                         <h4>문제집목록</h4>
@@ -26,15 +26,15 @@ function TestList() {
                         </Box>
                     </Grid>
                     <Grid item xs={9}>
-                        <Box sx={{border: '2px solid #c4c4c4', height: '50vh'}}>
+                        <Box sx={{border: '2px solid #c4c4c4', height: '60vh'}}>
                             <Grid container spacing={3}>
-                                <Grid item xs={3}>문제집 목록</Grid>
+                                <Grid item xs={3} >
+                                    <h4>문제집 목록</h4>
+                                </Grid>
                                 <Grid item xs={6}></Grid>
                                 <Grid item xs={3}>
-                                    <Button size="small" variant="contained">
-                                        <Link href="/CreateTest" underline="none" color="inherit">
-                                            문제집 생성
-                                        </Link>
+                                    <Button size="medieum" variant="contained" href="/CreateTest" sx={{marginTop:'20px'}}>
+                                        문제집 생성
                                     </Button>
                                 </Grid>
 
@@ -42,7 +42,7 @@ function TestList() {
                                     <Box sx={{border: '1px solid #c4c4c4'}}>
                                         <Grid container spacing={3}>
                                             <Grid item xs={3}>
-                                                <h5>전체</h5>
+                                                <h4>전체</h4>
                                             </Grid>
                                         </Grid>
                                         <TestTable />

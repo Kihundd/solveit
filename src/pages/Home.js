@@ -1,6 +1,6 @@
-import Header from '../components/Header';
-import Slide from '../components/Slide'
-import HomeList from '../components/HomeList'
+import Header from '../components/home/Header';
+import Slide from '../components/home/Slide'
+import HomeList from '../components/home/HomeList'
 import Grid from '@mui/material/Grid';
 import AnswerListInput from '../components/AnwerListInput';
 function Home() {

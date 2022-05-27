@@ -9,7 +9,7 @@ class AnswerRate extends Component {
     this.state = {
         options: {labels: ['정답률', '오답률']},
         series: [50, 50],
-        
+
     }
   }
 

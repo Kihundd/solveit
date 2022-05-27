@@ -5,17 +5,12 @@ import Grid from '@mui/material/Grid';
 import {useEffect, useState} from 'react';
 import { Routes, Route } from 'react-router-dom'
 import { useQuery } from '@apollo/client';
-import { NICKNAME } from '../queries/queries';
+import { NICKNAME } from '../../queries/queries';
 import { Container, Link, Button, Box } from '@mui/material';
 import jsCookies from 'js-cookies';
 import MenuList from './MenuList'
 
-// import {Link, useNavigate } from 'react-router-dom'
-
-
-
 function Header() {
-    // let navigate =useNavigate();
     const [name, setName] = useState("");
     const [isLogin, setIsLogin] = useState(false);
 
@@ -114,11 +109,7 @@ function Header() {
               <MenuList></MenuList>
             </Grid>
           </Grid>
-          
         </Container>
-        
-          
-        
       </ div>
 
     )

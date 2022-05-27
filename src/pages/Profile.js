@@ -1,42 +1,37 @@
-import ProfileHeader from '../components/ProfileHeader'
-import ProfileInfo from '../components/ProfileInfo'
-import TestStaus from '../components/TestStatus'
-import AnswerRate from '../components/AnswerRate'
-import SutdyChart from '../components/StudyChart'
-import {Grid} from '@mui/material';
+import ProfileHeader from '../components/profile/ProfileHeader'
+import ProfileInfo from '../components/profile/ProfileInfo'
+import TestStaus from '../components/profile/TestStatus'
+import AnswerRate from '../components/profile/AnswerRate'
+import SutdyChart from '../components/profile/StudyChart'
+import { Container, Grid, Box } from '@mui/material';
 
 function Profile() {
     return(
         <div>
             <ProfileHeader />
-            
-            <div style={{width:"80%", margin:"0 auto", border: "2px solid #c4c4c4"}}>
-                <div>
-                    <h6>프로필 정보</h6>
-                    <ProfileInfo></ProfileInfo>
-                </div>
-                <div style={{borderTop: "2px solid #c4c4c4"}}>
-                    <Grid container >
-                        <Grid item xs={2}></Grid>
-                        <Grid item xs={3}>
+            <Container maxWidth="lg">   
+                <ProfileInfo></ProfileInfo>
+                <Box sx={{border:'1px solid #c4c4c4', marginTop:'20px'}}>
+                    <Grid container spacing={1} sx={{marginTop:'20px'}}>
+                        <Grid item xs={5}>
                             <TestStaus />
                         </Grid>
-                        <Grid item xs={1}></Grid>
-                        <Grid item xs={3}>
+                        <Grid item xs={2}></Grid>
+                        <Grid item xs={5}>
                             <AnswerRate />
                         </Grid>
                     </Grid>
-                </div>
-                <div style={{borderTop: "2px solid #c4c4c4"}}>
+                </Box>
+                {/* <div style={{borderTop: "2px solid #c4c4c4"}}>
                     <Grid container>
                         <Grid item xs={2}></Grid>
                         <Grid item xs={6}>
-                            {/* <SutdyChart /> */}
+                            <SutdyChart />
                         </Grid>
                     </Grid>
                     
-                </div>
-            </div>
+                </div> */}
+            </Container>
         </div>
     )
 }
