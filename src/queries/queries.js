@@ -15,16 +15,26 @@ export const LOGIN = gql`
     }
 `;
 export const USER_INFO = gql`
-    query Profile($ID: String!) {
+    query Profile($ID: String) {
         profile(ID: $ID) {
             ownerId
             nickname
             image
             point
             favorites
+            tier
         }
     }
 `;
+// export const UPDATE_USER_INFO =gql`
+//     mutation UpdateUserInfo($name: String!, $favorite: [String!]!) {
+//         updateProfile(name: $name, favorite: $[favorite]){
+//             success
+//             code
+//             message
+//         }
+//     }
+// `
 export const STATISTICS = gql`
     query Statistics($ID: String!) {
         statistics(ID: $ID) {
@@ -45,20 +55,21 @@ export const My_Coupon = gql`
         }
     }
 `;
-export const Log = gql`
-    query Log{
-        category
-        correct
-        wrong
-    }
-`;
 export const NICKNAME = gql`
     query GetMyname($ID: String) {
         profile(ID: $ID) {
             nickname
+            ownerId
         }
     }
 `;
+export const USER_ID = gql`
+    query GetUserId($ID: String) {
+        profile(ID: $ID) {
+            ownerId
+        }
+    }
+`
 // export const TESTLIST = gql`
 //     query GetTestList() {
 //         test(~~) {

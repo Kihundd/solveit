@@ -1,4 +1,4 @@
-import logo from '../Logo_Login.jpg';
+import logo from '../../Logo_Login.jpg';
 import styled from 'styled-components';
 
 const HeaderLogo = styled.img`

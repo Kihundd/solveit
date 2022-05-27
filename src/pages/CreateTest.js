@@ -1,4 +1,4 @@
-import Header from '../components/Header'
+import Header from '../components/home/Header'
 import { Container, Box, Grid, TextField, Button, Input, IconButton, ToggleButton, ToggleButtonGroup } from '@mui/material'
 import { useState } from 'react'
 

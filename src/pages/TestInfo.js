@@ -1,4 +1,4 @@
-import Header from "../components/Header"
+import Header from "../components/home/Header"
 import { Container, Grid, Box, Button } from "@mui/material"
 import { useQuery } from "@apollo/client"
 import TEST_INFO from '../queries/queries'

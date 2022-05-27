@@ -10,22 +10,33 @@ import { Table,
     } from '@mui/material';
 
 
-function createData(문제번호, 문제집이름, 출제자, 제출수, 좋아요) {
-  return { 문제번호, 문제집이름, 출제자, 제출수, 좋아요 };
+function createData(문제번호, 문제집이름, 출제자, 제출수) {
+  return { 문제번호, 문제집이름, 출제자, 제출수 };
 }
 
 export default function TestTable() {
 
-  const [testList, setTestList] = useState('1');
+  // const [testList, setTestList] = useState({
+  //   testId:"",
+  //   testName:"",
+  //   ownerId:"",
+  //   tryCnt:0
+  // });
+  // const testListNum = [1, 2, 3, 4, 5, 6, 7, 8];
   
+
+  // const testList = num.map((test, i)=>{
+  //   test.testNum,
+  //   test.testName,
+  //   test.ownerName,
+  //   test.tryCnt
+  // });
   // const {data, loading, error} = useQuery(TESTLIST, {
   //   variables:{ID: }
   // });
   
   const rows = [
-    createData('1', '연습문제', 'yu', 100),
-    createData('2', 'Test', 'Test', 20),
-
+    createData('1', '연습문제', 'yu', '20')
   ];
 
 
@@ -36,7 +47,7 @@ export default function TestTable() {
         // sx={{ minWidth: 650 }} 
         aria-label="simple table">
         <TableHead>
-          <TableRow>
+          <TableRow sx={{border:'2px solid #c4c4c4'}}>
             <TableCell align="center">문제번호</TableCell>
             <TableCell align="center">문제집이름</TableCell>
             <TableCell align="center">출제자</TableCell>
@@ -45,9 +56,8 @@ export default function TestTable() {
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <TableRow
-              key={row.문제번호}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            <TableRow key={row.문제번호}
+              sx={{border:'2px solid #c4c4c4'}}
             >
               <TableCell align="center"><Link href='/TestInfo/0' underline="none" color="inherit">{row.문제번호}</Link></TableCell>
               <TableCell align="center"><Link href='/TestInfo/0' underline="none" color="inherit">{row.문제집이름}</Link></TableCell>
