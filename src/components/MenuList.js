@@ -17,10 +17,10 @@ function MenuList() {
                         <Link underline="none" color="inherit">문제 관리</Link>
                     </Grid>
                     <Grid item xs={2}>
-                        <Link underline="none" color="inherit">문제 게시판</Link>
+                        <Link underline="none" color="inherit">게시판</Link>
                     </Grid>
                     <Grid item xs={2}>
-                        <Link underline="none" color="inherit">문제 랭킹</Link>
+                        <Link underline="none" color="inherit">랭킹</Link>
                     </Grid>
                     <Grid item xs={2}>
                         <Link underline="none" color="inherit">상점</Link>
