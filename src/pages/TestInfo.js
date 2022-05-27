@@ -1,8 +1,7 @@
 import Header from "../components/Header"
-import { Container, Grid, Box, Button, Link } from "@mui/material"
+import { Container, Grid, Box, Button } from "@mui/material"
 import { useQuery } from "@apollo/client"
 import TEST_INFO from '../queries/queries'
-import TestTable from "../components/TestTable"
 import { useState } from "react"
 
 function TestInfo() {
@@ -11,7 +10,6 @@ function TestInfo() {
     //     variables:{ID: }
     // });
     
-    // const [content, setContent] = useState(false);
     
    
     return (
