@@ -8,6 +8,8 @@ import CreateTest from './pages/CreateTest'
 import TestList from './pages/TestList'
 import Test from './pages/Test'
 import TestInfo from './pages/TestInfo'
+// import TestResult from 'pages/TestResult'
+// import Ranking from '/pages/Ranking'
 import { Routes, Route, Link} from 'react-router-dom'
 
 
@@ -26,6 +28,8 @@ function App() {
         <Route path="/TestList" element={ <TestList /> } />
         <Route path="/TestInfo/:testId" element={ <TestInfo /> } />
         <Route path="/Test/:testId" element={ <Test />} />
+        {/* <Route path='/TestResult:testId' element={ <TestResult />} />
+        <Route path='/Ranking' element={ <Ranking />} /> */}
       </Routes>
       
     </div>

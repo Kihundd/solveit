@@ -1,46 +1,25 @@
-import { useState } from 'react';
-import { Table,
-        TableBody,
-        TableCell,
-        TableContainer,
-        TableHead,
-        TableRow,
-        Paper,
-        Link,
-    } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper,Link,} from '@mui/material';
+import { useQuery } from '@apollo/client';
+import { ALLTESTLIST, TESTLIST_CATEGORY } from '../queries/queries';
 
-
-function createData(문제번호, 문제집이름, 출제자, 제출수) {
-  return { 문제번호, 문제집이름, 출제자, 제출수 };
-}
 
 export default function TestTable() {
-
-  // const [testList, setTestList] = useState({
-  //   testId:"",
-  //   testName:"",
-  //   ownerId:"",
-  //   tryCnt:0
-  // });
-  // const testListNum = [1, 2, 3, 4, 5, 6, 7, 8];
+  const [testList, setTestList] = useState();
+  const {loading, error, data} = useQuery(ALLTESTLIST);
+  // const {categoryLoading, categoryError, categoryData} = useQuery(TESTLIST_CATEGORY);
   
+  useEffect(()=>{
+    if(data !== undefined && data.allTests !== undefined){
+      setTestList(data.allTests)
+    }
+  },[])
 
-  // const testList = num.map((test, i)=>{
-  //   test.testNum,
-  //   test.testName,
-  //   test.ownerName,
-  //   test.tryCnt
-  // });
-  // const {data, loading, error} = useQuery(TESTLIST, {
-  //   variables:{ID: }
-  // });
+  console.log(data)
+
+  if(loading) return <p>Loading...</p>;
+  if(error) return <p>Error!</p>;
   
-  const rows = [
-    createData('1', '연습문제', 'yu', '20')
-  ];
-
-
-
   return (
     <TableContainer component={Paper}>
       <Table 
@@ -55,14 +34,14 @@ export default function TestTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.문제번호}
+          {data.allTests.map((a, index) => (
+            <TableRow key={index}
               sx={{border:'2px solid #c4c4c4'}}
             >
-              <TableCell align="center"><Link href='/TestInfo/0' underline="none" color="inherit">{row.문제번호}</Link></TableCell>
-              <TableCell align="center"><Link href='/TestInfo/0' underline="none" color="inherit">{row.문제집이름}</Link></TableCell>
-              <TableCell align="center"><Link href='/TestInfo/0' underline="none" color="inherit">{row.출제자}</Link></TableCell>
-              <TableCell align="center"><Link href='/TestInfo/0' underline="none" color="inherit">{row.제출수}</Link></TableCell>
+              <TableCell align="center"><Link href='/TestInfo/0' underline="none" color="inherit">{data.allTests[index].id}</Link></TableCell>
+              <TableCell align="center"><Link href='/TestInfo/0' underline="none" color="inherit">{data.allTests[index].name}</Link></TableCell>
+              <TableCell align="center"><Link href='/TestInfo/0' underline="none" color="inherit">{data.allTests[index].ownerId}</Link></TableCell>
+              <TableCell align="center"><Link href='/TestInfo/0' underline="none" color="inherit">{data.allTests[index].tryCnt}</Link></TableCell>
             </TableRow>
           ))}
         </TableBody>

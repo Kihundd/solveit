@@ -21,22 +21,21 @@ export const USER_INFO = gql`
             nickname
             image
             point
-            favorites
             tier
         }
     }
 `;
-// export const UPDATE_USER_INFO =gql`
-//     mutation UpdateUserInfo($name: String!, $favorite: [String!]!) {
-//         updateProfile(name: $name, favorite: $[favorite]){
-//             success
-//             code
-//             message
-//         }
-//     }
-// `
+export const UPDATE_USER_INFO =gql`
+    mutation UpdateUserInfo($name: String, $favorite: String) {
+        updateProfile(name: $name, favorite: $favorite){
+            success
+            code
+            message
+        }
+    }
+`
 export const STATISTICS = gql`
-    query Statistics($ID: String!) {
+    query Statistics($ID: String) {
         statistics(ID: $ID) {
             try_count
             correct_count
@@ -63,26 +62,56 @@ export const NICKNAME = gql`
         }
     }
 `;
-export const USER_ID = gql`
-    query GetUserId($ID: String) {
-        profile(ID: $ID) {
+export const ALLTESTLIST = gql`
+    query GetAllTestList {
+        allTests{
+            id
+            name
             ownerId
+            tryCnt
         }
     }
 `
-// export const TESTLIST = gql`
-//     query GetTestList() {
-//         test(~~) {
-//             questionIds
+export const CREATE_TEST = gql`
+    mutation CreateTest ($input: createTestInput) {
+        createTest(input: $input) {
+            code
+            message
+            success
+        }
+    }
+`
+// export const TESTLIST_CATEGORY = gql`
+//     query GetByCategory{
+//         testByCategory{
+//             id
 //             name
-//             ownerId
+//             ownerID
 //             tryCnt
+//             testCategory
 //         }
 //     }
 // `
 // export const TEST_INFO = gql`
-//     query GetTestInfomation() {
-//         name
-//         content
+//     query GetTestInfomation($id: ID) {
+//         testInfo(id: $ID){
+//             name
+//             content
+//         }
+       
 //     }
 // `
+export const TAKE_QUESTION = gql`
+    query getQuestion($questionID: ID){
+        question(id: $questionID){
+            id
+            name
+            paragraph
+            type
+            difficulty {
+                id
+                name
+            }
+        }
+    }
+`

@@ -16,16 +16,15 @@ const FILL_BLANK = "FILL_BLANK";
 const SHORT_ANSWER = "SHORT_ANSWER";
 const CODING_TEST = "CODING_TEST";
 
-export default function () {
+export default function (props) {
     const [type, setType] = useState(FILL_BLANK);
     const [category, setCategory] = useState('');
     const [name, setName] = useState('');
     const [difficulty, setDifficulty] = useState(2.5);
     const [isSave, setIsSave] = useState(false);
     const {loading, error, data} = useQuery(CATEGORIES);
-
+    const [questionNum, setQeustionNum] = useState(props.QuestionNum)
     const [createQuestion, {loadingQuestion, errorQuetion, dataQuestion}] = useMutation(CREATE_QUESTION)
-
     const renderBody = () => {
         if(type === MULTIPLE_CHOICE) {
             return <MultipleChoice 
@@ -44,7 +43,6 @@ export default function () {
                 handleSave={info => handleSave(info)}
                 />;
         }
-        
         return <></>
     }
 
@@ -61,7 +59,6 @@ export default function () {
     }
 
     const handleSave = async info => {
-        //TODO: validation
         setIsSave(false);
         const input = {
             ...info,
@@ -69,6 +66,7 @@ export default function () {
             type,
             questionCategory: Number(category),
             questionDifficulty: difficulty * 2,
+            
         };
         console.log(input);
 
@@ -167,11 +165,11 @@ export default function () {
                     </Grid>
                 </Box>
                 {renderBody()}
-                <Grid item container xs={12} justifyContent='flex-end'>
-                    <Stack spacing={2} direction="row">
-                        <Button variant="contained" onClick={handleOnSave}>저장</Button>
-                        <Button variant="text">취소</Button>
-                    </Stack>
+                <Grid item xs={2}>
+                    <Button variant="text">취소</Button>
+                </Grid>
+                <Grid item xs={2}>
+                    <Button variant="contained" onClick={handleOnSave}>저장</Button>
                 </Grid>
             </Grid>      
         </Grid>
