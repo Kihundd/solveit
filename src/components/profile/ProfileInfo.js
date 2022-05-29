@@ -1,8 +1,11 @@
-import {useQuery} from '@apollo/client'
-import {USER_INFO} from '../../queries/queries'
+import {useMutation, useQuery} from '@apollo/client'
+import {USER_INFO, UPDATE_USER_INFO} from '../../queries/queries'
+import { CATEGORIES } from "../../queries/test_queries";
 import {useEffect, useState} from 'react'
 import { Grid, Button, Input, Avatar, Container, Box, TextField, MenuItem } from '@mui/material';
 import Header from '../home/Header';
+import { Favorite } from '@mui/icons-material';
+
 const Cartegory = [
     {
       value: 'USD',
@@ -22,20 +25,35 @@ const Cartegory = [
     },
   ];
 
-function ProfileInfo() {
+function ProfileInfo(props) {
+
     const [item, setItem] = useState('USD');
-    const [userId, setUserId] = useState("");
-    const {data, loading, error} = useQuery((USER_INFO), {
-        variables:{ID: null}
+    const [userName, setUserName] = useState('');
+    const [category, setCategory] = useState('');
+    const {data: userData, loading: userLoading, error: userError} = useQuery((USER_INFO), {
+        variables:{ID: props.userId}
     });
-    useEffect(() => {
-        if(data !== undefined && data.profile.ownerId !== undefined) {
-          setUserId(data.profile.ownerId);
-        }
-    }, [data]);
-    console.log(data);
-    if(loading) return <p>Loading...</p>;
-    if(error) return <p>Error!</p>; 
+    const [update, { loading: updateLoading, error: updateError, data: updateData }] = useMutation(UPDATE_USER_INFO);
+    const handleSubmit = async (updateData) => {
+        console.log(updateData)
+        await update({varialbes: {
+            name: userName,
+        }});
+    }
+    // useEffect(() => {
+    //     if(updateData !== undefined && updateData.update.success) {
+    //         console.log(updateData)
+    //     }
+    // }, [updateData]);
+
+    if(userLoading) return <p>Loading...</p>;
+    if(userError) return <p>Error!</p>;
+    
+    
+
+    const handleInputChange = (e) => {
+        setUserName(e.target.value);
+    }
 
     const handleChange = (e) => {
         setItem(e.target.value);
@@ -47,9 +65,13 @@ function ProfileInfo() {
                 <Grid item xs={2}><h3>기본정보</h3></Grid>
                 <Grid item xs={8}></Grid>
                 <Grid item xs={2}>
-                    <Button variant="contained" fullWidth size="medium" sx={{
-                        marginTop:'10px'
-                    }}>저장</Button> 
+                    <Button variant="contained" 
+                        type='submit'
+                        fullWidth 
+                        size="medium" 
+                        sx={{marginTop:'10px'}}
+                        onClick={handleSubmit}
+                    >저장</Button> 
                 </Grid>
             </Grid>
 
@@ -58,21 +80,37 @@ function ProfileInfo() {
                 <Grid item xs={6}>
                     <Grid container spacing={2}>
                         <Grid item xs={2}>
-                            <TextField size="small" fullWidth label="티어" disabled={true} defaultValue={data.profile.tier}></TextField>
+                            <TextField size="small" 
+                            fullWidth 
+                            label="티어" 
+                            disabled={true} 
+                            defaultValue={userData.profile.tier}
+
+                            >
+                        </TextField>
                         </Grid>
                         <Grid item xs={10}>
-                            <TextField size="small" fullWidth label="닉네임" defaultValue={data.profile.nickname}></TextField>
+                            <TextField size="small" 
+                                fullWidth 
+                                label="닉네임" 
+                                defaultValue={userData.profile.nickname}
+                                onChange={handleInputChange}
+                            ></TextField>
                         </Grid>
                     </Grid>
                     <Grid container sx={{marginTop:'20px'}}>
                         <Grid item xs={12}>
-                            <TextField size="small" fullWidth label="이메일" disabled={true} defaultValue={data.profile.ownerId}></TextField>
+                            <TextField size="small" 
+                            fullWidth label="이메일" 
+                            disabled={true} 
+                            defaultValue={userData.profile.ownerId}
+                            ></TextField>
                         </Grid>
                     </Grid>
                     <Grid container sx={{marginTop:'20px'}}>
                         <Grid item xs={12}>
                             <TextField
-                                id="outlined-select-currency"
+                                // id="outlined-select-currency"
                                 size='small'
                                 select
                                 fullWidth
@@ -83,13 +121,13 @@ function ProfileInfo() {
                                     <MenuItem key={option.value} value={option.value}>
                                     {option.label}
                                     </MenuItem>
-                                ))}<ul>{data.profile.favorites}</ul>
+                                ))}
                             </TextField>
                         </Grid>
                     </Grid>
                     <Grid container spacing={2} sx={{marginTop:'10px'}}>
                         <Grid item xs={7}>
-                        <TextField size="small" fullWidth disabled={true} defaultValue={data.profile.point}></TextField>
+                        <TextField size="small" fullWidth disabled={true} defaultValue={userData.profile.point}></TextField>
                         </Grid>
                         <Grid item xs={5}>
                             <Button href="/Shop" fullWidth variant='contained'>상점</Button>

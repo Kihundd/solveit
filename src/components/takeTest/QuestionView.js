@@ -1,6 +1,16 @@
 import { Button, Grid, Box } from "@mui/material"
+import { useState } from "react";
+import { useQuery } from "@apollo/client";
+import { TAKE_QUESTION } from "../../queries/queries";
 
 function QuestionView() {
+
+    const [QuestionNum, setQuestionNum] = useState('1');
+    const {loading, error, data} = useQuery(TAKE_QUESTION, {
+        variables: {id: 1}
+    });
+    console.log(data)
+
     return(
         <>
             <Box sx={{ marginTop:'10px',  border: '2px solid #c4c4c4' , height: '30vh'}}>
