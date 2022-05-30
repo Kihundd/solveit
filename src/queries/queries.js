@@ -92,26 +92,25 @@ export const CREATE_TEST = gql`
 //         }
 //     }
 // `
-// export const TEST_INFO = gql`
-//     query GetTestInfomation($id: ID) {
-//         testInfo(id: $ID){
-//             name
-//             content
-//         }
-       
-//     }
-// `
-export const TAKE_QUESTION = gql`
-    query getQuestion($questionID: ID){
-        question(id: $questionID){
+export const TEST_INFO = gql`
+    query getTestInfo($id: ID!) {
+        test(id: $id) {
+            id
+            name
+            content
+            ownerId
+            tryCnt
+        }
+    }
+`
+export const TAKE_TEST = gql`
+    query getQuestion($id: ID!){
+        question(id: $id){
             id
             name
             paragraph
             type
-            difficulty {
-                id
-                name
-            }
+            
         }
     }
 `

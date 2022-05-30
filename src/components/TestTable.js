@@ -1,21 +1,24 @@
 import { useEffect, useState } from 'react';
-import { Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper,Link,} from '@mui/material';
+import { Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper} from '@mui/material';
 import { useQuery } from '@apollo/client';
 import { ALLTESTLIST, TESTLIST_CATEGORY } from '../queries/queries';
-
+import { Link } from "react-router-dom"
 
 export default function TestTable() {
+
+  // const {testId} = useParams();
+  // console.log(testId)
   const [testList, setTestList] = useState();
   const {loading, error, data} = useQuery(ALLTESTLIST);
   // const {categoryLoading, categoryError, categoryData} = useQuery(TESTLIST_CATEGORY);
-  
   useEffect(()=>{
     if(data !== undefined && data.allTests !== undefined){
       setTestList(data.allTests)
+      
     }
+    console.log(1)
+    console.log(testList)
   },[])
-
-  console.log(data)
 
   if(loading) return <p>Loading...</p>;
   if(error) return <p>Error!</p>;
@@ -38,10 +41,10 @@ export default function TestTable() {
             <TableRow key={index}
               sx={{border:'2px solid #c4c4c4'}}
             >
-              <TableCell align="center"><Link href='/TestInfo/0' underline="none" color="inherit">{data.allTests[index].id}</Link></TableCell>
-              <TableCell align="center"><Link href='/TestInfo/0' underline="none" color="inherit">{data.allTests[index].name}</Link></TableCell>
-              <TableCell align="center"><Link href='/TestInfo/0' underline="none" color="inherit">{data.allTests[index].ownerId}</Link></TableCell>
-              <TableCell align="center"><Link href='/TestInfo/0' underline="none" color="inherit">{data.allTests[index].tryCnt}</Link></TableCell>
+              <TableCell align="center"><Link to={`/TestInfo/${data.allTests[index].id}`} style={{ textDecoration: 'none', color: 'inherit'}}>{data.allTests[index].id}</Link></TableCell>
+              <TableCell align="center"><Link to={`/TestInfo/${data.allTests[index].id}`} style={{ textDecoration: 'none', color: 'inherit'}}>{data.allTests[index].name}</Link></TableCell>
+              <TableCell align="center"><Link to={`/TestInfo/${data.allTests[index].id}`} style={{ textDecoration: 'none', color: 'inherit'}}>{data.allTests[index].ownerId}</Link></TableCell>
+              <TableCell align="center"><Link to={`/TestInfo/${data.allTests[index].id}`} style={{ textDecoration: 'none', color: 'inherit'}}>{data.allTests[index].tryCnt}</Link></TableCell>
             </TableRow>
           ))}
         </TableBody>

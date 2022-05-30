@@ -1,13 +1,15 @@
 import { Button, Grid, Box } from "@mui/material"
 import { useState } from "react";
 import { useQuery } from "@apollo/client";
-import { TAKE_QUESTION } from "../../queries/queries";
+import { TAKE_TEST } from "../../queries/queries";
+import { useParams } from "react-router-dom";
 
 function QuestionView() {
 
+    const params = useParams();
     const [QuestionNum, setQuestionNum] = useState('1');
-    const {loading, error, data} = useQuery(TAKE_QUESTION, {
-        variables: {id: 1}
+    const {loading, error, data} = useQuery(TAKE_TEST, {
+        variables: {id: params.testId}
     });
     console.log(data)
 
