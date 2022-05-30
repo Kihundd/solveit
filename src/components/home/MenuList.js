@@ -20,7 +20,7 @@ function MenuList() {
                         <Link underline="none" color="inherit">게시판</Link>
                     </Grid>
                     <Grid item xs={2}>
-                        <Link underline="none" color="inherit">랭킹</Link>
+                        <Link href="/Ranking" underline="none" color="inherit">랭킹</Link>
                     </Grid>
                     <Grid item xs={2}>
                         <Link underline="none" color="inherit">상점</Link>
