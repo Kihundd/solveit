@@ -2,12 +2,12 @@ import Header from "../components/home/Header"
 import { Container, Grid, Box, Button } from "@mui/material"
 import { useQuery } from "@apollo/client"
 import { TEST_INFO } from "../queries/queries"
-import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
+import { useState } from "react"
 
 function TestInfo() {
+    const [liked, setLiked] = useState(false)
     const params = useParams();
-    
     const {data, loading, error} = useQuery(TEST_INFO, {
         variables:{id: params.testId}
     });
@@ -15,6 +15,11 @@ function TestInfo() {
     if(loading) return <p>Loading...</p>;
     if(error) return <p>Error!</p>;
 
+    const handleLiked = ()=>{
+        setLiked(!liked)
+        console.log(liked)
+    }
+    
     return (
         <>
             <Header />
@@ -47,13 +52,24 @@ function TestInfo() {
                     </Box>
                 </Box>
                 <Grid container sx={{marginTop: '1vh'}}>
-                    <Grid item xs={9}></Grid>
-                    <Grid item xs={3}>
+                    <Grid item xs={6}></Grid>
+                    <Grid item xs={2}>
+                        <Button variant="contained" underline="none" color="primary">
+                            난이도측정
+                        </Button>
+                    </Grid>
+                    <Grid item xs={2}>
+                        <Button variant="contained" underline="none" color="primary" onClick={handleLiked}>
+                            좋아요
+                        </Button>
+                        </Grid>
+                    <Grid item xs={2}>
                         <Button variant="contained">
                             <Link to={`/Test/${params.testId}`} style={{ textDecoration: 'none', color: 'inherit'}}>
                                 Test응시
                             </Link>
                         </Button>
+                        
                     </Grid>
                 </Grid>
             </Container>

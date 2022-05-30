@@ -83,10 +83,10 @@ export default function (props) {
     };
 
     return (
-        <Box sx={{border: '2px solid #c4c4c4', height: '80vh'}}>
+        <Box sx={{border: '2px solid #c4c4c4', height: '100vh'}}>
         <Grid container spacing={2}>
             <Grid item xs={12}>
-                <Box sx={{border:'1px solid #c4c4c4'}}>새로운 문제 생성</Box>
+                <Box sx={{border:'1px solid #c4c4c4'}}>{questionNum}</Box>
             </Grid>
             <Grid item xs={12}>
                 <TextField 
@@ -165,12 +165,16 @@ export default function (props) {
                     </Grid>
                 </Box>
                 {renderBody()}
-                <Grid item xs={2}>
-                    <Button variant="text">취소</Button>
+                <Grid container >
+                    <Grid item xs={8}></Grid>
+                    <Grid item xs={2}>
+                        <Button variant="text">취소</Button>
+                    </Grid>
+                    <Grid item xs={2}>
+                        <Button variant="contained" onClick={handleOnSave}>저장</Button>
+                    </Grid>
                 </Grid>
-                <Grid item xs={2}>
-                    <Button variant="contained" onClick={handleOnSave}>저장</Button>
-                </Grid>
+                
             </Grid>      
         </Grid>
     </Box>

@@ -104,6 +104,17 @@ export const TEST_INFO = gql`
     }
 `
 export const TAKE_TEST = gql`
+    query takeTest($id: ID!) {
+        test(id: $id) { 
+            name
+            questionIds {
+                questionId
+                number
+            }
+        }
+    }
+`
+export const GET_QUESTION = gql`
     query getQuestion($id: ID!){
         question(id: $id){
             id
@@ -114,3 +125,5 @@ export const TAKE_TEST = gql`
         }
     }
 `
+
+
