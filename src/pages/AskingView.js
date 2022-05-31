@@ -15,10 +15,15 @@ function AskingView(){
     // });
     const [questionView, setQuestionView] = useState(false)
     const [answerView, setAnswerView] = useState(false)
-    const handleQuestionView = ()=>{
+    const handleQuestionView = (event)=>{
         setQuestionView(!questionView)
+
     }
-    console.log(params.askingId)
+    const handleAnswerView = (event)=>{
+        setAnswerView(!answerView)
+    }
+    
+    
     return(
         <>
             <Header  />
@@ -51,12 +56,14 @@ function AskingView(){
                                 </Grid>
                                 <Grid item xs={2}>
                                     <ToggleButton
-                                        size="small" variant="contained" value="questionView"
+                                        size="small" value="questionView" selected
+                                        onClick={handleQuestionView}
                                     >문제보기</ToggleButton>
                                 </Grid>
                                 <Grid item xs={2}>
                                 <ToggleButton
-                                        size="small" variant="contained" value="answerView"
+                                        size="small" value="answerView" selected
+                                        onClick={handleAnswerView}
                                     >정답보기</ToggleButton>
                                 </Grid>
                             </Grid>

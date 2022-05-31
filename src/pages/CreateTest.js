@@ -88,21 +88,31 @@ function CreateTest() {
                                     <Button size="small" variant="contained" onClick={addQuestion} >문제 추가</Button>
                                 </Grid>
                             </Grid>
+                            {questionList.map((q, index) => {
+                                return <Grid container spacing={1} sx={{marginTop:'10px'}}>
+                                        <Grid item xs={2} key={index}>
+                                            <Button 
+                                                color='inherit'
+                                                onClick={() => handleQuestionNumClick(index)}
+                                                >{`${index + 1}`}
+                                            </Button>
+                                        </Grid>
+                                        <Grid item xs={10}>
+                                            <Button 
+                                                color='inherit'
+                                                onClick={() => handleQuestionNumClick(index)}
+                                                >{ `${questionList[index].name === undefined? '': questionList[index].name} `}
+                                            </Button>
+                                        </Grid>
+                                        </Grid>
+                                    })}
                             <Grid container>
-                                <Grid item xs={3}>
-                                    {questionList.map((q, index) => {
-                                        return <Box sx={{marginTop:'10px'}}  key={index}>
-                                                    <Button 
-                                                        color='inherit'
-                                                        onClick={() => handleQuestionNumClick(index)}
-                                                        >
-                                                        {`${index + 1} \t ${questionList[index].name === undefined? '': questionList[index].name} `}
-                                                    </Button>
-                                                </Box>
-                                        })}
+                                <Grid item xs={2}></Grid>
+                                <Grid item xs={8}>
+                                    <Button type='submit' fullWidth variant="contained" onClick={handleOnSave} sx={{marginTop:'10px'}}>테스트 생성</Button>
                                 </Grid>
                             </Grid>
-                            <Button type='submit' variant="contained" onClick={handleOnSave}>테스트 생성</Button>
+                            
                         </Box>
                     </Grid>
                     <Grid item xs={9}>

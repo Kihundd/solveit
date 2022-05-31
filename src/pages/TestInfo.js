@@ -1,24 +1,33 @@
 import Header from "../components/home/Header"
 import { Container, Grid, Box, Button } from "@mui/material"
-import { useQuery } from "@apollo/client"
+import { useQuery, useMutation } from "@apollo/client"
 import { TEST_INFO } from "../queries/queries"
 import { Link, useParams } from "react-router-dom"
 import { useState } from "react"
+import { LIKE_TEST, UNLIKE_TEST } from "../queries/queries"
+import { UpdateSharp } from "@mui/icons-material"
 
 function TestInfo() {
-    const [liked, setLiked] = useState(false)
+    const [liked, setLiked] = useState()
     const params = useParams();
     const {data, loading, error} = useQuery(TEST_INFO, {
         variables:{id: params.testId}
     });
+    const [like, {data:likeData, loading:likeLoading, error:likeError}] = useMutation(LIKE_TEST,{
+        variables: {id: params.testId}
+    })
+    const [unLike, { loading:unLikeLoading, error:unLikeError}] = useMutation(UNLIKE_TEST)
+
+    const handleClick = async ()=>{
+            const response = like({variables:{id: params.testId}})
+            
+            console.log(likeData)
+    }
 
     if(loading) return <p>Loading...</p>;
     if(error) return <p>Error!</p>;
-
-    const handleLiked = ()=>{
-        setLiked(!liked)
-        console.log(liked)
-    }
+    
+    
     
     return (
         <>
@@ -59,7 +68,7 @@ function TestInfo() {
                         </Button>
                     </Grid>
                     <Grid item xs={2}>
-                        <Button variant="contained" underline="none" color="primary" onClick={handleLiked}>
+                        <Button variant="contained" underline="none" color="primary" onClick={handleClick}>
                             좋아요
                         </Button>
                         </Grid>
