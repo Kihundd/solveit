@@ -10,6 +10,9 @@ import Test from './pages/Test'
 import TestInfo from './pages/TestInfo'
 // import TestResult from 'pages/TestResult'
 import Ranking from './pages/Ranking'
+import Forum from './pages/Forum'
+import AskingView from './pages/AskingView';
+import Shop from './pages/Shop';
 import { Routes, Route } from 'react-router-dom'
 
 
@@ -29,7 +32,10 @@ function App() {
         <Route path="/TestInfo/:testId" element={ <TestInfo /> } />
         <Route path="/Test/:testId" element={ <Test />} />
         {/* <Route path='/TestResult:testId' element={ <TestResult />} /> */}
+        <Route path="/Forum" element={ <Forum />} />
+        <Route path="/Ask/:askingId"element={ <AskingView /> } />
         <Route path='/Ranking' element={ <Ranking />} />
+        <Route path="/Shop" element={ <Shop /> } />
       </Routes>
       
     </div>
