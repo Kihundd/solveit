@@ -1,15 +1,16 @@
 import Header from '../components/home/Header'
 import { Container, Box, Grid, TextField, Button, InputLabel, FormControl, Select, MenuItem } from '@mui/material'
 import { useState } from 'react'
-import QuestionInfo from '../components/test/QuestionInfo';
+import QuestionInfo, { MULTIPLE_CHOICE } from '../components/test/QuestionInfo';
 import { useMutation, useQuery } from '@apollo/client';
 import { CREATE_TEST } from '../queries/queries';
 import { CATEGORIES } from "../queries/test_queries";
 import { render } from '@testing-library/react';
 
 function CreateTest() {
-    const [QuestionNum, setQuestionNum] = useState(1);
-    const [QuestionList, setQuestionList] = useState([]);
+    const [questionNum, setQuestionNum] = useState(1);
+    const [questionList, setQuestionList] = useState([]);
+    const [questionIdx, setQuestionIdx] = useState();
     const [viewCreateTest, setViewCreateTest] = useState(true)
     // const [viewCreateQestion, setViewCreateQestion] = useState(false)
     
@@ -17,15 +18,18 @@ function CreateTest() {
     const [category, setCategory] = useState('');
     const [content, setContent] = useState('');
     const [open, setOpen] = useState(true);
-    const [questionIds, setQuestionIds] = useState([QuestionNum]);
     const [isSave, setIsSave] = useState(false);
-    console.log(QuestionList)
+    console.log(questionList)
     const {loading, error, data} = useQuery(CATEGORIES);
     const [createTest, {Testloading, TestError, TestData}] = useMutation(CREATE_TEST);
     
     const addQuestion = () => {
-        setQuestionNum(QuestionNum+1)
-        setQuestionList([...QuestionList, QuestionNum])
+        setQuestionList([...questionList, {
+            type: MULTIPLE_CHOICE,
+            name: '',
+            questionCategory: '',
+            questionDifficulty: 5
+        }])
     }
     const renderCategories = () => {
         if(data === undefined)
@@ -39,6 +43,8 @@ function CreateTest() {
 
     const handleOnSave = async info => {
         setIsSave(true);
+        const questionIds = questionList.map(q => q.questionId);
+
         const input = {
             name,
             content,
@@ -50,9 +56,18 @@ function CreateTest() {
         const response = await createTest({variables: {input}});
         console.log(response);
     }
-    const questionList = QuestionList.map((num,i)=>{
-        <QuestionInfo questionNum={i}/>         
-    })
+
+    const handleQuestionNumClick = idx => {
+        if(viewCreateTest) setViewCreateTest(false);
+        console.log(idx);
+        setQuestionIdx(idx);
+    }
+
+    const handleSaveQuestion = (idx, question) => {
+        questionList[idx] = question;
+
+        setQuestionList([...questionList]);
+    }
 
     return (
         <>
@@ -75,13 +90,13 @@ function CreateTest() {
                             </Grid>
                             <Grid container>
                                 <Grid item xs={3}>
-                                    {QuestionList.map((Num, index) => {
+                                    {questionList.map((q, index) => {
                                         return <Box sx={{marginTop:'10px'}}  key={index}>
-                                                    <Button color='inherit' onClick={()=>{
-                                                        setViewCreateTest(false)
-                                                        {<QuestionInfo />}
-                                                    }}>
-                                                        {QuestionList[index]}
+                                                    <Button 
+                                                        color='inherit'
+                                                        onClick={() => handleQuestionNumClick(index)}
+                                                        >
+                                                        {`${index + 1} \t ${questionList[index].name === undefined? '': questionList[index].name} `}
                                                     </Button>
                                                 </Box>
                                         })}
@@ -126,11 +141,14 @@ function CreateTest() {
                                         setOpen(!open)
                                         console.log(open)
                                     }}
-                                >공개
+                                >
+                                    {open? "공개": "비공개"}
                                 </Button>
                             </Grid>
                         </Box>
-                    : <QuestionInfo />}
+                    : <QuestionInfo 
+                        question = { [questionIdx, questionList[questionIdx]] } 
+                        saveQuestion={handleSaveQuestion} />}
                     </Grid>
                 </Grid>
             </Container>

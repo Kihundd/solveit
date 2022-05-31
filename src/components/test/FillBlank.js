@@ -2,7 +2,7 @@ import { Button, FormControlLabel, Grid, Switch, TextField } from "@mui/material
 import {useState, useEffect, useRef} from 'react';
 import FillBlankQuestionView from "./FillBlankQuestionView";
 
-export default function({isSave, handleSave}) {
+export default function({isSave, handleSave, question}) {
     const [paragraph, setParagraph] = useState("빈칸 채우기 테스트 \n__정답1__ 은 xyz이다. __정답2__ 입니다.");
     const [answers, setAnswers] = useState([]);
     const [explanation, setExplation] = useState("");
@@ -18,6 +18,14 @@ export default function({isSave, handleSave}) {
             });            
         }
     }, [isSave]);
+
+    useEffect(() => {
+        setParagraph(question.paragraph !== undefined? question.paragraph: '');
+        setExplation(question.explanation !== undefined? question.explanation: '');
+        if(question.answers !== undefined) {
+            setAnswers(question.answers);
+        }
+    }, [question]);
 
     const handleParagraphChange = (e) => {
         setParagraph(e.target.value);

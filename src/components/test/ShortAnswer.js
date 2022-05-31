@@ -1,9 +1,9 @@
 import { Button, Grid, TextField } from "@mui/material";
 import {useState, useEffect} from 'react';
 
-export default function({isSave, handleSave}) {
+export default function({isSave, handleSave, question}) {
     const [paragraph, setParagraph] = useState("");
-    const [answer, setAnswer] = useState("");
+    const [answer, setAnswer] = useState([""]);
     const [explanation, setExplation] = useState("");
 
     useEffect(()=>{
@@ -16,6 +16,14 @@ export default function({isSave, handleSave}) {
             });            
         }
     }, [isSave]);
+
+    useEffect(() => {
+        setParagraph(question.paragraph !== undefined? question.paragraph: '');
+        setExplation(question.explanation !== undefined? question.explanation: '');
+        if(question.answers !== undefined) {
+            setAnswer(question.answers.join(","));
+        }
+    }, [question]);
 
     return (
         <Grid container rowSpacing={1}>
