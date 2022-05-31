@@ -7,11 +7,9 @@ import { Container, Grid, Box } from '@mui/material'
 import { useQuery } from '@apollo/client'
 import { useState, useEffect,  } from 'react'
 import { USER_INFO } from '../queries/queries'
-
 function Profile() {
 
     const [userId, setUserId] = useState("");
-    const [category, setCategory] = useState("");
     const {data: userData, loading: userLoading, error: userError} = useQuery((USER_INFO), {
         variables:{ID: null}
     });

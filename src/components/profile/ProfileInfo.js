@@ -2,62 +2,64 @@ import {useMutation, useQuery} from '@apollo/client'
 import {USER_INFO, UPDATE_USER_INFO} from '../../queries/queries'
 import { CATEGORIES } from "../../queries/test_queries";
 import {useEffect, useState} from 'react'
-import { Grid, Button, Input, Avatar, Container, Box, TextField, MenuItem } from '@mui/material';
-import Header from '../home/Header';
-import { Favorite } from '@mui/icons-material';
-
-const Cartegory = [
-    {
-      value: 'USD',
-      label: '관심분야설정',
-    },
-    {
-      value: 'EUR',
-      label: 'TOEIC',
-    },
-    {
-      value: 'BTC',
-      label: 'JLPT',
-    },
-    {
-      value: 'JPY',
-      label: 'ONLINEJUDGE',
-    },
-  ];
+import { Grid, Button, Input, Avatar, Container, Box, TextField, MenuItem, FormControl, InputLabel, Select } from '@mui/material';
 
 function ProfileInfo(props) {
 
     const [item, setItem] = useState('USD');
     const [userName, setUserName] = useState('');
     const [category, setCategory] = useState('');
-    const {data: userData, loading: userLoading, error: userError} = useQuery((USER_INFO), {
+    const {data, loading, error} = useQuery((USER_INFO), {
         variables:{ID: props.userId}
     });
-    const [update, { loading: updateLoading, error: updateError, data: updateData }] = useMutation(UPDATE_USER_INFO);
+    const {loading: catagoryLoaing, error: categoryError, data: categoryData} = useQuery(CATEGORIES);
+    const [update, { loading: updataLoading, error: updateError, data: updateData }] = useMutation(UPDATE_USER_INFO,{
+        variables:{name: userName, favorite: category}
+    });
+    
     const handleSubmit = async (updateData) => {
         console.log(updateData)
         await update({varialbes: {
             name: userName,
+            favorite: category
         }});
     }
-    // useEffect(() => {
-    //     if(updateData !== undefined && updateData.update.success) {
-    //         console.log(updateData)
-    //     }
-    // }, [updateData]);
+    if(loading) return <p>Loading...</p>;
+    if(error) return <p>Error!</p>;
 
-    if(userLoading) return <p>Loading...</p>;
-    if(userError) return <p>Error!</p>;
     
-    
-
     const handleInputChange = (e) => {
         setUserName(e.target.value);
     }
-
-    const handleChange = (e) => {
-        setItem(e.target.value);
+    const handleCategoryChange = (event) => {
+        setCategory(event.target.value);
     };
+    console.log(category)
+
+    const renderCategories = () => {
+        if(categoryData === undefined)
+            return <MenuItem value='EMPTY' key='loading' disabled={true}>Loading...</MenuItem>
+        return categoryData.categories.map(category => 
+            <MenuItem value={category.name} key={category.name}>{category.name}</MenuItem>);
+    };
+
+    // const onSuccess = async (updateData) => {
+    //     console.log(updateData);
+    //     await update({variables: {
+    //         name : data.name.value,
+    //         favorite: category
+    //       }
+    //     });
+    // };
+    // const onFail = (data, error) => {
+    //     console.log(error);
+    //     if(error['name'] != null) {
+    //       console.log(nameError)
+    //     }
+    //     if(error['favorite'] != null) {
+    //         console.log(favoriteError)
+    //     }
+    // }
 
     return (
         <Container maxWidth="xl" sx={{border:'2px solid #c4c4c4', padding:'20px', marginTop:'20px'}}>
@@ -65,8 +67,8 @@ function ProfileInfo(props) {
                 <Grid item xs={2}><h3>기본정보</h3></Grid>
                 <Grid item xs={8}></Grid>
                 <Grid item xs={2}>
+                    
                     <Button variant="contained" 
-                        type='submit'
                         fullWidth 
                         size="medium" 
                         sx={{marginTop:'10px'}}
@@ -84,7 +86,7 @@ function ProfileInfo(props) {
                             fullWidth 
                             label="티어" 
                             disabled={true} 
-                            defaultValue={userData.profile.tier}
+                            defaultValue={data.profile.tier}
 
                             >
                         </TextField>
@@ -93,7 +95,7 @@ function ProfileInfo(props) {
                             <TextField size="small" 
                                 fullWidth 
                                 label="닉네임" 
-                                defaultValue={userData.profile.nickname}
+                                defaultValue={data.profile.nickname}
                                 onChange={handleInputChange}
                             ></TextField>
                         </Grid>
@@ -103,31 +105,29 @@ function ProfileInfo(props) {
                             <TextField size="small" 
                             fullWidth label="이메일" 
                             disabled={true} 
-                            defaultValue={userData.profile.ownerId}
+                            defaultValue={data.profile.ownerId}
                             ></TextField>
                         </Grid>
                     </Grid>
                     <Grid container sx={{marginTop:'20px'}}>
                         <Grid item xs={12}>
-                            <TextField
-                                // id="outlined-select-currency"
-                                size='small'
-                                select
-                                fullWidth
-                                value={item}
-                                onChange={handleChange} 
-                                >
-                                {Cartegory.map((option) => (
-                                    <MenuItem key={option.value} value={option.value}>
-                                    {option.label}
-                                    </MenuItem>
-                                ))}
-                            </TextField>
+                            <FormControl fullWidth>
+                            <InputLabel id="question-category">카테고리</InputLabel>
+                            <Select
+                            labelId="question-category"
+                            id="question-category-select"
+                            value={category}
+                            label="카테고리"
+                            onChange={handleCategoryChange}
+                            >
+                                {renderCategories()}
+                            </Select>
+                            </FormControl>
                         </Grid>
                     </Grid>
                     <Grid container spacing={2} sx={{marginTop:'10px'}}>
                         <Grid item xs={7}>
-                        <TextField size="small" fullWidth disabled={true} defaultValue={userData.profile.point}></TextField>
+                        <TextField size="small" fullWidth disabled={true} defaultValue={data.profile.point}></TextField>
                         </Grid>
                         <Grid item xs={5}>
                             <Button href="/Shop" fullWidth variant='contained'>상점</Button>

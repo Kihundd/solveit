@@ -26,7 +26,7 @@ export const USER_INFO = gql`
     }
 `;
 export const UPDATE_USER_INFO =gql`
-    mutation UpdateUserInfo($name: String, $favorite: String) {
+    mutation UpdateUserInfo($name: String, $favorite: [String!]!) {
         updateProfile(name: $name, favorite: $favorite){
             success
             code

@@ -14,12 +14,10 @@ export default function TestTable() {
   useEffect(()=>{
     if(data !== undefined && data.allTests !== undefined){
       setTestList(data.allTests)
-      
     }
-    console.log(1)
-    console.log(testList)
+    
   },[])
-
+console.log(testList)
   if(loading) return <p>Loading...</p>;
   if(error) return <p>Error!</p>;
   
