@@ -4,13 +4,23 @@ import _ from 'lodash';
 import CheckIcon from '@mui/icons-material/Check';
 
 
-export default function ({isSave, handleSave}) {
+export default function ({isSave, handleSave, question}) {
     const [num, setAnswerNum] = useState(['1']);
-    const [candNum, setCandNum] = useState(4);
-    const [cands, setCands] = useState(["","","",""]);
-    const [paragraph, setParagraph] = useState("");
-    const [explanation, setExplation] = useState("");
-    const [exclusive, setExclusive] = useState(true);
+    const [candNum, setCandNum] = useState(2);
+    const [cands, setCands] = useState(['', '']);
+    const [paragraph, setParagraph] = useState('');
+    const [explanation, setExplation] = useState('');
+    const [exclusive, setExclusive] = useState(false);
+
+    useEffect(() => {
+        setAnswerNum(question.answers !== undefined? question.answers: ['1']);
+        setCandNum(question.candidates !== undefined? question.candidates.length: 2);
+        setCands(question.candidates !== undefined? question.candidates: ['', '']);
+        setParagraph(question.paragraph !== undefined? question.paragraph: '');
+        setExplation(question.explanation !== undefined? question.explanation: '');
+        setExclusive(question.candidates !== undefined && question.candidates.length >= 2? false: true);
+
+    }, [question]);
 
     const handleExChange = e => {
         setExplation(e.target.value);
@@ -18,7 +28,7 @@ export default function ({isSave, handleSave}) {
   
     const handleSelect = (e, newSelect) => {
         console.log(newSelect);
-        setAnswerNum(newSelect);
+        setAnswerNum([...newSelect]);
     };
 
     const handleExclusiveChange = () => {
@@ -36,7 +46,7 @@ export default function ({isSave, handleSave}) {
             handleSave({
                 paragraph,
                 candidates: cands,
-                answers: [num],
+                answers: num,
                 explanation
             });
         }
