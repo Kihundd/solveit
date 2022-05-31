@@ -10,9 +10,7 @@ export default function TestTable() {
   // console.log(testId)
   const [pages, setPages] = useState(1);
   const [testList, setTestList] = useState();
-  const {loading, error, data} = useQuery(ALLTESTLIST,{
-    variables:{page: pages}
-  });
+  const {loading, error, data} = useQuery(ALLTESTLIST, {variables: {page: 1}});
   // const {categoryLoading, categoryError, categoryData} = useQuery(TESTLIST_CATEGORY);
   useEffect(()=>{
     if(data !== undefined && data.allTests !== undefined){
