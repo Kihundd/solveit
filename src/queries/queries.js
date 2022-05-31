@@ -69,6 +69,7 @@ export const ALLTESTLIST = gql`
             name
             ownerId
             tryCnt
+            page
         }
     }
 `
@@ -121,7 +122,12 @@ export const GET_QUESTION = gql`
             name
             paragraph
             type
-            
+            ... on MultipleChoice {
+                candidates {
+                    number
+                    content
+                }
+            }
         }
     }
 `

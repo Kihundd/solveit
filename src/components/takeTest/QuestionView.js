@@ -1,9 +1,33 @@
 import { Button, Grid, Box } from "@mui/material"
-import { useState } from "react";
-import { useQuery } from "@apollo/client";
+import { useEffect, useState } from "react";
+import { useLazyQuery, useQuery } from "@apollo/client";
+import { GET_QUESTION } from "../../queries/queries";
 
-function QuestionView() {
+function QuestionView({row}) {
+    const [answer, setAnswer] = useState([]);
+    const [question, setQuestion] = useState(undefined);
+    const [getQuestion, {data, loading, error}] = useLazyQuery(GET_QUESTION);
 
+    useEffect(() => {
+        async function setUp() {
+            if(row !== undefined) {
+                setAnswer(row.answer);
+                const response = await getQuestion({variables: {id: row.qid}});
+                setQuestion(response.data.question);
+            }
+        }
+        setUp();
+    }, [row])
+
+    useEffect(() => {
+        if(question !== undefined) {
+
+        }
+    }, [question]);
+
+
+    if(row === undefined) return <></>
+    const qid = row.qid;
 
     return(
         <>
