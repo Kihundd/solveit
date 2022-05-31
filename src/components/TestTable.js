@@ -8,8 +8,11 @@ export default function TestTable() {
 
   // const {testId} = useParams();
   // console.log(testId)
+  const [pages, setPages] = useState(1);
   const [testList, setTestList] = useState();
-  const {loading, error, data} = useQuery(ALLTESTLIST);
+  const {loading, error, data} = useQuery(ALLTESTLIST,{
+    variables:{page: pages}
+  });
   // const {categoryLoading, categoryError, categoryData} = useQuery(TESTLIST_CATEGORY);
   useEffect(()=>{
     if(data !== undefined && data.allTests !== undefined){
@@ -32,6 +35,8 @@ console.log(testList)
             <TableCell align="center">문제집이름</TableCell>
             <TableCell align="center">출제자</TableCell>
             <TableCell align="center">제출 수</TableCell>
+            <TableCell align="center">좋아요</TableCell>
+
           </TableRow>
         </TableHead>
         <TableBody>
@@ -43,6 +48,7 @@ console.log(testList)
               <TableCell align="center"><Link to={`/TestInfo/${data.allTests[index].id}`} style={{ textDecoration: 'none', color: 'inherit'}}>{data.allTests[index].name}</Link></TableCell>
               <TableCell align="center"><Link to={`/TestInfo/${data.allTests[index].id}`} style={{ textDecoration: 'none', color: 'inherit'}}>{data.allTests[index].ownerId}</Link></TableCell>
               <TableCell align="center"><Link to={`/TestInfo/${data.allTests[index].id}`} style={{ textDecoration: 'none', color: 'inherit'}}>{data.allTests[index].tryCnt}</Link></TableCell>
+              <TableCell align="center"><Link to={`/TestInfo/${data.allTests[index].id}`} style={{ textDecoration: 'none', color: 'inherit'}}>{data.allTests[index].like}</Link></TableCell>
             </TableRow>
           ))}
         </TableBody>

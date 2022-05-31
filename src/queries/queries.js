@@ -63,20 +63,34 @@ export const NICKNAME = gql`
     }
 `;
 export const ALLTESTLIST = gql`
-    query GetAllTestList {
-        allTests{
+    query GetAllTestList($page: Int!) {
+        allTests(page: $page){
             id
             name
             ownerId
             tryCnt
+            like
         }
     }
 `
 export const CREATE_TEST = gql`
     mutation CreateTest ($input: createTestInput) {
         createTest(input: $input) {
-            code
-            message
+            success
+        }
+    }
+`
+
+export const LIKE_TEST = gql`
+    mutation LikeTest($id: ID!){
+        likeTest(id: $id){
+            success
+        }
+    }
+`
+export const UNLIKE_TEST = gql`
+    mutation LikeTest($id: ID!){
+        likeTest(id: $id){
             success
         }
     }
