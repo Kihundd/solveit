@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/client";
 import { Box, Grid, Button } from "@mui/material"
 import { useState } from "react";
 
-function QuestionNum({answerSheet, setIdx}) {
+function QuestionNum({answerSheet, setIdx, submit}) {
     const renderAnswer = () => {
         if(answerSheet.length === 0) return <></>;
         
@@ -24,7 +24,7 @@ function QuestionNum({answerSheet, setIdx}) {
                     {renderAnswer()}
                 </Grid>
                 <Grid item xs={12}>
-                    <Button size="medium" variant="contained">제출</Button>
+                    <Button size="medium" variant="contained" onClick={() => submit()}>제출</Button>
                 </Grid>
             </Grid>
             
