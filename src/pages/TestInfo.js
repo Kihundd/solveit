@@ -23,10 +23,17 @@ function TestInfo() {
             
             console.log(likeData)
     }
-
+    const handleDifficulty = async ()=> {
+        
+    }
+    
+    const handleDifficultyView = e => {
+        setDifficultyView(!dificlutyView)
+        
+    }
+    // console.log(dificlutyView)
     if(loading) return <p>Loading...</p>;
     if(error) return <p>Error!</p>;
-    
     
     
     return (
