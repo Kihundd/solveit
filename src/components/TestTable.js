@@ -18,7 +18,7 @@ export default function TestTable() {
     }
     
   },[])
-console.log(testList)
+// console.log(testList)
   if(loading) return <p>Loading...</p>;
   if(error) return <p>Error!</p>;
   
