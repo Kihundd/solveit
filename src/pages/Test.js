@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
 import { TAKE_TEST } from "../queries/queries";
 import { useParams } from "react-router-dom";
+import Asking from "../components/Asking";
 
 
 function Test(){
@@ -46,7 +47,9 @@ function Test(){
                     <Grid item xs={9}>
                         <TestName />
                         <QuestionView row={answerSheet[idx]} />
+                        <Asking />
                     </Grid>
+                    
                     
                 </Grid>
             </Container>

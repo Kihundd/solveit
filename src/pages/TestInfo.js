@@ -42,7 +42,7 @@ function TestInfo() {
         const response = selectDifficulty({variables:{questionId:34, difficulty:difficultyNum}})
         
     }
-    console.log(difficultyData)
+    
     const handleDifficultyView = e => {
         setDifficultyView(!dificlutyView)
         
