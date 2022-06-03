@@ -7,6 +7,7 @@ export default function({question, changeAnswer, prevAnswer}) {
     const [answer, setAnswer] = useState(prevAnswer);
 
     const handleSelectAnswer = (e, newAnswer) => {
+        console.log(newAnswer)
         setAnswer([...newAnswer]);
         changeAnswer([...newAnswer]);
     }
