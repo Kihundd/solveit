@@ -2,7 +2,7 @@ import Header from "../components/home/Header";
 import QuestionNum from '../components/takeTest/QuestionNum';
 import QuestionView from "../components/takeTest/QuestionView";
 import TestName from "../components/takeTest/TestName";
-import { Container, getAccordionDetailsUtilityClass, Grid } from '@mui/material'
+import { Container, Grid } from '@mui/material'
 import { useEffect, useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { TAKE_TEST, JUDGE_ANSWERS, SUBMIT_QUESTION } from "../queries/queries";
