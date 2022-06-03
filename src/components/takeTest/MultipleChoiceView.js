@@ -7,6 +7,7 @@ export default function({question, changeAnswer, prevAnswer}) {
     const [answer, setAnswer] = useState(prevAnswer);
 
     const handleSelectAnswer = (e, newAnswer) => {
+        console.log(newAnswer)
         setAnswer([...newAnswer]);
         changeAnswer([...newAnswer]);
     }
@@ -22,7 +23,7 @@ export default function({question, changeAnswer, prevAnswer}) {
                 fullWidth={true}>
                 {
                     candidates.map(({number, content}) => {
-                        return (<ToggleButton value={content} key={content} fullWidth={true} style={{color: 'black'}}>
+                        return (<ToggleButton value={number} key={content} fullWidth={true} style={{color: 'black'}}>
                                                 {content}
                                         </ToggleButton>);
                     })

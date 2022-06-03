@@ -73,6 +73,17 @@ export const ALLTESTLIST = gql`
         }
     }
 `
+export const MYTEST = gql`
+    query MyTestList{
+        mySolvingTests{
+            id
+            name
+            ownerId
+            tryCnt
+            like
+        }
+    }
+`
 export const CREATE_TEST = gql`
     mutation CreateTest ($input: createTestInput) {
         createTest(input: $input) {
