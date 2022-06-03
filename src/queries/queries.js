@@ -89,12 +89,20 @@ export const LIKE_TEST = gql`
     }
 `
 export const UNLIKE_TEST = gql`
-    mutation LikeTest($id: ID!){
-        likeTest(id: $id){
+    mutation unLikeTest($id: ID!){
+        unlikeTest(id: $id){
             success
         }
     }
 `
+export const DIFFICULTY = gql`
+    mutation Difficulty($questionId: ID!, $difficulty: Int!){
+        contributeDifficulty(questionId: $questionId, difficulty: $difficulty){
+            success
+        }
+    }
+`
+
 // export const TESTLIST_CATEGORY = gql`
 //     query GetByCategory{
 //         testByCategory{

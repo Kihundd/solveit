@@ -1,24 +1,24 @@
 import { useEffect, useState } from 'react';
 import { Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper} from '@mui/material';
 import { useQuery } from '@apollo/client';
-import { ALLTESTLIST, TESTLIST_CATEGORY } from '../queries/queries';
+import { ALLTESTLIST } from '../queries/queries';
 import { Link } from "react-router-dom"
 
 export default function TestTable() {
 
   // const {testId} = useParams();
   // console.log(testId)
-  const [pages, setPages] = useState(1);
+  // const [pages, setPages] = useState(1);
   const [testList, setTestList] = useState();
-  const {loading, error, data} = useQuery(ALLTESTLIST, {variables: {page: 1}});
+  const {loading, error, data} = useQuery(ALLTESTLIST, {
+    variables: {page: 1}}
+  );
   // const {categoryLoading, categoryError, categoryData} = useQuery(TESTLIST_CATEGORY);
   useEffect(()=>{
     if(data !== undefined && data.allTests !== undefined){
       setTestList(data.allTests)
     }
-    
   },[])
-// console.log(testList)
   if(loading) return <p>Loading...</p>;
   if(error) return <p>Error!</p>;
   
