@@ -193,3 +193,21 @@ export const TEST_RESULT = gql`
     }
 
 `
+export const ASKING = gql`
+    mutation CreateAsking($input: CreateAskingInput!){
+        createAsking(input: $input){
+            code
+            success
+            message
+        }
+    }
+`
+export const REVIEWNOTE = gql`
+    mutation CreateReviewNote($input: createReviewNoteInput!){
+        createReviewNote(input: $input){
+            code
+            success
+            message
+        }
+    }
+`
