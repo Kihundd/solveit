@@ -15,11 +15,12 @@ export default function() {
     useEffect(() => {
         if(data !== undefined) {
             let correct = 0;
-            data.testJudgeResult.forEach(r => {
-                if(r === true) correct += 1;
+            data.testAnswers.forEach(r => {
+                if(r.is_correct === true) correct += 1;
             })
+            console.log(data.testAnswers)
 
-            const newResult = [correct, data.testJudgeResult.length];
+            const newResult = [correct, data.testAnswers.length];
             setResult(newResult);
         }
     }, [data]);

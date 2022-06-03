@@ -174,7 +174,11 @@ export const JUDGE_ANSWERS = gql`
 `
 export const TEST_RESULT = gql`
     query testJudgeResult($testId: Int!) {
-        testJudgeResult(testId: $testId)
+        testAnswers(testId: $testId) {
+            correctAnswer
+            myAnswer
+            is_correct
+        }
     }
 
 `
