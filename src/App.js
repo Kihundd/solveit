@@ -8,13 +8,14 @@ import CreateTest from './pages/CreateTest'
 import TestList from './pages/TestList'
 import Test from './pages/Test'
 import TestInfo from './pages/TestInfo'
-// import TestResult from 'pages/TestResult'
+import MyTestList from './pages/MyTestList';
 import Ranking from './pages/Ranking'
 import Forum from './pages/Forum'
 import AskingView from './pages/AskingView';
 import Shop from './pages/Shop';
 import { Routes, Route } from 'react-router-dom'
 import TestResult from './pages/TestResult';
+import MyTestResult from './pages/MyTestResult';
 
 
 
@@ -34,6 +35,8 @@ function App() {
         <Route path="/Test/:testId" element={ <Test />} />
         <Route path='/TestResult/:testId' element={ <TestResult />} />
         <Route path="/Forum" element={ <Forum />} />
+        <Route path="/MyTestList" element={ <MyTestList /> } />
+        <Route path="/MyTestResult/:testId" element={ <MyTestResult /> } />
         <Route path="/Ask/:askingId"element={ <AskingView /> } />
         <Route path='/Ranking' element={ <Ranking />} />
         <Route path="/Shop" element={ <Shop /> } />

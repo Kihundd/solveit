@@ -45,7 +45,6 @@ function TestInfo() {
         const response = selectDifficulty({variables:{questionId:34, difficulty:difficultyNum}})
 
     }
-    console.log(difficultyData)
     const handleDifficultyView = e => {
         setDifficultyView(!dificlutyView)
 
@@ -109,7 +108,7 @@ function TestInfo() {
                         }
                     </Grid>
                     <Grid item xs={2}>
-                        <Button variant="contained" underline="none" color="primary" onClick={handleDifficultyView}>>
+                        <Button variant="contained" underline="none" color="primary" onClick={handleDifficultyView}>
                             난이도측정
                         </Button>
                     </Grid>

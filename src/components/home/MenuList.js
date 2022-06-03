@@ -14,7 +14,7 @@ function MenuList() {
                         <Link href="/CreateTest" underline="none" color="inherit" >문제 생성</Link>
                     </Grid>
                     <Grid item xs={2}>
-                        <Link underline="none" color="inherit">문제 관리</Link>
+                        <Link href="/MyTestList" underline="none" color="inherit">문제 관리</Link>
                     </Grid>
                     <Grid item xs={2}>
                         <Link href="/Forum" underline="none" color="inherit">게시판</Link>
