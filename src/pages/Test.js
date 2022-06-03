@@ -18,7 +18,8 @@ function Test(){
     const [answerSheet, setAnswerSheet] = useState([]);
     const { testId } = useParams();
     const {data, loading, error} = useQuery(TAKE_TEST, {
-        variables:{id: testId}
+        variables:{id: testId},
+        fetchPolicy: 'no-cache'
     });
     const [submitAnswer] = useMutation(SUBMIT_QUESTION);
     const [judgeAnswers] = useMutation(JUDGE_ANSWERS);
@@ -84,7 +85,8 @@ function Test(){
         }});
 
         if(response.data.judgeAnswers.success === true) {
-            navigate(`/TestResult/${testId}`);
+            alert('수고하셨습니다');
+            navigate(`/`);
         }
     };
 
