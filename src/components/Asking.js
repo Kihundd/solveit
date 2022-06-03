@@ -77,11 +77,7 @@ function Asking(){
 
             </Grid>
             <Grid item xs={3}></Grid>
-
             
-            <Grid item xs={12}>
-                <ReviewNote />
-            </Grid>
         </Grid>
 
     )

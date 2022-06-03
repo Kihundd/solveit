@@ -15,6 +15,7 @@ function QuestionView({row, answerChange, submit}) {
     const [getQuestion, {data, loading, error}] = useLazyQuery(GET_QUESTION);
 
     useEffect(() => {
+        //TODO: 여기서 문제를 가져오면 패킷을 너무 많이 보냄.
         async function setUp() {
             if(row !== undefined) {
                 setAnswer(row.answer);
