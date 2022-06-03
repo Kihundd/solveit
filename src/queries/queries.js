@@ -85,7 +85,7 @@ export const MYTEST = gql`
     }
 `
 export const CREATE_TEST = gql`
-    mutation CreateTest ($input: createTestInput) {
+    mutation CreateTest ($input: CreateTestInput) {
         createTest(input: $input) {
             success
         }
@@ -163,6 +163,25 @@ export const GET_QUESTION = gql`
         }
     }
 `
+
+export const GET_FULL_QUESTION = gql`
+    query getQuestion($id: ID!){
+        question(id: $id){
+            id
+            name
+            paragraph
+            type
+            explanation
+            ... on MultipleChoice {
+                candidates {
+                    number
+                    content
+                }
+            }
+        }
+    }
+`
+
 export const SUBMIT_QUESTION = gql`
     mutation submitQuestionAnswer($testId: Int!, $questionId: Int!, $answers: String!) {
         submitAnswer(testId: $testId, questionId: $questionId, answers: $answers) {
@@ -189,6 +208,7 @@ export const TEST_RESULT = gql`
             correctAnswer
             myAnswer
             is_correct
+            questionId
         }
     }
 
