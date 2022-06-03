@@ -14,6 +14,7 @@ import Forum from './pages/Forum'
 import AskingView from './pages/AskingView';
 import Shop from './pages/Shop';
 import { Routes, Route } from 'react-router-dom'
+import TestResult from './pages/TestResult';
 
 
 
@@ -31,7 +32,7 @@ function App() {
         <Route path="/TestList" element={ <TestList /> } />
         <Route path="/TestInfo/:testId" element={ <TestInfo /> } />
         <Route path="/Test/:testId" element={ <Test />} />
-        {/* <Route path='/TestResult:testId' element={ <TestResult />} /> */}
+        <Route path='/TestResult/:testId' element={ <TestResult />} />
         <Route path="/Forum" element={ <Forum />} />
         <Route path="/Ask/:askingId"element={ <AskingView /> } />
         <Route path='/Ranking' element={ <Ranking />} />

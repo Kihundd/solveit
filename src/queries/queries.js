@@ -152,5 +152,29 @@ export const GET_QUESTION = gql`
         }
     }
 `
+export const SUBMIT_QUESTION = gql`
+    mutation submitQuestionAnswer($testId: Int!, $questionId: Int!, $answers: String!) {
+        submitAnswer(testId: $testId, questionId: $questionId, answers: $answers) {
+            code
+            success
+            message
+        }
+    }
+`;
 
+export const JUDGE_ANSWERS = gql`
+    mutation judgeAnswers($testId: Int!) {
+        judgeAnswers(testId: $testId) {
+            code
+            success
+            message
+        }
+    }
 
+`
+export const TEST_RESULT = gql`
+    query testJudgeResult($testId: Int!) {
+        testJudgeResult(testId: $testId)
+    }
+
+`

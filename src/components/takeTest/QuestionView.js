@@ -1,11 +1,17 @@
 import { Button, Grid, Box } from "@mui/material"
 import { useEffect, useState } from "react";
-import { useLazyQuery, useQuery } from "@apollo/client";
-import { GET_QUESTION } from "../../queries/queries";
+import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
+import { GET_QUESTION, SUBMIT_QUESTION } from "../../queries/queries";
+import { MULTIPLE_CHOICE, SHORT_ANSWER, FILL_BLANK } from "../test/QuestionInfo";
+import MultipleChoice from "../test/MultipleChoice";
+import MultipleChoiceView from "./MultipleChoiceView";
+import ShortAnswerView from "./ShortAnswerView";
+import FillBlankView from './FillBlankView'
 
-function QuestionView({row}) {
-    const [answer, setAnswer] = useState([]);
+function QuestionView({row, answerChange, submit}) {
+    const [answer, setAnswer] = useState();
     const [question, setQuestion] = useState(undefined);
+    const [questionView, setQuestionView] = useState(<></>);
     const [getQuestion, {data, loading, error}] = useLazyQuery(GET_QUESTION);
 
     useEffect(() => {
@@ -20,25 +26,47 @@ function QuestionView({row}) {
     }, [row])
 
     useEffect(() => {
-        if(question !== undefined) {
+        // 정답 업데이트
+        if(row !== undefined) {
+            row.answer = answer;
+            answerChange();
+        }
+    }, [answer]);
 
+    const handleGoNext = () => {
+        // 다음 문제로 가면서 제출하기
+        submit();
+    };
+
+
+    useEffect(() => {
+        if(question !== undefined) {
+            const type = question.type;
+            if(type === MULTIPLE_CHOICE) 
+                setQuestionView(<MultipleChoiceView question={question} prevAnswer={row.answer} changeAnswer={setAnswer}/>)
+            else if(type === SHORT_ANSWER)
+                setQuestionView(<ShortAnswerView question={question} prevAnswer={row.answer} changeAnswer={setAnswer}/>)
+            else if(type === FILL_BLANK)
+                setQuestionView(<FillBlankView question={question} prevAnswer={row.answer} changeAnswer={setAnswer}/>)
         }
     }, [question]);
 
 
-    if(row === undefined) return <></>
-    const qid = row.qid;
-
     return(
         <>
-            <Box sx={{ marginTop:'10px',  border: '2px solid #c4c4c4' , height: '30vh'}}>
-                <h4>문제내용</h4>
-            </Box>
+            {/* <Box sx={{ marginTop:'10px',  border: '2px solid #c4c4c4' , height: '30vh'}}>
+                <Grid container>
+                    <h4>문제내용</h4>
+                    {questionView}
+                </Grid>
+            </Box> */}
             <Grid container sx={{marginTop:'10px'}}>
+                <h4>문제내용</h4>
+                {questionView}
                 <Grid item xs={9}></Grid>
                 <Grid item xs={3}>
                     <Button variant="contained" sx={{margin:'10px'}}>이전</Button>
-                    <Button variant="contained">다음</Button>
+                    <Button variant="contained" onClick={handleGoNext}>다음</Button>
                 </Grid>
                 
             </Grid>
