@@ -183,7 +183,7 @@ export const GET_FULL_QUESTION = gql`
 `
 
 export const SUBMIT_QUESTION = gql`
-    mutation submitQuestionAnswer($testId: Int!, $questionId: Int!, $answers: String!) {
+    mutation submitQuestionAnswer($testId: ID!, $questionId: ID!, $answers: String!) {
         submitAnswer(testId: $testId, questionId: $questionId, answers: $answers) {
             code
             success
@@ -193,7 +193,7 @@ export const SUBMIT_QUESTION = gql`
 `;
 
 export const JUDGE_ANSWERS = gql`
-    mutation judgeAnswers($testId: Int!) {
+    mutation judgeAnswers($testId: ID!) {
         judgeAnswers(testId: $testId) {
             code
             success
@@ -203,7 +203,7 @@ export const JUDGE_ANSWERS = gql`
 
 `
 export const TEST_RESULT = gql`
-    query testJudgeResult($testId: Int!) {
+    query testJudgeResult($testId: ID!) {
         testAnswers(testId: $testId) {
             correctAnswer
             myAnswer
