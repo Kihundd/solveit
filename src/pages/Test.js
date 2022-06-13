@@ -25,7 +25,7 @@ function Test(){
 
     useEffect(() => {
         if(data !== undefined) {
-            console.log("!");
+            console.log(data);
             setQuestionIds(data.test.questionIds);
             const newSheet = data.test.questionIds.map(id => {
                 return {
@@ -35,10 +35,6 @@ function Test(){
             setAnswerSheet(newSheet);
         }
     }, [data]);
-
-    useEffect(() => {
-        console.log(answerSheet);
-    }, [answerSheet]);
 
     if(loading) return <p>Loading...</p>;
     if(error) return <p>Error!</p>;
