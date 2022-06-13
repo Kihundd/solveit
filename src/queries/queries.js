@@ -73,8 +73,19 @@ export const ALLTESTLIST = gql`
         }
     }
 `
+export const MYTEST = gql`
+    query MyTestList{
+        mySolvingTests{
+            id
+            name
+            ownerId
+            tryCnt
+            like
+        }
+    }
+`
 export const CREATE_TEST = gql`
-    mutation CreateTest ($input: createTestInput) {
+    mutation CreateTest ($input: CreateTestInput) {
         createTest(input: $input) {
             success
         }
@@ -152,6 +163,25 @@ export const GET_QUESTION = gql`
         }
     }
 `
+
+export const GET_FULL_QUESTION = gql`
+    query getQuestion($id: ID!){
+        question(id: $id){
+            id
+            name
+            paragraph
+            type
+            explanation
+            ... on MultipleChoice {
+                candidates {
+                    number
+                    content
+                }
+            }
+        }
+    }
+`
+
 export const SUBMIT_QUESTION = gql`
     mutation submitQuestionAnswer($testId: Int!, $questionId: Int!, $answers: String!) {
         submitAnswer(testId: $testId, questionId: $questionId, answers: $answers) {
@@ -174,7 +204,30 @@ export const JUDGE_ANSWERS = gql`
 `
 export const TEST_RESULT = gql`
     query testJudgeResult($testId: Int!) {
-        testJudgeResult(testId: $testId)
+        testAnswers(testId: $testId) {
+            correctAnswer
+            myAnswer
+            is_correct
+            questionId
+        }
     }
 
+`
+export const ASKING = gql`
+    mutation CreateAsking($input: CreateAskingInput!){
+        createAsking(input: $input){
+            code
+            success
+            message
+        }
+    }
+`
+export const REVIEWNOTE = gql`
+    mutation CreateReviewNote($input: createReviewNoteInput!){
+        createReviewNote(input: $input){
+            code
+            success
+            message
+        }
+    }
 `

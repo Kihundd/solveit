@@ -4,15 +4,19 @@ import { useState } from "react";
 
 function QuestionNum({answerSheet, setIdx, submit}) {
     const renderAnswer = () => {
-        if(answerSheet.length === 0) return <></>;
+        if(answerSheet.length === 0 || answerSheet === undefined) return <></>;
         
         return answerSheet.map((row, index) => {
             const handleOnClick = () => {
                 setIdx(index);
             };
 
-            return <Button onClick={() => handleOnClick()} key={row.qid}>
-                {`${index + 1} \t ${row.answer} `}
+            let textColor = '';
+            if(row.correct !== undefined && row.correct === false) 
+                textColor = 'red';
+            
+            return <Button onClick={() => handleOnClick()} key={row.qid} >
+                <span style={{color: textColor}}>{`${index + 1} \t ${row.answer} `}</span>
             </Button>
         });
     };
@@ -24,7 +28,10 @@ function QuestionNum({answerSheet, setIdx, submit}) {
                     {renderAnswer()}
                 </Grid>
                 <Grid item xs={12}>
-                    <Button size="medium" variant="contained" onClick={() => submit()}>제출</Button>
+                    {
+                        submit && 
+                        <Button size="medium" variant="contained" onClick={() => submit()}>제출</Button>
+                    }
                 </Grid>
             </Grid>
             
