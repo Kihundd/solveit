@@ -1,10 +1,10 @@
 import Header from "../components/home/Header"
 import { Container, Grid, Box, Button, Rating, Stack } from "@mui/material"
 import { useQuery, useMutation } from "@apollo/client"
-import { TEST_INFO, TAKE_TEST, DIFFICULTY } from "../queries/queries"
+import { TEST_INFO } from "../queries/queries"
 import { Link, useParams } from "react-router-dom"
 import { useState } from "react"
-import { LIKE_TEST, UNLIKE_TEST } from "../queries/queries"
+import { LIKE_TEST, UNLIKE_TEST, DIFFICULTY, TAKE_TEST } from "../queries/queries"
 import { UpdateSharp } from "@mui/icons-material"
 
 function TestInfo() {
@@ -13,7 +13,7 @@ function TestInfo() {
     const [difficultyNum, setDifficultyNum] = useState(0);
     const [dificlutyView, setDifficultyView] = useState(false)
     const {data, loading, error} = useQuery(TEST_INFO, {
-        variables: {id: params.testId}
+        variables:{id: params.testId}
     });
     const {data: TestData, loading:TestLoading, error:TestError} = useQuery(TAKE_TEST,{
         variables: {id: params.testId}
@@ -27,27 +27,31 @@ function TestInfo() {
     const [selectDifficulty,{data:difficultyData, loading:difficultyLoading, error:difficultyError}] = useMutation(DIFFICULTY,{
         variables: {questionId: 33, difficulty:difficultyNum}
     })
-    
+
     const handleClick = async ()=>{
         if(liked == false){
             const response = like({variables:{id: params.testId}})
+
+            console.log(likeData)
             setLiked(true)
         }
         else if(liked == true){
             const response = unLike({variables:{id: params.testId}})
             setLiked(false)
-        }
+        } 
     }
+    
     const handleDifficulty = async ()=> {
         const response = selectDifficulty({variables:{questionId:34, difficulty:difficultyNum}})
-        
+
     }
     const handleDifficultyView = e => {
         setDifficultyView(!dificlutyView)
-        
+
     }
     if(loading) return <p>Loading...</p>;
     if(error) return <p>Error!</p>;
+    
     
     return (
         <>
@@ -81,7 +85,7 @@ function TestInfo() {
                     </Box>
                 </Box>
                 <Grid container sx={{marginTop: '1vh'}}>
-                    <Grid item xs={6}>
+                <Grid item xs={6}>
                         {
                         (dificlutyView == true) &&
                             <Box sx={{border: '2px solid #c4c4c4', height: '5vh'}}>
@@ -92,7 +96,7 @@ function TestInfo() {
                                     onChange={(e)=>{
                                         setDifficultyNum(Number(e.target.value))
                                     }}
-                                     
+
                                     />
                                 </Stack>
                                 <Button variant="contained" underline="none" color="primary" onClick={handleDifficulty}>
@@ -100,13 +104,14 @@ function TestInfo() {
                                 확인</Button>
                             </Box>
                         }
-                        
                     </Grid>
                     <Grid item xs={2}>
                         <Button variant="contained" underline="none" color="primary" onClick={handleDifficultyView}>
                             난이도측정
                         </Button>
                     </Grid>
+
+                    
                     <Grid item xs={2}>
                         <Button variant="contained" underline="none" color="primary" onClick={handleClick}>
                             좋아요
@@ -120,7 +125,6 @@ function TestInfo() {
                         </Button>
                         
                     </Grid>
-                    
                 </Grid>
             </Container>
             

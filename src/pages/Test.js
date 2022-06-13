@@ -2,11 +2,13 @@ import Header from "../components/home/Header";
 import QuestionNum from '../components/takeTest/QuestionNum';
 import QuestionView from "../components/takeTest/QuestionView";
 import TestName from "../components/takeTest/TestName";
-import { Container, getAccordionDetailsUtilityClass, Grid } from '@mui/material'
+import { Container, Grid } from '@mui/material'
 import { useEffect, useState } from "react";
-import { useMutation, useQuery } from "@apollo/client";
-import { JUDGE_ANSWERS, SUBMIT_QUESTION, TAKE_TEST } from "../queries/queries";
+import { useQuery, useMutation } from "@apollo/client";
+import { TAKE_TEST, JUDGE_ANSWERS, SUBMIT_QUESTION } from "../queries/queries";
 import { useNavigate, useParams } from "react-router-dom";
+import Asking from "../components/Asking";
+
 
 
 function Test(){
@@ -16,7 +18,8 @@ function Test(){
     const [answerSheet, setAnswerSheet] = useState([]);
     const { testId } = useParams();
     const {data, loading, error} = useQuery(TAKE_TEST, {
-        variables:{id: testId}
+        variables:{id: testId},
+        fetchPolicy: 'no-cache'
     });
     const [submitAnswer] = useMutation(SUBMIT_QUESTION);
     const [judgeAnswers] = useMutation(JUDGE_ANSWERS);
@@ -78,7 +81,8 @@ function Test(){
         }});
 
         if(response.data.judgeAnswers.success === true) {
-            navigate(`/TestResult/${testId}`);
+            alert('수고하셨습니다');
+            navigate(`/`);
         }
     };
 
@@ -97,6 +101,7 @@ function Test(){
                             answerChange={() => setAnswerSheet([...answerSheet])} 
                             submit={handleOnSubmit}/>
                     </Grid>
+                    
                     
                 </Grid>
             </Container>

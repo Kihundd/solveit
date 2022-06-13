@@ -22,7 +22,7 @@ function TestName(){
                     <Button variant='contained' size='small' color='inherit'>태그추가</Button>
                 </Grid>
                 <Grid item xs={2}>
-                    <Button variant='contained' size='small' color='inherit'>좋아요</Button>
+                    <Button variant='contained' size='small' color='inherit'>질문하기</Button>
                 </Grid>
                 <Grid item xs={2}>
                     <Button variant='contained' size='small' color='inherit'>신고하기</Button>

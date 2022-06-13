@@ -10,7 +10,7 @@ export const CATEGORIES = gql`
 `;
 
 export const CREATE_QUESTION = gql`
-    mutation CreateQuestion($input: createQuestionInput) {
+    mutation CreateQuestion($input: CreateQuestionInput) {
         createQuestion(input: $input) {
             code
             success

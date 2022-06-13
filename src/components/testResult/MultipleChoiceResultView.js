@@ -2,23 +2,17 @@ import { Button, Grid, TextField, ToggleButton, ToggleButtonGroup, Stack } from 
 import { useState } from "react";
 
 
-export default function({question, changeAnswer, prevAnswer}) {
+export default function({question, answers}) {
     const {paragraph, candidates, name} = question;
-    const [answer, setAnswer] = useState(prevAnswer);
 
-    const handleSelectAnswer = (e, newAnswer) => {
-        console.log(newAnswer)
-        setAnswer([...newAnswer]);
-        changeAnswer([...newAnswer]);
-    }
-
+    const answer = answers.answer.split(',').map(s => Number(s));
+    
 
     const renderCandidate = () => {
         return (
             <ToggleButtonGroup
                 orientation="vertical" 
                 value={answer}
-                onChange={handleSelectAnswer}
                 aria-label="test"
                 fullWidth={true}>
                 {
