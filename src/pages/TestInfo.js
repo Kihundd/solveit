@@ -42,12 +42,10 @@ function TestInfo() {
         const response = selectDifficulty({variables:{questionId:34, difficulty:difficultyNum}})
         
     }
-    console.log(difficultyData)
     const handleDifficultyView = e => {
         setDifficultyView(!dificlutyView)
         
     }
-    // console.log(dificlutyView)
     if(loading) return <p>Loading...</p>;
     if(error) return <p>Error!</p>;
     
@@ -93,7 +91,6 @@ function TestInfo() {
                                     value={difficultyNum} 
                                     onChange={(e)=>{
                                         setDifficultyNum(Number(e.target.value))
-                                        console.log(difficultyNum)
                                     }}
                                      
                                     />
