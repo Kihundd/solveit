@@ -9,10 +9,10 @@ function Home() {
             <Header></Header>
             <Slide></Slide>
             <Grid container spacing={2}>
-                <Grid item xs>
+                <Grid item xs={6}>
                     <HomeList></HomeList>
                 </Grid>
-                <Grid item xs>
+                <Grid item xs={6}>
                     <HomeList></HomeList>
                 </Grid>
             </Grid>
