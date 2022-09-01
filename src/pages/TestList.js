@@ -25,23 +25,19 @@ function TestList() {
                         </Box>
                     </Grid>
                     <Grid item xs={9}>
-                        <Box sx={{border: '2px solid #c4c4c4', height: '60vh'}}>
-                            <Grid container spacing={3}>
-                                <Grid item xs={3} >
-                                    <h4>문제집 목록</h4>
-                                </Grid>
-                                <Grid item xs={6}></Grid>
-                                <Grid item xs={3}>
-                                    <Button size="medieum" variant="contained" href="/CreateTest" sx={{marginTop:'20px'}}>
-                                        문제집 생성
-                                    </Button>
-                                </Grid>
-
+                        <Box sx={{border: '2px solid #c4c4c4', height: '70vh'}}>
+                            {/* <Grid container spacing={3}> */}
                                 <Grid item xs={12}>
                                     <Box sx={{border: '1px solid #c4c4c4'}}>
                                         <Grid container spacing={3}>
                                             <Grid item xs={3}>
                                                 <h4>전체</h4>
+                                            </Grid>
+                                            <Grid item xs={6}></Grid>
+                                            <Grid item xs={3}>
+                                                <Button size="medieum" variant="contained" href="/CreateTest" sx={{marginTop:'20px'}}>
+                                                    문제집 생성
+                                                </Button>
                                             </Grid>
                                         </Grid>
                                         <TestTable />
@@ -49,7 +45,7 @@ function TestList() {
                                     </Box>
                                 </Grid>      
                                 
-                            </Grid>
+                            {/* </Grid> */}
                         </Box>
                     </Grid>
                 </Grid>
