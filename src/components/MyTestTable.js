@@ -20,12 +20,11 @@ export default function MyTestTable() {
   if(loading) return <p>Loading...</p>;
   if(error) return <p>Error!</p>;
   return (
-    <TableContainer component={Paper}>
       <Table 
-        // sx={{ minWidth: 650 }} 
+        sx={{ minWidth: 650, borderCollapse: 'inherit', border: '1px solid #c4c4c4', borderRadius: '5px'}} 
         aria-label="simple table">
         <TableHead>
-          <TableRow sx={{border:'2px solid #c4c4c4'}}>
+          <TableRow sx={{border:'1px solid #c4c4c4'}}>
             <TableCell align="center">문제번호</TableCell>
             <TableCell align="center">문제집이름</TableCell>
             <TableCell align="center">출제자</TableCell>
@@ -37,7 +36,7 @@ export default function MyTestTable() {
         <TableBody>
           {data.mySolvingTests.map((a, index) => (
             <TableRow key={index}
-              sx={{border:'2px solid #c4c4c4'}}
+              sx={{border:'1px solid #c4c4c4'}}
             >
               <TableCell align="center"><Link to={`/MyTestResult/${data.mySolvingTests[index].id}`} style={{ textDecoration: 'none', color: 'inherit'}}>{data.mySolvingTests[index].id}</Link></TableCell>
               <TableCell align="center"><Link to={`/MyTestResult/${data.mySolvingTests[index].id}`} style={{ textDecoration: 'none', color: 'inherit'}}>{data.mySolvingTests[index].name}</Link></TableCell>
@@ -48,6 +47,5 @@ export default function MyTestTable() {
           ))}
         </TableBody>
       </Table>
-    </TableContainer>
   );
 }

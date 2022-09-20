@@ -4,37 +4,45 @@ import { CATEGORIES } from "../../queries/test_queries";
 import {useEffect, useState} from 'react'
 import { Grid, Button, Input, Avatar, Container, Box, TextField, MenuItem, FormControl, InputLabel, Select } from '@mui/material';
 
+
 function ProfileInfo(props) {
 
     const [item, setItem] = useState('USD');
     const [userName, setUserName] = useState('');
-    const [category, setCategory] = useState('');
+    const [userCategory, setUserCategory] = useState('');
     const {data, loading, error} = useQuery((USER_INFO), {
         variables:{ID: props.userId}
     });
     const {loading: catagoryLoaing, error: categoryError, data: categoryData} = useQuery(CATEGORIES);
     const [update, { loading: updataLoading, error: updateError, data: updateData }] = useMutation(UPDATE_USER_INFO,{
-        variables:{name: userName, favorite: category}
+        variables:{name: userName, favorite: userCategory}
     });
-    
+    console.log(data)
     const handleSubmit = async (updateData) => {
         console.log(updateData)
         await update({varialbes: {
             name: userName,
-            favorite: category
+            favorite: userCategory
         }});
     }
+
+    useEffect(() => {
+        if(data !== undefined) {
+            setUserCategory(data.profile.favorites[0].name)
+        }
+    }, [userCategory])
+
     if(loading) return <p>Loading...</p>;
     if(error) return <p>Error!</p>;
-
+    console.log(data.profile.favorites[0].name)
     
     const handleInputChange = (e) => {
         setUserName(e.target.value);
     }
     const handleCategoryChange = (event) => {
-        setCategory(event.target.value);
+        setUserCategory(event.target.value);
     };
-    console.log(category)
+
 
     const renderCategories = () => {
         if(categoryData === undefined)
@@ -42,6 +50,9 @@ function ProfileInfo(props) {
         return categoryData.categories.map(category => 
             <MenuItem value={category.name} key={category.name}>{category.name}</MenuItem>);
     };
+
+    
+    
 
     // const onSuccess = async (updateData) => {
     //     console.log(updateData);
@@ -116,7 +127,7 @@ function ProfileInfo(props) {
                             <Select
                             labelId="question-category"
                             id="question-category-select"
-                            value={category}
+                            value={userCategory}
                             label="카테고리"
                             onChange={handleCategoryChange}
                             >

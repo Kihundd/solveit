@@ -55,25 +55,11 @@ function QuestionView({row, answerChange, submit}) {
 
     return(
         <>
-            {/* <Box sx={{ marginTop:'10px',  border: '2px solid #c4c4c4' , height: '30vh'}}>
-                <Grid container>
-                    <h4>문제내용</h4>
-                    {questionView}
-                </Grid>
-            </Box> */}
-            <Grid container sx={{marginTop:'10px'}}>
-                <h4>문제내용</h4>
-                {questionView}
-                <Grid item xs={9}></Grid>
-                <Grid item xs={3}>
-                    <Button variant="contained" sx={{margin:'10px'}}>이전</Button>
-                    <Button variant="contained" onClick={handleGoNext}>다음</Button>
-                </Grid>
-                
-            </Grid>
-            
+            {/* <h4>문제내용</h4> */}
+            {questionView}
+            <Button variant="contained" onClick={handleGoNext} sx={{marginTop:'10px', marginLeft: '10px', float: 'right'}}>다음</Button>
+            <Button variant="contained" sx={{marginTop:'10px', float: 'right'}}>이전</Button>
         </>
-        
     )
 }
 export default QuestionView

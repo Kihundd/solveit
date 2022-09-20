@@ -15,27 +15,21 @@ function QuestionNum({answerSheet, setIdx, submit}) {
             if(row.correct !== undefined && row.correct === false) 
                 textColor = 'red';
             
-            return <Button onClick={() => handleOnClick()} key={row.qid} >
+            return <Button onClick={() => handleOnClick()} key={row.qid} style={{display: 'block', textAlign: 'left'}} >
                 <span style={{color: textColor}}>{`${index + 1} \t ${row.answer} `}</span>
             </Button>
         });
     };
     
     return(
-        <Box sx={{border: '2px solid #c4c4c4', height: '80vh', widthh: '30%'}}>
-            <Grid container>
-                <Grid item xs={1}>
-                    {renderAnswer()}
-                </Grid>
-                <Grid item xs={12}>
-                    {
-                        submit && 
-                        <Button size="medium" variant="contained" onClick={() => submit()}>제출</Button>
-                    }
-                </Grid>
-            </Grid>
-            
-        </Box> 
+        <>
+            {renderAnswer()}
+            {
+                submit && 
+                <Button size="medium" fullWidth={true} sx={{}} variant="contained" onClick={() => submit()}>제출</Button>
+            }
+        </>
+        
     )
 }
 export default QuestionNum

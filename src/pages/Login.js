@@ -1,4 +1,4 @@
-import logo from '../Logo_Login.jpg';
+import logo from '../logo2.png';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
@@ -72,58 +72,44 @@ export default function Login() {
     <div className='body'>
       <form className='LoginContainer' onSubmit={e => handleSubmit(e, onSuccess, onFail)}>
         <img src={logo} ></img>
+        <TextField label="Email" 
+          type="text"
+          name="email" 
+          required 
+          fullWidth
+          autoFocus
+          onFocus={_ => setEmailError("")}
+          helperText={emailError}
+          error={emailError === ""? false: true}
+          {...add({name:'email', contains: '@', value: 'test@test.com'})}
+        />
+        <TextField label="PW" 
+          type="password" 
+          name="password" 
+          required 
+          fullWidth
+          onFocus={_ => setPasswordError("")}
+          helperText={passwordError}
+          error={passwordError === ""? false: true}
+          {...add({name:'password', minlength: 4, value: 'test'})}
+        />
+        <Button type="submit" 
+          fullWidth
+          variant="contained"
+          sx={{mt:1}}
+        >로그인
+        </Button>
         <Grid container>
-          <TextField label="Email" 
-            type="text"
-            name="email" 
-            required 
-            fullWidth
-            autoFocus
-            onFocus={_ => setEmailError("")}
-            helperText={emailError}
-            error={emailError === ""? false: true}
-            {...add({name:'email', contains: '@', value: 'test@test.com'})}
-          
-            // onBlur={checkEmail}
-            // sx={{mt:1}}
-          />
-        </Grid>
-        <Grid container>
-          <TextField label="PW" 
-            type="password" 
-            name="password" 
-            required 
-            fullWidth
-            onFocus={_ => setPasswordError("")}
-            helperText={passwordError}
-            error={passwordError === ""? false: true}
-            {...add({name:'password', minlength: 4, value: 'test'})}
-            // onChange={handleInput}
-            // defaultValue={formData.password}
-            // onBlur={checkPassword}
-            // sx={{mt:1}}
-          />
-        </Grid>
-        <Grid container>
-          <Button type="submit" 
-            fullWidth
-            variant="contained"
-            sx={{mt:1}}
-          >로그인
-          </Button>
-        </Grid>
-        <Grid container>
-          <Grid item xs={3}>
-            <Link href="/">비밀번호 재설정</Link>
+          <Grid item xs={8} sx={{textAlign: 'left'}}>
+            <Link href="/" underline='none' color='inherit'>비밀번호 재설정</Link>
           </Grid>
-          <Grid item xs={2}>
-            <Link href="/SignUp">회원가입</Link>
+          <Grid item xs={4}>
+            <Link href="/SignUp" underline='none' color='inherit' sx={{float: 'right'}}>회원가입</Link>
           </Grid>
         </Grid>
-        
+
       </form>
     </div>
-    
   )
     
 }

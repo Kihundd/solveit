@@ -1,16 +1,14 @@
 .App {
   text-align: center;
-}
+  height: 100vh;
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.main-bg {
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-bottom: 1px solid #c4c4c4;
 }
 
 .App-header {
@@ -24,45 +22,32 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 .body {
   position: relative;
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .LoginContainer {
   margin: 0 auto;
-  width: 600px;
-  height: 600px;
-  border: 2px #c4c4c4 solid;
-  border-radius: 5px;
+  width: 400px;
+  height: 500px;
   display: grid;
+  
   place-items: center;
-  margin-top: 5%;
 }
 .LoginContainer img {
   width: 50%;
 }
+
 .SignUpContainer {
   margin: 0 auto;
-  width: 600px;
-  height: 700px;
-  border: 2px #c4c4c4 solid;
-  border-radius: 5px;
+  width: 400px;
+  height: 500px;
   display: grid;
   place-items: center;
-  margin-top: 5%;
 }
 .SignUpContainer img {
   width: 50%;
@@ -72,11 +57,6 @@
   height: 200px;
   
 }
-/* .Header img {
-  width: 200px;
-  height: 150px;
-  float: left;
-} */
 
 .header-name {
   cursor: pointer;

@@ -22,6 +22,10 @@ export const USER_INFO = gql`
             image
             point
             tier
+            favorites{
+                id
+                name
+            }
         }
     }
 `;
@@ -65,6 +69,17 @@ export const NICKNAME = gql`
 export const ALLTESTLIST = gql`
     query GetAllTestList($page: Int!) {
         allTests(page: $page){
+            id
+            name
+            ownerId
+            tryCnt
+            like
+        }
+    }
+`
+export const RANKINGLIST = gql`
+    query GetRankingList($page: Int!) {
+        allTests(page: $page ){
             id
             name
             ownerId
@@ -228,6 +243,19 @@ export const REVIEWNOTE = gql`
             code
             success
             message
+        }
+    }
+`
+
+export const GET_ASKING = gql`
+    query AskingByQuestion($id: ID!){
+        askingByQuestion(id: $ID){
+            id
+            title
+            content
+            ownerID
+            creationDate
+            questionId
         }
     }
 `

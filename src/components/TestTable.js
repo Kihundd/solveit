@@ -23,24 +23,22 @@ export default function TestTable() {
   if(error) return <p>Error!</p>;
   
   return (
-    <TableContainer component={Paper}>
       <Table 
-        // sx={{ minWidth: 650 }} 
+        sx={{ minWidth: 650, borderCollapse: 'inherit', border: '1px solid #c4c4c4', borderRadius: '5px'}} 
         aria-label="simple table">
         <TableHead>
-          <TableRow sx={{border:'2px solid #c4c4c4'}}>
+          <TableRow>
             <TableCell align="center">문제번호</TableCell>
             <TableCell align="center">문제집이름</TableCell>
             <TableCell align="center">출제자</TableCell>
             <TableCell align="center">제출 수</TableCell>
             <TableCell align="center">좋아요</TableCell>
-
           </TableRow>
         </TableHead>
         <TableBody>
           {data.allTests.map((a, index) => (
             <TableRow key={index}
-              sx={{border:'2px solid #c4c4c4'}}
+              
             >
               <TableCell align="center"><Link to={`/TestInfo/${data.allTests[index].id}`} style={{ textDecoration: 'none', color: 'inherit'}}>{data.allTests[index].id}</Link></TableCell>
               <TableCell align="center"><Link to={`/TestInfo/${data.allTests[index].id}`} style={{ textDecoration: 'none', color: 'inherit'}}>{data.allTests[index].name}</Link></TableCell>
@@ -51,6 +49,5 @@ export default function TestTable() {
           ))}
         </TableBody>
       </Table>
-    </TableContainer>
   );
 }

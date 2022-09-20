@@ -1,4 +1,4 @@
-import Header from '../components/home/Header'
+import Appbar from '../components/home/Appbar.js';
 import { Container, Box, Grid, TextField, Button, InputLabel, FormControl, Select, MenuItem } from '@mui/material'
 import { useState } from 'react'
 import QuestionInfo, { MULTIPLE_CHOICE } from '../components/test/QuestionInfo';
@@ -7,9 +7,10 @@ import { CREATE_TEST } from '../queries/queries';
 import { CATEGORIES } from "../queries/test_queries";
 import { render } from '@testing-library/react';
 
+
 function CreateTest() {
     const [questionNum, setQuestionNum] = useState(1);
-    const [questionList, setQuestionList] = useState([]);
+    const [questionList, setQuestionList] = useState([1]);
     const [questionIdx, setQuestionIdx] = useState();
     const [viewCreateTest, setViewCreateTest] = useState(true)
     // const [viewCreateQestion, setViewCreateQestion] = useState(false)
@@ -69,25 +70,19 @@ function CreateTest() {
         setQuestionList([...questionList]);
     }
 
+    console.log(questionList)
+
+
     return (
         <>
-            <Header  />
-            <Container maxWidth="xl" className='bodyContainer'>
+            <Appbar />
+            <Container maxWidth="xl">
                 <Grid container spacing={2}>
                     <Grid item xs={3}>
-                        <Box sx={{border: '2px solid #c4c4c4', height: '80vh'}}>
-                            <Grid container spacing={2}>
-                                <Grid item xs={6}>
-                                    <Button color='inherit' onClick={()=>{
-                                        setViewCreateTest(true)
-                                    }}>
-                                        {name}
-                                    </Button>
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <Button size="small" variant="contained" onClick={addQuestion} >문제 추가</Button>
-                                </Grid>
-                            </Grid>
+                        <Box sx={{border: '1px solid #c4c4c4', height: '100%', borderRadius: '5px'}}>
+                            <Button color='inherit' onClick={()=>{ setViewCreateTest(true)}}>
+                                {name}
+                            </Button>
                             {questionList.map((q, index) => {
                                 return <Grid container spacing={1} sx={{marginTop:'10px'}}>
                                         <Grid item xs={2} key={index}>
@@ -106,18 +101,18 @@ function CreateTest() {
                                         </Grid>
                                         </Grid>
                                     })}
+                                <Button size="small" variant="contained" onClick={addQuestion} >+</Button>
                             <Grid container>
                                 <Grid item xs={2}></Grid>
                                 <Grid item xs={8}>
-                                    <Button type='submit' fullWidth variant="contained" onClick={handleOnSave} sx={{marginTop:'10px'}}>테스트 생성</Button>
+                                    <Button type='submit' fullWidth variant="contained" onClick={handleOnSave} sx={{marginTop:'10px', marginBottom: '10px'}}>테스트 생성</Button>
                                 </Grid>
                             </Grid>
-                            
                         </Box>
                     </Grid>
                     <Grid item xs={9}>
                         { viewCreateTest ?
-                        <Box sx={{border: '2px solid #c4c4c4', height: '40vh'}}>
+                        <Box>
                             <TextField
                                 fullWidth={true}
                                 value={name}
@@ -146,7 +141,7 @@ function CreateTest() {
                                 </Select>
                             </FormControl>
                             <Grid item xs={1}>
-                                <Button variant='contained'
+                                <Button variant='contained' size='small'
                                     onClick={()=>{
                                         setOpen(!open)
                                         console.log(open)
