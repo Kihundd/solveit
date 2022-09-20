@@ -36,7 +36,7 @@ function Difficulty() {
 
     return (
         <div>
-            <Button variant="contained" color="primary" onClick={handleClickOpen}>
+            <Button variant="contained" color="primary" size='small' onClick={handleClickOpen} sx={{float: 'right', marginLeft: 2, marginTop: '10px'}}>
                 난이도측정
             </Button>
             <Dialog open={open} onClose={handleClose}>

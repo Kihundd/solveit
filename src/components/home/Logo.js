@@ -1,9 +1,9 @@
-import logo from '../../Logo_Login.jpg';
+import logo from '../../logo2.png';
 import styled from 'styled-components';
 
 const HeaderLogo = styled.img`
-width: 200px;
-height: 150px;
+width: 100px;
+height: 30px;
 
 `
 function Logo() {

@@ -11,9 +11,12 @@ import jsCookies from 'js-cookies';
 import MenuList from './MenuList'
 
 function Header() {
+
+    const pages = ['문제목록', '문제생성', '문제관리', '게시판', '랭킹', '상점']
+    const settings = ['프로필', '로그아웃']
+
     const [name, setName] = useState("");
     const [isLogin, setIsLogin] = useState(false);
-
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -97,18 +100,8 @@ function Header() {
           <Grid item xs={12}></Grid>
         </Grid>
         </Container>
-        
-        <Container maxWidth="xl" >
-          <Grid container spacing={2}>
-            <Grid item xs={3}>
-              <Link href="/">
-                <Logo></Logo>
-              </Link>
-            </Grid>
-            <Grid item xs={9}>
-              <MenuList></MenuList>
-            </Grid>
-          </Grid>
+        <Container maxWidth="xl">
+          <MenuList></MenuList>
         </Container>
       </ div>
 

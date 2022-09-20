@@ -1,4 +1,4 @@
-import logo from '../Logo_Login.jpg';
+import logo from '../logo2.png';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
@@ -15,7 +15,7 @@ export default function SignUp() {
     const [success, setSuccess] = useState(false);
     const [msg, setMsg] = useState("");
     const [formData, setFormData] = useState({name: 'dddd', email:'ddd@email.com', password: 'ddddd'});
-
+    
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
 
@@ -53,33 +53,8 @@ export default function SignUp() {
         }
     }, [data]);
 
-    // const handleSubmit = async e => {
-    //     e.preventDefault();
-    //     await signUp({ variables: {
-    //         name: formData.name,
-    //         ID: formData.email,
-    //         hashedPW: formData.password
-    //     }
-    //     });
-    // };
-
-    // const checkName = (e) => {
-    //     const regExp = /^(?=.*[a-zA-Z])[0-9a-zA-Z]{8,10}$/
-    //     console.log('이름 유효성 검사 : ', regExp.test(e.target.value))
-    // };
-    // const checkEmail = (e) => {
-    //     const regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
-    //     console.log('이메일 유효성 검사 : ', regExp.test(e.target.value))
-    // };
-    // const checkPassword = (e) => {
-    //     const regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,10}$/
-    //     console.log('비밀번호 유효성 검사 : ', regExp.test(e.target.value))
-    // };
-    
-
-
     return(
-        <div className='container'>
+        <div className='body'>
             <form className='SignUpContainer' onSubmit={e => handleSubmit(e, onSuccess, onFail)}>
                 <img src={logo} ></img>
                 <Grid container>
