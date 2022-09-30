@@ -99,6 +99,7 @@ export const MYTEST = gql`
         }
     }
 `
+
 export const CREATE_TEST = gql`
     mutation CreateTest ($input: CreateTestInput) {
         createTest(input: $input) {
@@ -140,6 +141,8 @@ export const DIFFICULTY = gql`
 //         }
 //     }
 // `
+
+
 export const TEST_INFO = gql`
     query getTestInfo($id: ID!) {
         test(id: $id) {
@@ -148,6 +151,7 @@ export const TEST_INFO = gql`
             content
             ownerId
             tryCnt
+            
         }
     }
 `
@@ -226,17 +230,19 @@ export const TEST_RESULT = gql`
             questionId
         }
     }
-
 `
-export const ASKING = gql`
-    mutation CreateAsking($input: CreateAskingInput!){
-        createAsking(input: $input){
-            code
-            success
-            message
+
+export const GET_REVIEWNOTE = gql`
+    query ReviewNote($questionId: ID!){
+        reviewNote(questionId: $questionId){
+            id
+            ownerId
+            questionId
+            explanation
         }
     }
 `
+
 export const REVIEWNOTE = gql`
     mutation CreateReviewNote($input: createReviewNoteInput!){
         createReviewNote(input: $input){
@@ -246,16 +252,78 @@ export const REVIEWNOTE = gql`
         }
     }
 `
-
-export const GET_ASKING = gql`
-    query AskingByQuestion($id: ID!){
-        askingByQuestion(id: $ID){
+export const ALLASKING = gql`
+    query GetAllAsking($page: Int!){
+        allAsking(page: $page){
             id
             title
             content
-            ownerID
+            ownerId
             creationDate
             questionId
+        }
+    }
+`
+
+export const ASKING = gql`
+    mutation CreateAsking($input: CreateAskingInput!){
+        createAsking(input: $input){
+            code
+            success
+            message
+        }
+    }
+`
+export const GET_ASKING = gql`
+    query AskingByQuestion($id: ID!){
+        askingByQuestion(id: $id){
+            id
+            title
+            content
+            ownerId
+            creationDate
+            questionId
+        }
+    }
+`
+export const ASKINGINFO = gql`
+    query GetAsking($askingId: ID!){
+        asking(askingId: $askingId){
+            id
+            title
+            content
+            ownerId
+            creationDate
+            questionId
+        }
+    }
+`
+export const CREATE_REPLY = gql`
+    mutation CreateReply($input: CreateReplyInput!){
+        createReply(input: $input){
+            code
+            success
+            message
+        }
+    }
+`
+export const GET_REPLY = gql`
+    query GetReply($id: ID!){
+        repliesByAsking(id: $id){
+            id
+            content
+            ownerId
+            creationDate
+            askingId
+        }
+    }
+`
+export const DELETE_REPLY = gql`
+    mutation CreateReply($id: ID!){
+        deleteReply(id: $id){
+            code
+            success
+            message
         }
     }
 `

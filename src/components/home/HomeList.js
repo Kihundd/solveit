@@ -23,6 +23,7 @@ export default function HomeList() {
   const {loading, error, data} = useQuery(ALLTESTLIST, {
     variables: {page: 1}}
   );
+  
 
   useEffect(()=>{
     if(data !== undefined && data.allTests !== undefined){

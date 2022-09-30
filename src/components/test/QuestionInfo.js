@@ -86,7 +86,9 @@ export default function ({ saveQuestion, question }) {
         input['questionId'] = response.data.createQuestion.questionId;
 
         saveQuestion(question[0], input);
+        console.log(response.data)
     }
+    
       
 
     const renderCategories = () => {

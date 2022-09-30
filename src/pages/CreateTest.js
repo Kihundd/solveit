@@ -10,7 +10,7 @@ import { render } from '@testing-library/react';
 
 function CreateTest() {
     const [questionNum, setQuestionNum] = useState(1);
-    const [questionList, setQuestionList] = useState([1]);
+    const [questionList, setQuestionList] = useState([]);
     const [questionIdx, setQuestionIdx] = useState();
     const [viewCreateTest, setViewCreateTest] = useState(true)
     // const [viewCreateQestion, setViewCreateQestion] = useState(false)
@@ -29,7 +29,8 @@ function CreateTest() {
             type: MULTIPLE_CHOICE,
             name: '',
             questionCategory: '',
-            questionDifficulty: 5
+            questionDifficulty: 5,
+
         }])
     }
     const renderCategories = () => {
@@ -45,7 +46,7 @@ function CreateTest() {
     const handleOnSave = async info => {
         setIsSave(true);
         const questionIds = questionList.map(q => q.questionId);
-
+        
         const input = {
             name,
             content,
@@ -70,7 +71,6 @@ function CreateTest() {
         setQuestionList([...questionList]);
     }
 
-    console.log(questionList)
 
 
     return (
@@ -84,8 +84,8 @@ function CreateTest() {
                                 {name}
                             </Button>
                             {questionList.map((q, index) => {
-                                return <Grid container spacing={1} sx={{marginTop:'10px'}}>
-                                        <Grid item xs={2} key={index}>
+                                return <Grid container spacing={1} sx={{marginTop:'10px'}} key={index}>
+                                        <Grid item xs={2} >
                                             <Button 
                                                 color='inherit'
                                                 onClick={() => handleQuestionNumClick(index)}

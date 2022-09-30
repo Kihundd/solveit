@@ -59,21 +59,17 @@ function MyTestResult(){
     return(
         <>
             <Appbar />
-            <Container maxWidth="xl">
-                <Grid container spacing={2}>
-                    <Grid item xs={3}>
+            <Container maxWidth="xl" >
+                <Grid container spacing={2} sx={{paddingTop: 0}}>
+                    <Grid item xs={3} sx={{border: '1px solid #c4c4c4', borderRadius: '5px'}}>
                         <QuestionNum answerSheet={answerSheet} setIdx={setIdx}/>
+                        <Button variant="contained" >이전</Button>
+                        <Button variant="contained" sx={{marginLeft:'5px'}} onClick={handleNext}>다음</Button>
                     </Grid>
-                    <Grid item xs={9}>
-                        {/* <TestName /> */}
+                    <Grid item xs={9} >
+                        <TestName />
                         <QuestionResultView question={questionInfos[idx]} answers={answerSheet[idx]}/>
                     </Grid>
-                    <Grid item xs={3}>
-                        <Button variant="contained" sx={{margin:'10px'}}>이전</Button>
-                        <Button variant="contained" onClick={handleNext}>다음</Button>
-                    </Grid>
-                    
-                    
                 </Grid>
             </Container>
 
