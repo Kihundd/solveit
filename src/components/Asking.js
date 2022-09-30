@@ -3,13 +3,21 @@ import { ASKING } from "../queries/queries"
 import { useState, } from "react"
 import { useMutation } from "@apollo/client"
 import ReviewNote from "./ReviewNote"
+import { useEffect } from "react"
 
-function Asking(){
+function Asking(props){
 
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
-    const [questionIds, setQuestionIds] = useState(33)
+    const [questionIds, setQuestionIds] = useState(props.qid)
     // const [input, setInput] = useState({title:'',content:'',questionId:33})
+
+    useEffect(() => {
+        if (props.qid !== undefined){
+          setQuestionIds(props.qid)
+        }
+      }, [props.pid])
+    
 
     const [addAsking, {data, loading, error}] = useMutation(ASKING)
     const submitAsk = async () => {
@@ -24,11 +32,9 @@ function Asking(){
     }
 
     return(
-        <Grid container sx={{marginTop:'50px'}}>
-            <Grid item xs={3}></Grid>
-            <Grid item xs={6}>
+
                 
-                <Box maxWidth="xl" sx={{border:'2px solid #c4c4c4', height:'40vh'}}>
+                <Box maxWidth="xl" sx={{border:'1px solid #c4c4c4', borderRadius: '5px'}}>
                     <Grid container>
                         <Grid item sx={{marginLeft: '20px'}}><h4>질문하기</h4></Grid>
                     </Grid>
@@ -37,7 +43,7 @@ function Asking(){
                             <TextField 
                                 fullWidth={true}
                                 value={title}
-                                label="질문제목"
+                                label="제목"
                                 onChange={e => {
                                     setTitle(e.target.value)
                                     console.log(title)
@@ -59,26 +65,12 @@ function Asking(){
                                 }}
                             />
                         </Grid>
-                    </Grid>
-                    <Grid container spacing={1} sx={{marginTop:'10px'}}>
-                        <Grid item xs={8}></Grid>
-                        <Grid item xs={2}>
-                            <Button fullWidth variant="contained" underline="none" color="primary">취소</Button>
-                        </Grid>
-                        <Grid item xs={2}>
-                            <Button fullWidth variant="contained" underline="none" color="primary"
-                                onClick={submitAsk}
-                            >
-                                확인
-                            </Button>
+                        <Grid item xs={12} sx={{marginTop: '10px'}}>
+                            <Button variant="contained" underline="none" color="primary" sx={{float: 'right', marginLeft: '10px'}} onClick={submitAsk}>확인</Button>
+                            <Button variant="contained" underline="none" color="primary" sx={{float: 'right'}}>닫기</Button>
                         </Grid>
                     </Grid>
                 </Box>
-
-            </Grid>
-            <Grid item xs={3}></Grid>
-            
-        </Grid>
 
     )
 }

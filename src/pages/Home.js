@@ -8,7 +8,7 @@ import { Typography,Box } from '@mui/material';
 
 function Home() {
     const categories = ['새로운문제', '인기문제'];
-    console.log(categories[1])
+    
     return (
         <div>
             <Appbar/>

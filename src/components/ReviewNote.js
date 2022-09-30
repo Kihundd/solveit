@@ -1,14 +1,35 @@
 import { useState } from "react"
-import { useMutation } from "@apollo/client"
+import { useMutation, useQuery } from "@apollo/client"
 import { TextField, Box, Button } from "@mui/material"
-import { REVIEWNOTE } from "../queries/queries"
+import { REVIEWNOTE,GET_REVIEWNOTE } from "../queries/queries"
+import { useEffect } from "react"
 
-function ReviewNote(){
+function ReviewNote(props){
 
-    const [explanation, setExplanation] = useState('')
-    const [questionIds, setQuestionIds] = useState(33)
-    const [addAsking, {data, loading, error}] = useMutation(REVIEWNOTE)
+    const [explanation, setExplanation] = useState('');
+    const [questionIds, setQuestionIds] = useState(props.qid);
+    const { Loading: ReviewLoading, error: ReviewError, data: ReviewData } = useQuery(GET_REVIEWNOTE, {
+        variables: {questionId : questionIds}
+    });
+    const [addAsking, {data, loading, error}] = useMutation(REVIEWNOTE);
+    // console.log(ReviewData)
 
+    useEffect(() => {
+      if (props.qid !== undefined){
+        setQuestionIds(props.qid)
+      }
+    }, [props.pid])
+
+    useEffect(() => {
+      if(ReviewData !== undefined){
+        setExplanation(ReviewData.reviewNote.explanation)
+      }
+    }, [ReviewData])
+
+    
+    // console.log(questionIds)
+    // console.log(ReviewData)
+    
     const onSave = async () => {
         // const questionIds = questionList.map(q => q.questionId);
         const input = {
@@ -19,8 +40,12 @@ function ReviewNote(){
         console.log(response);
     }
 
+    // id, name, questionId
+
+
     return(
         <Box>
+            {}
             <TextField 
                 rows="5"
                 multiline
@@ -31,10 +56,11 @@ function ReviewNote(){
                     setExplanation(e.target.value)
                 }}
             />
-            <Button variant="contained" underline="none" color="primary"
-                onClick={onSave}
-            >
-                확인
+            {/* <Button variant="contained" underline="none" color="primary" onClick={onSave} sx={{float: 'right', marginTop: '10px'}}>
+                닫기
+            </Button> */}
+            <Button variant="contained" underline="none" color="primary" onClick={onSave} sx={{float: 'right', marginTop: '10px'}}>
+                저장
             </Button>
         </Box>
         
