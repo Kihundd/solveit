@@ -16,6 +16,7 @@ import { onError } from "@apollo/client/link/error";
 
 const httpLink = createHttpLink({
   uri: 'http://3.36.229.240:4000/',
+  // uri: 'http://localhost:'
 });
 
 const authLink = setContext((_, {headers}) => {

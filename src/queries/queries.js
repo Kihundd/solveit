@@ -175,6 +175,12 @@ export const GET_QUESTION = gql`
                     content
                 }
             }
+            ...on CodingTest {
+                testCases {
+                    input
+                    output
+                }
+            }
         }
     }
 `
@@ -256,6 +262,16 @@ export const GET_ASKING = gql`
             ownerID
             creationDate
             questionId
+        }
+    }
+`
+
+export const SUBMIT_CODING_TEST_ANSWER = gql`
+    mutation SubmitCodingTestAnswer($input: CodingTestAnswerInput!) {
+        submitCodingTestAnswer(input: $input) {
+            code
+            success
+            message
         }
     }
 `
