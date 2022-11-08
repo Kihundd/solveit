@@ -10,7 +10,12 @@ import { render } from '@testing-library/react';
 
 function CreateTest() {
     const [questionNum, setQuestionNum] = useState(1);
-    const [questionList, setQuestionList] = useState([1]);
+    const [questionList, setQuestionList] = useState([{
+        type: MULTIPLE_CHOICE,
+        name: '',
+        questionCategory: '',
+        questionDifficulty: 5
+    }]);
     const [questionIdx, setQuestionIdx] = useState();
     const [viewCreateTest, setViewCreateTest] = useState(true)
     // const [viewCreateQestion, setViewCreateQestion] = useState(false)
@@ -20,7 +25,6 @@ function CreateTest() {
     const [content, setContent] = useState('');
     const [open, setOpen] = useState(true);
     const [isSave, setIsSave] = useState(false);
-    console.log(questionList)
     const {loading, error, data} = useQuery(CATEGORIES);
     const [createTest, {Testloading, TestError, TestData}] = useMutation(CREATE_TEST);
     
@@ -49,7 +53,7 @@ function CreateTest() {
         const input = {
             name,
             content,
-            private: open,
+            isPrivate: open,
             categoryId: Number(category),
             questionIds: questionIds
  
@@ -67,6 +71,7 @@ function CreateTest() {
     const handleSaveQuestion = (idx, question) => {
         questionList[idx] = question;
 
+        console.log("12345");
         setQuestionList([...questionList]);
     }
 
@@ -84,7 +89,7 @@ function CreateTest() {
                                 {name}
                             </Button>
                             {questionList.map((q, index) => {
-                                return <Grid container spacing={1} sx={{marginTop:'10px'}}>
+                                return <Grid container spacing={1} sx={{marginTop:'10px'}} key={`sidebar ${index}`}>
                                         <Grid item xs={2} key={index}>
                                             <Button 
                                                 color='inherit'

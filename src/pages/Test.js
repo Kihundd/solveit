@@ -12,7 +12,6 @@ import Asking from "../components/Asking";
 
 
 function Test(){
-
     const [idx, setIdx] = useState(0);
     const [questionIds, setQuestionIds] = useState([])
     const [answerSheet, setAnswerSheet] = useState([]);

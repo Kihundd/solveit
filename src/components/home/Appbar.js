@@ -70,7 +70,7 @@ const ResponsiveAppBar = () => {
       setName(data.profile.nickname);
     }
   }, [data]);
-  console.log(isLogin)
+  
   return (
 
       <AppBar position="static" color='inherit' sx={{boxShadow: 'none', marginBottom: 5, borderBottom: '1px solid #c4c4c4'}}>

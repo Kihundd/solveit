@@ -11,3 +11,29 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.code-editor-container {
+  position: relative;
+}
+.code-editor-line-number {
+  position: absolute;
+  top: 22px;
+  left: 12px;
+  white-space: pre-wrap;
+}
+
+.code-editor {
+  border-radius: 4px;
+  box-sizing: border-box;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(0,0,0,0.23);
+}
+
+.code-editor textarea, .code-editor pre {
+  padding-left: 40px !important;
+}
+
+.loading-center div {
+  margin: auto;
+}
