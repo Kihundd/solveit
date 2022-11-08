@@ -16,7 +16,6 @@ import language from "react-syntax-highlighter/dist/esm/languages/hljs/1c";
 import { DataGrid } from "@mui/x-data-grid";
 import { render } from "@testing-library/react";
 import Spinner from "react-spinner-material";
-import Spinner from "react-spinner-material";
 import { CODING_TEST_RESULT, GRADE_TEST_CASE, SUBMIT_CODING_TEST_ANSWER } from "../../queries/queries";
 import { useLazyQuery, useMutation } from "@apollo/client";
 
