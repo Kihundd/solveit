@@ -73,8 +73,6 @@ const ResponsiveAppBar = () => {
       setRole(data.profile.role)
     }
   }, [data]);
-  // console.log(data)
-
   
   return (
 
