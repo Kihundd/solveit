@@ -203,6 +203,12 @@ export const GET_QUESTION = gql`
                     content
                 }
             }
+            ...on CodingTest {
+                testCases {
+                    input
+                    outputs
+                }
+            }
         }
     }
 `
@@ -289,9 +295,9 @@ export const ALLASKING = gql`
     }
 `
 
-export const ASKING = gql`
-    mutation CreateAsking($input: CreateAskingInput!){
-        createAsking(input: $input){
+export const SUBMIT_CODING_TEST_ANSWER = gql`
+    mutation SubmitCodingTestAnswer($input: CodingTestAnswerInput!) {
+        submitCodingTestAnswer(input: $input) {
             code
             success
             message
@@ -322,6 +328,17 @@ export const ASKINGINFO = gql`
         }
     }
 `
+
+export const ASKING = gql`
+    mutation CreateAsking($input: CreateAskingInput!){
+        createAsking(input: $input){
+            code
+            success
+            message
+        }
+    }
+`
+
 export const CREATE_REPLY = gql`
     mutation CreateReply($input: CreateReplyInput!){
         createReply(input: $input){
@@ -348,6 +365,16 @@ export const DELETE_REPLY = gql`
             code
             success
             message
+        }
+    }
+`
+export const CODING_TEST_RESULT = gql`
+    mutation CodingTestResult($testId: ID!, $questionId: ID!, $testCaseIdx: Int!) {
+        getCodingTestResult(testId: $testId, questionId: $questionId, testCaseIdx: $testCaseIdx) {
+            code
+            success
+            message
+            result
         }
     }
 `
@@ -393,5 +420,15 @@ export const LIKESCOUNT = gql`
 export const GETLIKE = gql`
     query Like($testId: ID!, $userId: ID){
         like(testId: $testId, userId: $userId)
+    }
+`
+
+export const GRADE_TEST_CASE = gql`
+    mutation GradeTestCase($testId: ID!, $questionId: ID!, $testCaseIdx: Int!) {
+        gradeTestCase(testId: $testId, questionId: $questionId, testCaseIdx: $testCaseIdx) {
+            code
+            success
+            message
+        }
     }
 `

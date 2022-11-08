@@ -6,10 +6,11 @@ import TextareaAutosize from '@mui/base/TextareaAutosize';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react'
 import MultipleChoice from "./MultipleChoice";
-import { CATEGORIES, CREATE_QUESTION } from "../../queries/test_queries";
+import { CATEGORIES, CREATE_CODING_TEST_QUESTION, CREATE_QUESTION } from "../../queries/test_queries";
 import { useQuery, useMutation } from "@apollo/client";
 import ShortAnswer from "./ShortAnswer";
 import FillBlank from "./FillBlank";
+import CodingTestMakingView from "./CodingTestMakingView";
 
 export const MULTIPLE_CHOICE = "MULTIPLE_CHOICE";
 export const FILL_BLANK = "FILL_BLANK";
@@ -23,7 +24,6 @@ export default function ({ saveQuestion, question }) {
     const [difficulty, setDifficulty] = useState(question[1].questionDifficulty);
 
     useEffect(() => {
-        console.log(question[1].type);
         setType(question[1].type);
         setCategory(question[1].questionCategory);
         setName(question[1].name);
@@ -32,27 +32,36 @@ export default function ({ saveQuestion, question }) {
 
     const [isSave, setIsSave] = useState(false);
     const {loading, error, data} = useQuery(CATEGORIES);
-    const [createQuestion, {loadingQuestion, errorQuetion, dataQuestion}] = useMutation(CREATE_QUESTION)
+    const [createQuestion, {loadingQuestion, errorQuetion, dataQuestion}] = useMutation(CREATE_QUESTION);
+    const [createCodingTestQuestion, {loadingCodingTestQuestion, errorCodingTestQuetion, dataCodingTestQuestion}] = useMutation(CREATE_CODING_TEST_QUESTION);
+
     const renderBody = () => {
+        console.log(question);
         if(type === MULTIPLE_CHOICE) {
             return <MultipleChoice 
-                    isSave={isSave}
-                    handleSave={info => handleSave(info)}
-                    question={question[1]}
-                />;
+                        isSave={isSave}
+                        handleSave={info => handleSave(info)}
+                        question={question[1]}
+                    />;
         }
         else if(type === SHORT_ANSWER) {
             return  <ShortAnswer
-                    isSave={isSave}    
-                    handleSave={info => handleSave(info)}
-                    question={question[1]}
-                />;
+                        isSave={isSave}    
+                        handleSave={info => handleSave(info)}
+                        question={question[1]}
+                    />;
         } else if(type === FILL_BLANK) {
             return <FillBlank
-                    isSave={isSave}
-                    handleSave={info => handleSave(info)}
-                    question={question[1]}
-                />;
+                        isSave={isSave}
+                        handleSave={info => handleSave(info)}
+                        question={question[1]}
+                    />;
+        } else if(type === CODING_TEST) {
+            return <CodingTestMakingView 
+                        isSave={isSave}
+                        handleSave={info => handleSave(info)}
+                        question={question[1]}
+                    />;
         }
         return <></>
     }
@@ -71,7 +80,6 @@ export default function ({ saveQuestion, question }) {
 
     const handleSave = async info => {
         setIsSave(false);
-        console.log(difficulty);
         const input = {
             ...info,
             name,
@@ -82,9 +90,19 @@ export default function ({ saveQuestion, question }) {
         };
         console.log(input);
 
-        const response = await createQuestion({variables: {input}});
-        input['questionId'] = response.data.createQuestion.questionId;
-        console.log(response)
+        let response;
+        if(input.type === CODING_TEST){
+            delete input.type;
+            response = await createCodingTestQuestion({variables: {input}});
+            input['questionId'] = response.data.createCodingTestQuestion.questionId;
+            input['type'] = type;
+        }
+        else {
+            response = await createQuestion({variables: {input}});
+            input['questionId'] = response.data.createQuestion.questionId;
+        }
+
+
         saveQuestion(question[0], input);
         console.log(response.data)
     }
