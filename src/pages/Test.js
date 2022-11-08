@@ -7,9 +7,7 @@ import { useEffect, useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { TAKE_TEST, JUDGE_ANSWERS, SUBMIT_QUESTION } from "../queries/queries";
 import { useNavigate, useParams } from "react-router-dom";
-import Asking from "../components/Asking";
-
-
+import Asking from "../components/ask/Asking";
 
 function Test(){
     const [idx, setIdx] = useState(0);
@@ -80,8 +78,10 @@ function Test(){
         const response = await judgeAnswers({variables: {
             testId: Number(testId)
         }});
-
-        if(response.data.judgeAnswers.success === true) {
+        console.log(testId)
+        console.log(response.data.judgeAnswers.success)
+        if(response.data.judgeAnswers.success == true) {
+            
             alert('수고하셨습니다');
             navigate(`/`);
         }
@@ -103,8 +103,6 @@ function Test(){
                             answerChange={() => setAnswerSheet([...answerSheet])} 
                             submit={handleOnSubmit}/>
                     </Grid>
-                    
-                    
                 </Grid>
             </Container>
 

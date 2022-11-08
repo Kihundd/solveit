@@ -12,22 +12,11 @@ function ProfileList() {
         jsCookies.removeItem('token');
     }
     return (
-        <Container maxWidth="xl">
-            <Grid container spacing={3} sx={{marginTop:'40px;'}}>
-                    <Grid item xs={6}>
-                        <Link href="/TestList" underline="none" color="inherit"></Link>
-                    </Grid>
-                    <Grid item xs={2}>
-                        <Link href="/Profile" underline="none" color="inherit">프로필설정</Link>
-                    </Grid>
-                    <Grid item xs={2}>
-                        <Link href="/MyCoupon" underline="none" color="inherit">쿠폰관리</Link>
-                    </Grid>
-                    <Grid item xs={2}>
-                        <Link href="/" underline="none" color="inherit" onClick={handleLogout}>로그아웃</Link>
-                    </Grid>
-                </Grid>
-        </Container>
+        <>      
+            <Link href="/" underline="none" color="inherit" onClick={handleLogout} sx={{float: 'right', margin: 2}}>로그아웃</Link>                  
+            <Link href="/MyCoupon" underline="none" color="inherit" sx={{float: 'right', margin: 2}}>쿠폰관리</Link>
+            <Link href="/Profile" underline="none" color="inherit" sx={{float: 'right', margin: 2}}>프로필설정</Link>
+        </>
     )
 }
 export default ProfileList

@@ -16,6 +16,7 @@ function TestStatus(props) {
     const { data, loading, error } = useQuery(STATISTICS, {
         variables:{ID: props.userId}
     });
+    console.log(data)
     const [ tryCount, setTryCout ] = useState('');
     const [ correct, setCorrect ] = useState('');
     const [ icorrect, setIcorrect] = useState('');

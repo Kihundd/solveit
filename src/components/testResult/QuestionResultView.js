@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
-import { Button, Grid, Box } from "@mui/material";
+import { Button, Grid, Box, TextField } from "@mui/material";
 import MultipleChoiceResultView from "./MultipleChoiceResultView";
 import { MULTIPLE_CHOICE, SHORT_ANSWER, FILL_BLANK } from "../test/QuestionInfo";
 import ShortAnswerResultView from "./ShortAnswerResultView";
 import FillBlankResultView from "./FillBlankResultView";
-import Asking from "../Asking";
-import ReviewNote from "../ReviewNote";
+import Asking from "../ask/Asking";
+import ReviewNote from "./ReviewNote";
 
 export default function QuestionResultView({question, answers}) {
     const [questionView, setQuestionView] = useState(<></>);
     const [view, setView] = useState(<></>);
+    const [qid, setQid] = useState();
 
     useEffect(() => {
         setView(<></>);
@@ -27,35 +28,54 @@ export default function QuestionResultView({question, answers}) {
         }
     }, [question]);
 
+    // useEffect(() => {
+    //     if(question !== undefined) {
+    //         setQid(question.id)
+    //         console.log(qid)
+    //     }
+
+    // }, [question]);
+
+    useEffect(() => {
+        if(question !== undefined) {
+            setQid(question.id)
+        }
+
+    }, [question])
+    
+
+    
+
     const handleAnswerView = () => {
         setView(
-            <Grid container>
-                <Grid item xs={12}>
-                    {answers.actualAnswer}
-                </Grid>
-                <Grid item xs={12}>
-                    {question.explanation}
-                </Grid>
-            </Grid>
+            <TextField 
+                rows="2"
+                multiline
+                fullWidth={true}
+                value={`답: ${answers.actualAnswer}
+해설: ${question.explanation}`}
+                label="정답"
+            />
+            // {answers.actualAnswer}{question.explanation}
         )
     };
     const handleAskingView = () => {
         setView(
-            <Asking />
+            <Asking qid={qid} />
         )
     };
     const handleReviewNoteView = () => {
         setView(
-            <ReviewNote />
+            <ReviewNote qid={qid} />
         )
     };
 
+
+
     return (
-    <>
-        <Grid container sx={{marginTop:'10px'}}>
-            <h4>문제내용</h4>
+
+        <Grid container>
             {questionView}
-            <Grid item xs={9}></Grid>
             <Grid item xs={12}>
                 <Button onClick={handleAnswerView}>정답 보기</Button>
                 <Button onClick={handleReviewNoteView}>오답 노트</Button>
@@ -67,6 +87,6 @@ export default function QuestionResultView({question, answers}) {
             
         </Grid>
         
-    </>
+
     )
 }
