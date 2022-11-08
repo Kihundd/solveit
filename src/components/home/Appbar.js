@@ -37,6 +37,7 @@ const ResponsiveAppBar = () => {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [name, setName] = useState("");
   const [isLogin, setIsLogin] = useState(false);
+  const [role, setRole] = useState(0);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -52,7 +53,7 @@ const ResponsiveAppBar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
+  // console.log(isLogin)
   const handleLogout = () => {
     setAnchorElUser(null);
     setName(null);
@@ -64,12 +65,16 @@ const ResponsiveAppBar = () => {
   const {loading, error, data} = useQuery(NICKNAME, {
     variables: {ID: null}
   });
+
   useEffect(() => {
     if(data !== undefined && data.profile.nickname !== undefined) {
       setIsLogin(true);
       setName(data.profile.nickname);
+      setRole(data.profile.role)
     }
   }, [data]);
+  // console.log(data)
+
   
   return (
 
@@ -190,9 +195,13 @@ const ResponsiveAppBar = () => {
                     open={Boolean(anchorElUser)}
                     onClose={handleCloseUserMenu}
                     >
-                      <MenuItem onClick={handleCloseUserMenu}>
-                        <Link href="/Profile" underline="none" color="inherit">프로필</Link>
-                      </MenuItem>
+                      {role ? <MenuItem onClick={handleCloseUserMenu}>
+                                <Link href="/Admin" underline="none" color="inherit">신고처리</Link>
+                              </MenuItem>
+                            : <MenuItem onClick={handleCloseUserMenu}>
+                                <Link href="/Profile" underline="none" color="inherit">프로필</Link>
+                              </MenuItem>
+                      }
                       <MenuItem onClick={handleLogout}>로그아웃</MenuItem>
                     </Menu>
                 </Box> : 

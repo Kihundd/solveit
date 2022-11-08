@@ -1,20 +1,22 @@
 import Appbar from '../components/home/Appbar.js';
-import { Container, Box, Grid, TextField, Button, InputLabel, FormControl, Select, MenuItem } from '@mui/material'
+import { Container, Box, Grid, TextField, Button, InputLabel, FormControl, Select, MenuItem, Typography } from '@mui/material'
 import { useState } from 'react'
 import QuestionInfo, { MULTIPLE_CHOICE } from '../components/test/QuestionInfo';
 import { useMutation, useQuery } from '@apollo/client';
 import { CREATE_TEST } from '../queries/queries';
 import { CATEGORIES } from "../queries/test_queries";
 import { render } from '@testing-library/react';
-
+import { useNavigate } from 'react-router-dom';
+import EditorBox from '../components/editor/EditorBox.js';
 
 function CreateTest() {
+    const navigate = useNavigate();
     const [questionNum, setQuestionNum] = useState(1);
     const [questionList, setQuestionList] = useState([]);
     const [questionIdx, setQuestionIdx] = useState();
     const [viewCreateTest, setViewCreateTest] = useState(true)
     // const [viewCreateQestion, setViewCreateQestion] = useState(false)
-    
+
     const [name, setName] = useState('테스트 이름');
     const [category, setCategory] = useState('');
     const [content, setContent] = useState('');
@@ -30,9 +32,9 @@ function CreateTest() {
             name: '',
             questionCategory: '',
             questionDifficulty: 5,
-
         }])
     }
+    
     const renderCategories = () => {
         if(data === undefined)
             return <MenuItem value='EMPTY' key='loading' disabled={true}>Loading...</MenuItem>
@@ -50,13 +52,17 @@ function CreateTest() {
         const input = {
             name,
             content,
-            private: open,
+            isPrivate: open,
             categoryId: Number(category),
             questionIds: questionIds
  
         };
         const response = await createTest({variables: {input}});
         console.log(response);
+        console.log(response.data.createTest.success)
+        if(response.data.createTest.success == true){
+            navigate(-1);
+        }
     }
 
     const handleQuestionNumClick = idx => {
@@ -78,9 +84,10 @@ function CreateTest() {
             <Appbar />
             <Container maxWidth="xl">
                 <Grid container spacing={2}>
-                    <Grid item xs={3}>
-                        <Box sx={{border: '1px solid #c4c4c4', height: '100%', borderRadius: '5px'}}>
-                            <Button color='inherit' onClick={()=>{ setViewCreateTest(true)}}>
+                    <Grid item xs={2}></Grid>
+                    <Grid item xs={2}>
+                        <Box sx={{border: '1px solid #c4c4c4', borderRadius: '5px'}}>
+                            <Button fullWidth variant='text' color='inherit' onClick={()=>{ setViewCreateTest(true)}}>
                                 {name}
                             </Button>
                             {questionList.map((q, index) => {
@@ -101,7 +108,7 @@ function CreateTest() {
                                         </Grid>
                                         </Grid>
                                     })}
-                                <Button size="small" variant="contained" onClick={addQuestion} >+</Button>
+                                <Button size="small" color='inherit' sx={{borderRadius: 100}} onClick={addQuestion} >+</Button>
                             <Grid container>
                                 <Grid item xs={2}></Grid>
                                 <Grid item xs={8}>
@@ -110,7 +117,7 @@ function CreateTest() {
                             </Grid>
                         </Box>
                     </Grid>
-                    <Grid item xs={9}>
+                    <Grid item xs={7}>
                         { viewCreateTest ?
                         <Box>
                             <TextField
@@ -119,17 +126,7 @@ function CreateTest() {
                                 onChange={e=>setName(e.target.value)}
                                 label="테스트 이름 입력"
                             />
-                            <TextField 
-                                fullWidth={true}
-                                value={content}
-                                onChange={e=>setContent(e.target.value)}
-                                minRows={5}
-                                maxRows={10}
-                                multiline={true}
-                                margin='dense'
-                                label="테스트 설명"
-                            />
-                            <FormControl fullWidth>
+                            <FormControl size='string' sx={{float: 'left', mt: 1, width: '85%'}}>
                                 <InputLabel id="question-category">카테고리</InputLabel>
                                 <Select
                                     labelId="question-category"
@@ -140,16 +137,28 @@ function CreateTest() {
                                     >{renderCategories()}
                                 </Select>
                             </FormControl>
-                            <Grid item xs={1}>
-                                <Button variant='contained' size='small'
-                                    onClick={()=>{
-                                        setOpen(!open)
-                                        console.log(open)
-                                    }}
-                                >
-                                    {open? "공개": "비공개"}
-                                </Button>
-                            </Grid>
+                            <Button variant='contained' size='medium'
+                                onClick={()=>{
+                                    setOpen(!open)
+                                    console.log(open)
+                                }}
+                                sx={{float: 'right', mt: 2, width: '10%'}}
+                            >
+                                {open? "공개": "비공개"}
+                            </Button>
+                            <TextField 
+                                fullWidth={true}
+                                value={content}
+                                onChange={e=>setContent(e.target.value)}
+                                minRows={5}
+                                maxRows={10}
+                                multiline={true}
+                                margin='dense'
+                                label="테스트 설명"
+                            />
+                            
+                            
+                            
                         </Box>
                     : <QuestionInfo 
                         question = { [questionIdx, questionList[questionIdx]] } 

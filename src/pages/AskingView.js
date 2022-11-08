@@ -5,7 +5,7 @@ import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { ASKINGINFO, CREATE_REPLY, GET_REPLY, DELETE_REPLY } from "../queries/queries";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
-import Reply from "../components/Reply.js";
+import Reply from "../components/testResult/Reply.js";
 
 function AskingView(){
 
@@ -22,7 +22,7 @@ function AskingView(){
     const [addReply, {data, loading, error}] = useMutation(CREATE_REPLY);
     const [deleteReply, {data: deleteData, loading: deleteLoading, error: deleteError}] = useMutation(DELETE_REPLY);
 
-
+    
     const [questionView, setQuestionView] = useState(false)
     const [answerView, setAnswerView] = useState(false)
     const [title, setTitle] = useState('');
@@ -80,15 +80,14 @@ function AskingView(){
                 </Box>
                 
                 {reply ? reply.map((a, index) => (
-                    <>
-                        <TextField rows="5"
-                        multiline
-                        fullWidth={true}
-                        value={a.content}
-                        key={index}
-                        >
-                        </TextField>
-                    </>
+
+                    <TextField rows="5"
+                    multiline
+                    fullWidth={true}
+                    value={a.content}
+                    key={index}
+                    />
+                        
                     
                 )): null}
 

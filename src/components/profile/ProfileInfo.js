@@ -3,7 +3,7 @@ import {USER_INFO, UPDATE_USER_INFO} from '../../queries/queries'
 import { CATEGORIES } from "../../queries/test_queries";
 import {useEffect, useState} from 'react'
 import { Grid, Button, Input, Avatar, Container, Box, TextField, MenuItem, FormControl, InputLabel, Select } from '@mui/material';
-
+import FileUpload from '../FileUpload';
 
 function ProfileInfo(props) {
 
@@ -17,24 +17,25 @@ function ProfileInfo(props) {
     const [update, { loading: updataLoading, error: updateError, data: updateData }] = useMutation(UPDATE_USER_INFO,{
         variables:{name: userName, favorite: userCategory}
     });
-    console.log(data)
+    // console.log(data)
+    // console.log(categoryData)
     const handleSubmit = async (updateData) => {
         console.log(updateData)
-        await update({varialbes: {
+        const response = await update({varialbes: {
             name: userName,
             favorite: userCategory
         }});
+        console.log(response)
     }
-
+    
     useEffect(() => {
-        if(data !== undefined) {
+        if(data !== undefined && data.profile.favorites.length !== 0) {
             setUserCategory(data.profile.favorites[0].name)
         }
-    }, [userCategory])
+    }, [data])
 
     if(loading) return <p>Loading...</p>;
     if(error) return <p>Error!</p>;
-    console.log(data.profile.favorites[0].name)
     
     const handleInputChange = (e) => {
         setUserName(e.target.value);
@@ -46,34 +47,13 @@ function ProfileInfo(props) {
 
     const renderCategories = () => {
         if(categoryData === undefined)
-            return <MenuItem value='EMPTY' key='loading' disabled={true}>Loading...</MenuItem>
+            return <MenuItem value='' key='loading' disabled={true}>Loading...</MenuItem>
         return categoryData.categories.map(category => 
             <MenuItem value={category.name} key={category.name}>{category.name}</MenuItem>);
     };
 
-    
-    
-
-    // const onSuccess = async (updateData) => {
-    //     console.log(updateData);
-    //     await update({variables: {
-    //         name : data.name.value,
-    //         favorite: category
-    //       }
-    //     });
-    // };
-    // const onFail = (data, error) => {
-    //     console.log(error);
-    //     if(error['name'] != null) {
-    //       console.log(nameError)
-    //     }
-    //     if(error['favorite'] != null) {
-    //         console.log(favoriteError)
-    //     }
-    // }
-
     return (
-        <Container maxWidth="xl" sx={{border:'2px solid #c4c4c4', padding:'20px', marginTop:'20px'}}>
+        <Container maxWidth="xl" sx={{border:'1px solid #c4c4c4', padding:'20px', marginTop:'20px'}}>
             <Grid container>
                 <Grid item xs={2}><h3>기본정보</h3></Grid>
                 <Grid item xs={8}></Grid>
@@ -154,30 +134,13 @@ export default ProfileInfo
 
 function ProfileImg() {
     return(
-        <Container maxwidth="xl">
-            <Box sx={{border:'2px solid #c4c4c4'}}>
-                <Grid container spacing={1} sx={{marginTop:'10px'}}>
-                    <Grid item xs={4}></Grid>
-                    <Grid item xs={4}>
-                        <Avatar
-                            src="/broken-image.jpg" 
-                            sx={{ width: 120, height: 120}}
-                        />
-                        {/* <p>{data.profile.image}</p> */}
-                    </Grid>
-                </Grid>
-                <Grid container sx={{marginTop:'35px'}}>
-                    <Grid item xs={12}>
-                        <label htmlFor="contained-button-file">
-                            <Input accept="image/*" id="contained-button-file" multiple type="file" />
-                            <Button variant="contained" size='small' >
-                                사진등록
-                            </Button>
-                        </label>
-                    </Grid>
-                </Grid>   
-            </Box>
-        </Container>
-        
+        <>
+            <Avatar
+                src="/broken-image.jpg" 
+                sx={{ width: 120, height: 120, margin: '0 auto'}}
+            />
+            <FileUpload />
+        </>
+
     )
 }

@@ -8,8 +8,8 @@ import { useState, useEffect } from 'react';
 import { TEST_RESULT, GET_FULL_QUESTION } from "../queries/queries";
 import { useNavigate, useParams } from "react-router-dom";
 import QuestionResultView from "../components/testResult/QuestionResultView";
-import Asking from '../components/Asking';
-import ReviewNote from '../components/ReviewNote';
+import Asking from '../components/ask/Asking';
+import ReviewNote from '../components/testResult/ReviewNote';
 
 function MyTestResult(){
     const [idx, setIdx] = useState(0);
