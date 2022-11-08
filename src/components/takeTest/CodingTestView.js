@@ -16,19 +16,25 @@ import language from "react-syntax-highlighter/dist/esm/languages/hljs/1c";
 import { DataGrid } from "@mui/x-data-grid";
 import { render } from "@testing-library/react";
 import Spinner from "react-spinner-material";
+import Spinner from "react-spinner-material";
+import { CODING_TEST_RESULT, GRADE_TEST_CASE, SUBMIT_CODING_TEST_ANSWER } from "../../queries/queries";
+import { useLazyQuery, useMutation } from "@apollo/client";
 
 const PADDING = 20;
 const fontHeight = 19;
 
 // C, python, java, C++
 
-export default function({question, prevAnswer, changeAnswer}) {
+export default function({question, prevAnswer, testId, changeAnswer}) {
     const {paragraph, name} = question;
     const [answer, setAnswer] = useState(prevAnswer);
     const [progress, setProgress] = useState([]);
     const ref = useRef();
     const [lineNumber, setLineNumber] = useState("1");
 
+    const [submitCodingTestAnswer] = useMutation(SUBMIT_CODING_TEST_ANSWER);
+    const [gradeTestCase] = useMutation(GRADE_TEST_CASE);
+    const [getCodingTestResult, {data, loading, error}] = useLazyQuery(CODING_TEST_RESULT);
     
     const [languageObject, setLanguageObject] = useState({languages: {python:{}}, name: "python"});
 
@@ -69,7 +75,7 @@ export default function({question, prevAnswer, changeAnswer}) {
         if(status === "nothing") {
             return <></>;
         }
-        else if (status === "processing") {
+        else if (status === "waiting") {
             return <Spinner visible={true} radius={30} />
         }
         else if (status === "correct") {
@@ -88,13 +94,13 @@ export default function({question, prevAnswer, changeAnswer}) {
             return <></>;
 
         const render = () => {
-            return question.testCases.map(({input, output}, idx) => {
-                const outputString = output.join(" or ");
+            return question.testCases.map(({input, outputs}, idx) => {
+                const outputsString = outputs.join(" or ");
                 
                 return (
                     <TableRow key={`${idx}: ${input}`}>
                         <TableCell align="center">{input}</TableCell>
-                        <TableCell align="center">{outputString}</TableCell>
+                        <TableCell align="center">{outputsString}</TableCell>
                         <TableCell align="center" className="loading-center">{renderProgress(progress[idx])}</TableCell>
                     </TableRow>
                 )
@@ -129,6 +135,53 @@ export default function({question, prevAnswer, changeAnswer}) {
         setLanguageObject({...languageObject, name: languageName});
     }
 
+    const handleTestCaseTest = async () => {
+        const response = await submitCodingTestAnswer({variables: {input: {
+            testId: Number(testId),
+            questionId: Number(question.id),
+            sourceCode: answer,
+            language: languageObject.name.toUpperCase()
+        }}});
+        
+        question.testCases.forEach((ignored, idx) => {
+            gradeTestCase({variables: {
+                testId: Number(testId),
+                questionId: Number(question.id),
+                testCaseIdx: idx
+            }});
+        });
+        
+        waitingResult();
+    };
+
+    const waitingResult = async () => {
+        setProgress(progress.map(p => "waiting"));
+        
+        let intervalId;
+
+        intervalId = setInterval(async () => {
+            let stop = true;
+
+            for(const[idx, p] of progress.entries()) {
+                if(p === "waiting") {
+                    stop = false;
+                    const response = await getCodingTestResult({variables: {
+                        testId: Number(testId),
+                        questionId: Number(question.id),
+                        testCaseIdx: idx
+                    }})
+                    if(response.data.getCodingTestResult.result === "SUCCESS") {
+
+                    }
+                    if(response.data.getCodingTestResult.result === "FAIL") {
+
+                    }
+                }
+            }
+
+        }, 500)
+    };
+
     return (
         <Grid container rowSpacing={1}>
             <Grid item xs={12}>
@@ -144,7 +197,7 @@ export default function({question, prevAnswer, changeAnswer}) {
             </Grid>
             <Grid item xs={12}>
                 <Box display="flex" justifyContent="flex-end">
-                    <Button variant="contained">
+                    <Button variant="contained" onClick={_ => handleTestCaseTest()}>
                         테스트
                     </Button>
                     <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>

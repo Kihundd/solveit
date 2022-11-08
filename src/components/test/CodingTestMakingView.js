@@ -5,7 +5,7 @@ import CodingTestCaseMakingView from "./CodingTestCaseMakingView";
 
 
 export default function ({isSave, handleSave, question}) {
-    const [cases, setCases] = useState([{input: '', output:['']}, {input: '', output:['']},{input: '', output:['']},{input: '', output:['']}]);
+    const [cases, setCases] = useState([{input: '', outputs:['']}, {input: '', outputs:['']},{input: '', outputs:['']},{input: '', outputs:['']}]);
     const [paragraph, setParagraph] = useState('');
     const [explanation, setExplation] = useState('');
 
@@ -35,7 +35,7 @@ export default function ({isSave, handleSave, question}) {
         const n = Number(e.target.value)
 
         while(cases.length > n) cases.pop();
-        while(cases.length < n) cases.push({input: '', output:[]});
+        while(cases.length < n) cases.push({input: '', outputs:[]});
         setCases([...cases]);
     }
 
