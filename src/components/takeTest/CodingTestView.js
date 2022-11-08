@@ -14,7 +14,7 @@ import c_language from "react-syntax-highlighter/dist/cjs/languages/prism/c";
 import cpp_language from "react-syntax-highlighter/dist/cjs/languages/prism/cpp";
 import Spinner from "react-spinner-material";
 import { CODING_TEST_RESULT, GRADE_TEST_CASE, SUBMIT_CODING_TEST_ANSWER } from "../../queries/queries";
-import { useMutation } from "@apollo/client";
+import { useLazyQuery, useMutation } from "@apollo/client";
 
 const PADDING = 20;
 const fontHeight = 19;
