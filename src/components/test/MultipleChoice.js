@@ -2,6 +2,7 @@ import { Button, Grid, TextField, ToggleButton, ToggleButtonGroup, Stack } from 
 import { useState, useEffect } from 'react'
 import _ from 'lodash';
 import CheckIcon from '@mui/icons-material/Check';
+import EditorBox from "../editor/EditorBox";
 
 
 export default function ({isSave, handleSave, question}) {
@@ -98,43 +99,32 @@ export default function ({isSave, handleSave, question}) {
                     onChange={e => setParagraph(e.target.value)}
                     label="문제 내용 입력"
                  />
+                {/* <EditorBox value={paragraph} />  */}
             </Grid>
-            <Grid item xs={12}>
-                {
-                // answerListNum.map((answerNum, index) => (
-                //     <AnswerListInput answerListNum={answerListNum} key={index} 
-                //     i={index+1}
-                // />))
-                }
+            <Grid item xs={2} >
+                <TextField
+                    id="outlined-number"
+                    label="보기 수"
+                    type="number"
+                    defaultValue={2}
+                    onChange={handleCandNum}
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                />
             </Grid>
-            
+            <Grid item xs={4}></Grid>
+            <Grid item xs={2}>
+                <span>중복 </span>
+                <ToggleButton
+                    value="check"
+                    label="복수 정답"
+                    selected={!exclusive}
+                    onChange={() => {handleExclusiveChange();}}>
+                        <CheckIcon />
+                </ToggleButton>
+            </Grid>
             <Grid item xs={3}>
-                <Grid container direction="row">
-                    <Grid item xs={3}>
-                    <TextField
-                        id="outlined-number"
-                        label="보기 수"
-                        type="number"
-                        defaultValue={4}
-                        onChange={handleCandNum}
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                    />
-                    </Grid>
-                    <Grid item xs={6}>
-                    <span>복수 정답</span>
-                    <ToggleButton
-                        value="check"
-                        label="복수 정답"
-                        selected={!exclusive}
-                        onChange={() => {handleExclusiveChange();}}>
-                            <CheckIcon />
-                    </ToggleButton>
-                    </Grid>
-                </Grid>
-            </Grid>
-            <Grid item xs={9}>
                 <span>정답: </span>
                 <ToggleButtonGroup 
                     value={num}
