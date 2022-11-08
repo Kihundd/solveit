@@ -1,6 +1,6 @@
 import Appbar from '../components/home/Appbar.js';
 import { Grid, Box, Container, Button, Link } from '@mui/material'
-import MyTestTable from '../components/MyTestTable'
+import MyTestTable from '../components/mytest/MyTestTable'
 import PageButton from '../components/PageButton'
 
 function MyTestList(){

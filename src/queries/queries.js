@@ -19,7 +19,7 @@ export const USER_INFO = gql`
         profile(ID: $ID) {
             ownerId
             nickname
-            image
+            experience
             point
             tier
             favorites{
@@ -43,6 +43,11 @@ export const STATISTICS = gql`
         statistics(ID: $ID) {
             try_count
             correct_count
+            category_log{
+                category
+                try_count
+                correct_count
+            }
         }
     }
 `;
@@ -63,12 +68,26 @@ export const NICKNAME = gql`
         profile(ID: $ID) {
             nickname
             ownerId
+            role
+        }
+    }
+`;
+export const USERCATETORY = gql`
+    query GetMyname($ID: String) {
+        profile(ID: $ID) {
+            nickname
+            ownerId
+            role
+            favorites{
+                id
+                name
+            }
         }
     }
 `;
 export const ALLTESTLIST = gql`
-    query GetAllTestList($page: Int!) {
-        allTests(page: $page){
+    query GetAllTestList($page: Int!, $order: OrderBy) {
+        allTests(page: $page, order: $order){
             id
             name
             ownerId
@@ -99,6 +118,7 @@ export const MYTEST = gql`
         }
     }
 `
+
 export const CREATE_TEST = gql`
     mutation CreateTest ($input: CreateTestInput) {
         createTest(input: $input) {
@@ -129,17 +149,21 @@ export const DIFFICULTY = gql`
     }
 `
 
-// export const TESTLIST_CATEGORY = gql`
-//     query GetByCategory{
-//         testByCategory{
-//             id
-//             name
-//             ownerID
-//             tryCnt
-//             testCategory
-//         }
-//     }
-// `
+export const TESTLIST_CATEGORY = gql`
+    query GetByCategory($id: ID!){
+        testsByCategory(id: $id){
+            id
+            name
+            ownerId
+            tryCnt
+            testCategory{
+                id
+                name
+            }
+        }
+    }
+`
+
 export const TEST_INFO = gql`
     query getTestInfo($id: ID!) {
         test(id: $id) {
@@ -148,6 +172,10 @@ export const TEST_INFO = gql`
             content
             ownerId
             tryCnt
+            testCategory{
+                id
+                name
+            }
         }
     }
 `
@@ -232,17 +260,19 @@ export const TEST_RESULT = gql`
             questionId
         }
     }
-
 `
-export const ASKING = gql`
-    mutation CreateAsking($input: CreateAskingInput!){
-        createAsking(input: $input){
-            code
-            success
-            message
+
+export const GET_REVIEWNOTE = gql`
+    query ReviewNote($questionId: ID!){
+        reviewNote(questionId: $questionId){
+            id
+            ownerId
+            questionId
+            explanation
         }
     }
 `
+
 export const REVIEWNOTE = gql`
     mutation CreateReviewNote($input: createReviewNoteInput!){
         createReviewNote(input: $input){
@@ -252,14 +282,13 @@ export const REVIEWNOTE = gql`
         }
     }
 `
-
-export const GET_ASKING = gql`
-    query AskingByQuestion($id: ID!){
-        askingByQuestion(id: $ID){
+export const ALLASKING = gql`
+    query GetAllAsking($page: Int!){
+        allAsking(page: $page){
             id
             title
             content
-            ownerID
+            ownerId
             creationDate
             questionId
         }
@@ -273,5 +302,102 @@ export const SUBMIT_CODING_TEST_ANSWER = gql`
             success
             message
         }
+    }
+`
+export const GET_ASKING = gql`
+    query AskingByQuestion($id: ID!){
+        askingByQuestion(id: $id){
+            id
+            title
+            content
+            ownerId
+            creationDate
+            questionId
+        }
+    }
+`
+export const ASKINGINFO = gql`
+    query GetAsking($askingId: ID!){
+        asking(askingId: $askingId){
+            id
+            title
+            content
+            ownerId
+            creationDate
+            questionId
+        }
+    }
+`
+export const CREATE_REPLY = gql`
+    mutation CreateReply($input: CreateReplyInput!){
+        createReply(input: $input){
+            code
+            success
+            message
+        }
+    }
+`
+export const GET_REPLY = gql`
+    query GetReply($id: ID!){
+        repliesByAsking(id: $id){
+            id
+            content
+            ownerId
+            creationDate
+            askingId
+        }
+    }
+`
+export const DELETE_REPLY = gql`
+    mutation CreateReply($id: ID!){
+        deleteReply(id: $id){
+            code
+            success
+            message
+        }
+    }
+`
+export const GET_TAG = gql`
+    query GetTag($testId: ID!) {
+        tagsOfTest(testId: $testId) {
+            id
+            name
+            ownerId
+            creationDate
+            testId
+        }
+    }
+`
+export const CREATE_TAG = gql`
+    mutation CreateTag($name: String!, $testId: ID!){
+        createTag(name: $name, testId: $testId){
+            code
+            success
+            message
+        }
+    }
+`
+export const CREATE_REPORT = gql`
+    mutation CreateReport($input: CreateReportInput!){
+        createReport(input: $input){
+            code
+            success
+            message
+        }
+    }
+`
+export const ALLTESTSCOUNT = gql`
+    query AllTestsCount {
+        allTestsCount
+    }
+`
+export const LIKESCOUNT = gql`
+    query LikseCount($id: ID!){
+        testLikesCount(id: $id)
+    }
+`
+export const GETLIKE = gql`
+    query Like($testId: ID!, $userId: ID){
+        like(testId: $testId, userId: $userId)
     }
 `
