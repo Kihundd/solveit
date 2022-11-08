@@ -84,7 +84,7 @@ export default function ({ saveQuestion, question }) {
 
         const response = await createQuestion({variables: {input}});
         input['questionId'] = response.data.createQuestion.questionId;
-
+        console.log(response)
         saveQuestion(question[0], input);
         console.log(response.data)
     }
@@ -99,7 +99,7 @@ export default function ({ saveQuestion, question }) {
     };
 
     return (
-        <Box sx={{border: '2px solid #c4c4c4', height: '100vh'}}>
+
         <Grid container spacing={2}>
             {/* <Grid item xs={12}>
                 <Box sx={{border:'1px solid #c4c4c4'}}>{questionNum}</Box>
@@ -165,34 +165,16 @@ export default function ({ saveQuestion, question }) {
 
                         <Grid item xs={9} />
                         <Grid item xs={3}>
-                            <label htmlFor="icon-button-file">
-                                {/* <Input accept="image/*" id="icon-button-file" type="file" /> */}
-                                <IconButton color="primary" aria-label="upload audio" component="span">
-                                    <AudiotrackOutlinedIcon />
-                                </IconButton>
-                            </label>
-                            <label htmlFor="icon-button-file">
-                                {/* <Input accept="image/*" id="icon-button-file" type="file" /> */}
-                                <IconButton color="primary" aria-label="upload picture" component="span">
-                                    <PhotoCamera />
-                                </IconButton>
-                            </label>
+                            
                         </Grid>
                     </Grid>
                 </Box>
                 {renderBody()}
-                <Grid container >
-                    <Grid item xs={8}></Grid>
-                    <Grid item xs={2}>
-                        <Button variant="text">취소</Button>
-                    </Grid>
-                    <Grid item xs={2}>
-                        <Button variant="contained" onClick={handleOnSave}>저장</Button>
-                    </Grid>
-                </Grid>
-                
+                <Button variant="contained" sx={{float: 'right', mt:2, ml: 2, mb: 3}} onClick={handleOnSave}>저장</Button>
+                <Button variant="outlined"  sx={{float: 'right', mt:2}}>취소</Button>
+
             </Grid>      
         </Grid>
-    </Box>
+
     )
 }

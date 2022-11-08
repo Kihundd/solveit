@@ -7,6 +7,7 @@ import { SIGN_UP } from '../queries/queries';
 import { useState, useEffect } from 'react';
 import useForm from '../hooks/useForm';
 import { useNavigate } from 'react-router-dom';
+import { Link } from '@mui/material';
 
 
 export default function SignUp() {
@@ -35,7 +36,7 @@ export default function SignUp() {
         });
       };
     
-      const onFail = (data, error) => {
+    const onFail = (data, error) => {
         console.log(error);
         if(error['email'] != null) {
           setEmailError("Email must contains @!");
@@ -43,13 +44,14 @@ export default function SignUp() {
         if(error['password'] != null) {
           setPasswordError("A password should be at least 4");
         }
-      }
-
+    }
+    console.log(data)
     useEffect(() => {
         if(data !== undefined && data.signup.success) {
             console.log(data)
             setSuccess(true);
             setMsg(data.signup.message);
+            navigate('/')
         }
     }, [data]);
 
@@ -59,7 +61,7 @@ export default function SignUp() {
                 <img src={logo} ></img>
                 <Grid container>
                     <TextField label="Name" 
-                        name="email" 
+                        name="name" 
                         required 
                         fullWidth
                         autoFocus
@@ -123,7 +125,6 @@ export default function SignUp() {
                         sx={{mt:2, mb:3}}
                         >회원가입
                     </Button>
-                    
                 </Grid>
 
             </ form>

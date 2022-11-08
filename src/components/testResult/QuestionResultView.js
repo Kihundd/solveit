@@ -4,8 +4,8 @@ import MultipleChoiceResultView from "./MultipleChoiceResultView";
 import { MULTIPLE_CHOICE, SHORT_ANSWER, FILL_BLANK } from "../test/QuestionInfo";
 import ShortAnswerResultView from "./ShortAnswerResultView";
 import FillBlankResultView from "./FillBlankResultView";
-import Asking from "../Asking";
-import ReviewNote from "../ReviewNote";
+import Asking from "../ask/Asking";
+import ReviewNote from "./ReviewNote";
 
 export default function QuestionResultView({question, answers}) {
     const [questionView, setQuestionView] = useState(<></>);
