@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
  * aCase ->
  * {
  *     input, 
- *     output [
+ *     outputs [
  *         
  *     ]
  * }
@@ -20,18 +20,18 @@ export default function({aCase, setCase, idx}) {
     }, [aCase]);
 
 
-    const setOutput = (output, i) => {
-        aCase.output[i] = output;
+    const setoutputs = (outputs, i) => {
+        aCase.outputs[i] = outputs;
         setCase({...aCase})
     };
 
     const renderAnswers = () => {
-        return aCase.output.map((output, i) => {
+        return aCase.outputs.map((outputs, i) => {
             return <TextField 
-                    key={`output ${i}`}
+                    key={`outputs ${i}`}
                     label={`case #${idx}. 정답 ${i}`}
-                    value={output}
-                    onChange={e => setOutput(e.target.value, i)}
+                    value={outputs}
+                    onChange={e => setoutputs(e.target.value, i)}
                     InputLabelProps={{
                         shrink: true,
                     }}
@@ -40,11 +40,11 @@ export default function({aCase, setCase, idx}) {
     }
 
     const handleAddAnswer = () => {
-        setCase({...aCase, output: [...aCase.output, '']});
+        setCase({...aCase, outputs: [...aCase.outputs, '']});
     };
     const handleRemoveAnswer = () => {
-        aCase.output.pop();
-        setCase({...aCase, output: aCase.output});
+        aCase.outputs.pop();
+        setCase({...aCase, outputs: aCase.outputs});
     };
     const setInput = (input) => {
         setCase({...aCase, input});

@@ -9,7 +9,7 @@ import ShortAnswerView from "./ShortAnswerView";
 import FillBlankView from './FillBlankView'
 import CodingTestView from "./CodingTestView";
 
-function QuestionView({row, answerChange, submit}) {
+function QuestionView({row, answerChange, testId, submit}) {
     const [answer, setAnswer] = useState();
     const [question, setQuestion] = useState(undefined);
     const [questionView, setQuestionView] = useState(<></>);
@@ -51,7 +51,7 @@ function QuestionView({row, answerChange, submit}) {
             else if(type === FILL_BLANK)
                 setQuestionView(<FillBlankView question={question} prevAnswer={row.answer} changeAnswer={setAnswer}/>)
             else if(type === CODING_TEST)
-                setQuestionView(<CodingTestView question={question} prevAnswer={row.answer} changeAnswer={setAnswer} />)
+                setQuestionView(<CodingTestView question={question} testId={testId} prevAnswer={row.answer} changeAnswer={setAnswer} />)
         }
     }, [question]);
 
