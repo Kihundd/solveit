@@ -10,7 +10,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import Asking from "../components/ask/Asking";
 
 function Test(){
-
     const [idx, setIdx] = useState(0);
     const [questionIds, setQuestionIds] = useState([])
     const [answerSheet, setAnswerSheet] = useState([]);
@@ -53,6 +52,8 @@ function Test(){
 
         const {qid, answer} = answerSheet[curIdx];
         if(answer.length === 0) return;
+
+        console.log(answer);
 
         setAnswerSheet([...answerSheet]);
         const response = await submitAnswer({variables: {
@@ -98,6 +99,7 @@ function Test(){
                         <TestName />
                         <QuestionView 
                             row={answerSheet[idx]} 
+                            testId={testId}
                             answerChange={() => setAnswerSheet([...answerSheet])} 
                             submit={handleOnSubmit}/>
                     </Grid>
