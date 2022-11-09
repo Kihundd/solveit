@@ -19,3 +19,14 @@ export const CREATE_QUESTION = gql`
         }
     }
 `;
+
+export const CREATE_CODING_TEST_QUESTION = gql`
+    mutation createCodingTestQuestion($input: CreateCodingTestQuestionInput) {
+        createCodingTestQuestion(input: $input) {
+            code
+            success
+            message
+            questionId
+        }
+    }
+`;
