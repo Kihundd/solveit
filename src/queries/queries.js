@@ -369,7 +369,7 @@ export const DELETE_REPLY = gql`
     }
 `
 export const CODING_TEST_RESULT = gql`
-    mutation CodingTestResult($testId: ID!, $questionId: ID!, $testCaseIdx: Int!) {
+    query CodingTestResult($testId: ID!, $questionId: ID!, $testCaseIdx: Int!) {
         getCodingTestResult(testId: $testId, questionId: $questionId, testCaseIdx: $testCaseIdx) {
             code
             success
