@@ -17,7 +17,7 @@ export const FILL_BLANK = "FILL_BLANK";
 export const SHORT_ANSWER = "SHORT_ANSWER";
 export const CODING_TEST = "CODING_TEST";
 
-export default function ({ saveQuestion, question }) {
+export default function ({ saveQuestion, testId, question }) {
     const [type, setType] = useState(question[1].type);
     const [category, setCategory] = useState(question[1].questionCategory);
     const [name, setName] = useState(question[1].name);
