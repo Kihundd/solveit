@@ -3,15 +3,7 @@ import { useState, useEffect, useRef } from 'react'
 import _ from 'lodash';
 import CheckIcon from '@mui/icons-material/Check';
 // import EditorBox from "../editor/EditorBox";
-
-import '@toast-ui/editor/dist/toastui-editor.css';
-import { Editor } from '@toast-ui/react-editor';
-
-import 'tui-color-picker/dist/tui-color-picker.css';
-import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
-import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
-
-
+import MyEditor from "../editor/MyEditor";
 
 export default function ({isSave, handleSave, question}) {
     const [num, setAnswerNum] = useState(['1']);
@@ -20,10 +12,8 @@ export default function ({isSave, handleSave, question}) {
     const [paragraph, setParagraph] = useState('');
     const [explanation, setExplation] = useState('');
     const [exclusive, setExclusive] = useState(false);
+
     const editorRef = useRef();
-
-    console.log(editorRef.current?.getInstance().getMarkdown());
-
 
     useEffect(() => {
         setAnswerNum(question.answers !== undefined? question.answers: ['1']);
@@ -57,7 +47,7 @@ export default function ({isSave, handleSave, question}) {
     useEffect(()=>{
         if(isSave === true) {
             handleSave({
-                paragraph: editorRef.current?.getInstance().getMarkdown(),
+                paragraph: editorRef.current?.getInstance().getHTML(),
                 candidates: cands,
                 answers: num,
                 explanation
@@ -99,7 +89,6 @@ export default function ({isSave, handleSave, question}) {
         })
     }
 
-
     return (
         <Grid container rowSpacing={1}>
             <Grid item xs={12} sx={{textAlign: 'left'}}>
@@ -111,15 +100,9 @@ export default function ({isSave, handleSave, question}) {
                     onChange={e => setParagraph(e.target.value)}
                     label="문제 내용 입력"
                  /> */}
-                <Editor
-                    initialValue={paragraph}
-                    initialEditType="wysiwyg"
-                    usageStatistics={false}
-                    useCommandShortcut={false}
-                    hideModeSwitch
-                    
-                    plugins={[colorSyntax]}
-                    ref={editorRef}
+                <MyEditor
+                    paragraph={paragraph}
+                    editorRef={editorRef}
                 />
             </Grid>
             <Grid item xs={2} >

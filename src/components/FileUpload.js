@@ -23,6 +23,7 @@ function FileUpload(props) {
     }
 
     const uploadFile = (file) => {
+        console.log(file);
 
         const params = {
             ACL: 'public-read',
@@ -44,10 +45,10 @@ function FileUpload(props) {
         <div style={{marginTop: '20px'}}>
             <div>{progress}%</div>
             <input type="file" onChange={handleFileInput}/>
-            {/* <Button variant="contained" size="small" onClick={() => uploadFile(selectedFile)}> 사진등록</Button> */}
-            <Button variant="contained" size="small" onClick={() => {
+            <Button variant="contained" size="small" onClick={() => uploadFile(selectedFile)}> 사진등록</Button>
+            {/* <Button variant="contained" size="small" onClick={() => {
                 console.log()
-            }}> 사진등록</Button>
+            }}> 사진등록</Button> */}
         </div>
       );
 }

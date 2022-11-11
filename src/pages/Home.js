@@ -164,7 +164,7 @@ function Home() {
                 </Grid> 
                 <Grid item xs={2}></Grid>
             </Grid>
-
+            <FileUpload />
         </div>
         
     )
