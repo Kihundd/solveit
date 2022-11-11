@@ -13,7 +13,7 @@ export default function({question, changeAnswer, prevAnswer}) {
         setAnswer([...newAnswer]);
         changeAnswer([...newAnswer]);
     }
-
+    console.log(paragraph)
 
     const renderCandidate = () => {
         return (

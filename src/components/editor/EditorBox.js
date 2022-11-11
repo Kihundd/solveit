@@ -14,10 +14,12 @@
 // // import tableMergedCell from '@toast-ui/editor-plugin-table-merged-cell';
 // // import uml from '@toast-ui/editor-plugin-uml';
 
+// import S3 from 'react-aws-s3';
+
 
 // export default function EditorBox(props){
+    
 //     const editorRef = useRef();
-//     const [content, setContent] = useState('');
 //     useEffect(() => {
 //       setContent(props.paragraph)
 //     }, [props])
@@ -25,12 +27,33 @@
 //         console.log(content)
 //     }
 //     console.log(editorRef.current?.getInstance().getMarkdown());
-    
 
 //     const btmClickListener = () => {
 //         console.log(editorRef.current.getInstance().getMarkdown());
 //         console.log(editorRef.current.getInstance().getHTML());
 //     }
+
+//     useEffect(() => {
+//         if(editorRef.current) {
+//             editorRef.current.getInstance().removeHook('addImageBlobHook');
+
+//             editorRef.current
+//                 .getInstance()
+//                 .addHook('addImageBlobHook', (blob, callback) => {
+//                     const s3config = {
+//                         // bucketName: process.env.REACT_APP_BUCKET_NAME as string,
+//                         // region: process.env.REACT_APP_REGION as string,
+//                         // accessKeyId: process.env.REACT_APP_ACCESS_ID as string,
+//                         // secretAccessKey: process.env.REACT_APP_ACCESS_KEY as string,
+//                     };
+//                     const ReactS3Client = new S3(s3config);
+//                     ReactS3Client.uploadFile(blob, uuidv4())
+//                         .then((data) => callback(data.location, 'imageURL'))
+//                         .catch((err) => (window.location.href = '/error'));
+//                     });
+//         }
+//     }, [])
+    
 
 // 	return (
 //         <div style={{textAlign: "left"}}>
