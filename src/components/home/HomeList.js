@@ -34,7 +34,12 @@ export default function HomeList(props) {
   const handleClick = (i) => {
     // console.log(i)
     // console.log(`/${props.url}/`+i)
-    navigate(`/${url}/${i}`)
+    if(url !=='Ranking'){
+      navigate(`/${url}/${i}`)
+    } else{
+      navigate(`/${url}`)
+    }
+    
   }
   
   // useEffect(()=>{
@@ -55,11 +60,11 @@ export default function HomeList(props) {
             {homeList ? homeList.map((x, index)=>(
               <ListItemButton
                 sx={{borderRadius: '5px', border: '1px solid #eee', bgcolor: '#eee', mt: 1}}
-                key={x.id}
+                key={index}
                 onClick={e=>handleClick(x.id)}
               >
                 <ListItemText secondary={secondary ? `${x.ownerId}` : null}>
-                  {x.name}{x.content}
+                  {x.name}{x.content}{x.nickname}
                 </ListItemText>
               </ListItemButton>
             )) : null

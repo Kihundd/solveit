@@ -1,11 +1,7 @@
 import React, {useState} from "react";
 import AWS from 'aws-sdk';
 import { Button } from '@mui/material';
-
-const ACCESS_KEY = 'AKIA5ISOFMWXZ5W3IA7U';
-const SECRET_ACCESS_KEY = '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';
-const REGION = "ap-northeast-2";
-const S3_BUCKET = 'solveit-storage';
+import {ACCESS_KEY, SECRET_ACCESS_KEY, REGION, S3_BUCKET} from './FileUploadKey';
 
 AWS.config.update({
     accessKeyId: ACCESS_KEY,

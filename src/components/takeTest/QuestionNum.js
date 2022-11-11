@@ -24,10 +24,15 @@ function QuestionNum({answerSheet, setIdx, submit}) {
     return(
         <>
             {renderAnswer()}
-            {
-                submit && 
-                <Button size="medium" fullWidth={true} sx={{}} variant="contained" onClick={() => submit()}>제출</Button>
-            }
+            <Grid container>
+                <Grid item xs={2}></Grid>
+                <Grid item xs={8}>
+                {
+                    submit && 
+                    <Button size="medium" fullWidth={true} sx={{marginBottom: '10px'}} variant="contained" onClick={() => submit()}>제출</Button>
+                }
+                </Grid>
+            </Grid>
         </>
         
     )

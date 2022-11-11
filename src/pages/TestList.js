@@ -10,7 +10,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 function TestList() {
     
     // const {testId} = useParams();
-    const [pageList, setPageList] = useState([1,2]);
+    const [pageList, setPageList] = useState([1,2,3]);
     const [pageNum, setPageNum] = useState(1);
     const [testCnt, setTestCnt] = useState(0);
     const [testList, setTestList] = useState();
@@ -82,7 +82,7 @@ function TestList() {
         <> 
             <Appbar />
             
-            <Container maxWidth="md">
+            <Container maxWidth="lg">
                 <Grid container >
                     <Grid item xs={2} sx={{mt:1}}>전체</Grid>
                     <Grid item xs={6}></Grid>
@@ -98,7 +98,7 @@ function TestList() {
                     </Grid>
                 </Grid>
                 <Table 
-                    sx={{ minWidth: 650, borderCollapse: 'inherit', border: '1px solid #c4c4c4', borderRadius: '5px'}} 
+                    sx={{ minWidth: 650, borderCollapse: 'inherit', border: '1px solid #c4c4c4', borderRadius: '5px', mb: 1}} 
                     aria-label="simple table">
                     <TableHead>
                     <TableRow>
@@ -113,11 +113,11 @@ function TestList() {
                         {testList ? testList.map((a, index) => (
                             <TableRow key={index}
                             >
-                            <TableCell align="center"><Link to={`/TestInfo/${data.allTests[index].id}`} style={{ textDecoration: 'none', color: 'inherit'}}>{data.allTests[index].id}</Link></TableCell>
-                            <TableCell align="center"><Link to={`/TestInfo/${data.allTests[index].id}`} style={{ textDecoration: 'none', color: 'inherit'}}>{data.allTests[index].name}</Link></TableCell>
-                            <TableCell align="center"><Link to={`/TestInfo/${data.allTests[index].id}`} style={{ textDecoration: 'none', color: 'inherit'}}>{data.allTests[index].ownerId}</Link></TableCell>
-                            <TableCell align="center"><Link to={`/TestInfo/${data.allTests[index].id}`} style={{ textDecoration: 'none', color: 'inherit'}}>{data.allTests[index].tryCnt}</Link></TableCell>
-                            <TableCell align="center"><Link to={`/TestInfo/${data.allTests[index].id}`} style={{ textDecoration: 'none', color: 'inherit'}}>{data.allTests[index].like}</Link></TableCell>
+                            <TableCell align="center"><Link to={`/TestInfo/${a.id}`} style={{ textDecoration: 'none', color: 'inherit'}}>{a.id}</Link></TableCell>
+                            <TableCell align="center"><Link to={`/TestInfo/${a.id}`} style={{ textDecoration: 'none', color: 'inherit'}}>{a.name}</Link></TableCell>
+                            <TableCell align="center"><Link to={`/TestInfo/${a.id}`} style={{ textDecoration: 'none', color: 'inherit'}}>{a.ownerId}</Link></TableCell>
+                            <TableCell align="center"><Link to={`/TestInfo/${a.id}`} style={{ textDecoration: 'none', color: 'inherit'}}>{a.tryCnt}</Link></TableCell>
+                            <TableCell align="center"><Link to={`/TestInfo/${a.id}`} style={{ textDecoration: 'none', color: 'inherit'}}>{a.like}</Link></TableCell>
                             </TableRow>
                         )): null}
                     </TableBody>

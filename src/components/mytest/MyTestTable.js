@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react';
-import { Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper} from '@mui/material';
+import { Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper, Button, IconButton} from '@mui/material';
 import { useQuery } from '@apollo/client';
 import { MYTEST } from '../../queries/queries';
 import { Link } from "react-router-dom"
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 export default function MyTestTable() {
   // const {testId} = useParams();
   // console.log(testId)
   // const [pages, setPages] = useState(1);
+  const [pageList, setPageList] = useState([1]);
+  const [pageNum, setPageNum] = useState(1);
   const [testList, setTestList] = useState();
   const {loading, error, data} = useQuery(MYTEST)
   console.log(data)
@@ -17,11 +21,28 @@ export default function MyTestTable() {
       setTestList(data.mySolvingTests)
     }
   },[])
+  console.log(data)
+
+  const nextPage = () => {
+    if (pageNum !== pageList[pageList.length - 1]) {
+        let currentPage = pageNum
+        let nextPage = currentPage + 1
+        setPageNum(nextPage)
+    }
+  }
+  const previousPage = () => {
+    if(pageNum !== 1){
+        let currentPage = pageNum
+        let previousPage = currentPage - 1
+        setPageNum(previousPage)
+    }
+  }
   if(loading) return <p>Loading...</p>;
   if(error) return <p>Error!</p>;
   return (
+    <>
       <Table 
-        sx={{ minWidth: 650, borderCollapse: 'inherit', border: '1px solid #c4c4c4', borderRadius: '5px'}} 
+        sx={{ minWidth: 650, borderCollapse: 'inherit', border: '1px solid #c4c4c4', borderRadius: '5px', marginBottom: 1}} 
         aria-label="simple table">
         <TableHead>
           <TableRow sx={{border:'1px solid #c4c4c4'}}>
@@ -47,5 +68,19 @@ export default function MyTestTable() {
           ))}
         </TableBody>
       </Table>
+
+      <IconButton onClick={()=>{previousPage()}}>
+        <ChevronLeftIcon />
+      </IconButton>
+      {pageList.map((a, index) => (
+          <Button key={index} variant='inherit' onClick={()=>{
+              setPageNum(a)
+              console.log(a)
+          }}>{a}</Button>
+      ))}
+      <IconButton onClick={()=>{nextPage()}}>
+        <ChevronRightIcon />
+      </IconButton>
+    </>
   );
 }

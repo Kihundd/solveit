@@ -69,6 +69,10 @@ export const NICKNAME = gql`
             nickname
             ownerId
             role
+            favorites{
+                id
+                name
+            }
         }
     }
 `;
@@ -96,17 +100,17 @@ export const ALLTESTLIST = gql`
         }
     }
 `
-export const RANKINGLIST = gql`
-    query GetRankingList($page: Int!) {
-        allTests(page: $page ){
-            id
-            name
-            ownerId
-            tryCnt
-            like
-        }
-    }
-`
+// export const RANKINGLIST = gql`
+//     query GetRankingList($page: Int!) {
+//         allTests(page: $page ){
+//             id
+//             name
+//             ownerId
+//             tryCnt
+//             like
+//         }
+//     }
+// `
 export const MYTEST = gql`
     query MyTestList{
         mySolvingTests{
@@ -429,6 +433,17 @@ export const GRADE_TEST_CASE = gql`
             code
             success
             message
+        }
+    }
+`
+
+export const RANKINGLIST = gql`
+    query GetRankingList($page: Int!, $includeAdmin: Boolean){
+        profilesByExp(page: $page, includeAdmin: $includeAdmin){
+            ownerId
+            nickname
+            tier
+            experience
         }
     }
 `

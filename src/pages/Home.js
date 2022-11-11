@@ -6,7 +6,7 @@ import { Typography, Box, Link } from '@mui/material';
 import FileUpload from '../components/FileUpload';
 import jsCookies from 'js-cookies';
 import { useQuery } from '@apollo/client';
-import { ALLTESTLIST, ALLASKING, TESTLIST_CATEGORY, USERCATETORY } from '../queries/queries';
+import { ALLTESTLIST, ALLASKING, TESTLIST_CATEGORY, USERCATETORY, RANKINGLIST } from '../queries/queries';
 import { useEffect } from 'react';
 import Login from './isLogin';
 
@@ -32,6 +32,11 @@ function Home() {
     const {loading:newAskingLoading, error:newAskingError, data:newAskingData} = useQuery(ALLASKING, {
         variables: {page: 1}}
     );
+    // 유저 랭킹
+    const {loading:rankLoading, eorr:rankError, data:rankData} = useQuery(RANKINGLIST, {
+        variables: {page: 1, includeAdmin: false}
+    })
+    console.log(rankData)
     
     const {loading, error, data} = useQuery(USERCATETORY, {
         variables: {ID: null}
@@ -49,7 +54,7 @@ function Home() {
     }, [Login()])
     
     useEffect(() => {
-        if(data !== undefined && data.profile.favorites[0].id !== undefined){
+        if(data !== undefined && data.profile.favorites.length !== 0){
             setCategoryId(Number(data.profile.favorites[0].id))
         }
     }, [data])
@@ -71,6 +76,14 @@ function Home() {
             setAsking(newAskingData.allAsking.slice(0,5));
         }
     }, [newAskingData])
+
+    useEffect(() => {
+        if(rankData !== undefined && rankData.profilesByExp !== undefined) {
+            setRanking(rankData.profilesByExp.slice(0,5));
+        }
+    
+    }, [rankData])
+    
 
 
     useEffect(() => {
@@ -147,7 +160,7 @@ function Home() {
                     <HomeList data={newAsking} url='Ask' />
                 </Grid> 
                 <Grid item xs={2}>
-                    <HomeList />
+                    <HomeList data={ranking} url='Ranking' />
                 </Grid> 
                 <Grid item xs={2}></Grid>
             </Grid>

@@ -37,12 +37,13 @@ function CreateReport(props) {
             type
         }
         const response = await createReport({variables: {input}})
+        setOpen(false)
         console.log(response.data)
     }
 
     return (
         <>
-            <Button variant="contained" color="primary" size='small' onClick={handleClickOpen} sx={{float: 'right', marginLeft: 2, marginTop: '10px'}}>
+            <Button variant="contained" color="error" size='small' onClick={handleClickOpen} sx={{float: 'right', marginLeft: 2, marginTop: '3px', mr: 1}}>
                 신고하기
             </Button>
             <Dialog open={open} onClose={handleClose} maxWidth="xs">
@@ -65,7 +66,7 @@ function CreateReport(props) {
                     <TextField fullWidth={true} minRows={4} maxRows={8} multiline={true} margin='dense' label="기타" />
                 </DialogContent>
                 <DialogActions>
-                    <Button variant="outliend" color="primary" onClick={handleSumbit}>확인</Button>
+                    <Button variant="contained" color="primary" onClick={handleSumbit}>확인</Button>
                     <Button variant="outlined" color="primary" onClick={handleClose}>닫기</Button>
                 </DialogActions>
             </Dialog>

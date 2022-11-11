@@ -56,7 +56,7 @@ function Forum() {
     return(
         <> 
             <Appbar />
-            <Container maxWidth="md">
+            <Container maxWidth="lg">
                 <Grid container>
                     <Grid item xs={2} sx={{mb:2}}>질문목록</Grid>
                     {/* <Grid item xs={7}></Grid>
@@ -72,7 +72,7 @@ function Forum() {
                     </Grid> */}
                 </Grid>
                 <Table 
-                    sx={{ minWidth: 650, borderCollapse: 'inherit', border: '1px solid #c4c4c4', borderRadius: '5px'}} 
+                    sx={{ minWidth: 650, borderCollapse: 'inherit', border: '1px solid #c4c4c4', borderRadius: '5px', mb: 1}} 
                     aria-label="simple table">
                     <TableHead>
                         <TableRow sx={{border:'1px solid #c4c4c4'}}>

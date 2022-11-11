@@ -117,7 +117,7 @@ function TestInfo() {
                 <Like userId={userId} />
                 <CreateTag />
                 <Difficulty />
-                <CreateReport testId={params.testId} testName={data.test.name} />
+                {/* <CreateReport testId={params.testId} testName={data.test.name} /> */}
                 
             </Container>
         </>

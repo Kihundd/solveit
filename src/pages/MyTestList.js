@@ -7,10 +7,12 @@ function MyTestList(){
     return(
         <>
             <Appbar />
-            <Container maxWidth="md" className='bodyContainer'>
-                <h5 style={{textAlign: 'left', marginLeft: '20px'}}>내가푼 문제집</h5>
+            <Container maxWidth="lg" className='bodyContainer'>
+                <Grid container>
+                    <Grid item xs={2} sx={{mt:1, mb: 2}}>내가 푼 문제집</Grid>
+                </Grid>
+                {/* <h5 style={{textAlign: 'left', marginLeft: '20px'}}>내가푼 문제집</h5> */}
                 <MyTestTable />
-                <PageButton />
             </ Container>
         </>
     )

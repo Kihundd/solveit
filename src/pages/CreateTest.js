@@ -89,7 +89,7 @@ function CreateTest() {
             <Appbar />
             <Container maxWidth="xl">
                 <Grid container spacing={2}>
-                    <Grid item xs={2}></Grid>
+                    <Grid item xs={1}></Grid>
                     <Grid item xs={2}>
                         <Box sx={{border: '1px solid #c4c4c4', borderRadius: '5px'}}>
                             <Button fullWidth variant='text' color='inherit' onClick={()=>{ setViewCreateTest(true)}}>
@@ -122,7 +122,7 @@ function CreateTest() {
                             </Grid>
                         </Box>
                     </Grid>
-                    <Grid item xs={7}>
+                    <Grid item xs={8}>
                         { viewCreateTest ?
                         <Box>
                             <TextField

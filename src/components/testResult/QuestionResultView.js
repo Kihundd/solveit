@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Grid, Box, TextField } from "@mui/material";
+import { Button, Grid, Box, TextField, Stack } from "@mui/material";
 import MultipleChoiceResultView from "./MultipleChoiceResultView";
 import { MULTIPLE_CHOICE, SHORT_ANSWER, FILL_BLANK } from "../test/QuestionInfo";
 import ShortAnswerResultView from "./ShortAnswerResultView";
@@ -76,11 +76,11 @@ export default function QuestionResultView({question, answers}) {
 
         <Grid container>
             {questionView}
-            <Grid item xs={12}>
-                <Button onClick={handleAnswerView}>정답 보기</Button>
-                <Button onClick={handleReviewNoteView}>오답 노트</Button>
-                <Button onClick={handleAskingView}>질문 하기</Button>
-            </Grid>
+            <Stack direction="row" spacing={1} sx={{paddingTop: 1, paddingBottom: 2}}>
+                <Button variant="contained" color="info" onClick={handleAnswerView}>정답 보기</Button>
+                <Button variant="contained" color="info" onClick={handleReviewNoteView}>오답 노트</Button>
+                <Button variant="contained" color="info" onClick={handleAskingView}>질문 하기</Button>
+            </Stack>
             <Grid item xs={12}>
                 {view}
             </Grid>
