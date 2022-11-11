@@ -370,11 +370,11 @@ export const DELETE_REPLY = gql`
 `
 export const CODING_TEST_RESULT = gql`
     query CodingTestResult($testId: ID!, $questionId: ID!, $testCaseIdx: Int!) {
-        getCodingTestResult(testId: $testId, questionId: $questionId, testCaseIdx: $testCaseIdx) {
+        codingTestResult(testId: $testId, questionId: $questionId, testCaseIdx: $testCaseIdx) {
             code
-            success
-            message
             result
+            message
+            success
         }
     }
 `
