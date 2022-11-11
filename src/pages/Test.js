@@ -2,12 +2,13 @@ import Appbar from "../components/home/Appbar";
 import QuestionNum from '../components/takeTest/QuestionNum';
 import QuestionView from "../components/takeTest/QuestionView";
 import TestName from "../components/takeTest/TestName";
-import { Container, Grid, Box } from '@mui/material'
+import { Box, Container, Grid } from '@mui/material'
 import { useEffect, useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
-import { TAKE_TEST, JUDGE_ANSWERS, SUBMIT_QUESTION } from "../queries/queries";
+import { TAKE_TEST, JUDGE_ANSWERS, SUBMIT_QUESTION, SUBMIT_CODING_TEST_ANSWER } from "../queries/queries";
 import { useNavigate, useParams } from "react-router-dom";
 import Asking from "../components/ask/Asking";
+import { CODING_TEST } from "../components/test/QuestionInfo";
 
 function Test(){
     const [idx, setIdx] = useState(0);
@@ -19,6 +20,7 @@ function Test(){
         fetchPolicy: 'no-cache'
     });
     const [submitAnswer] = useMutation(SUBMIT_QUESTION);
+    const [submitCodingTestAnswer] = useMutation(SUBMIT_CODING_TEST_ANSWER);
     const [judgeAnswers] = useMutation(JUDGE_ANSWERS);
 
     const navigate = useNavigate();
@@ -56,12 +58,26 @@ function Test(){
         console.log(answer);
 
         setAnswerSheet([...answerSheet]);
-        const response = await submitAnswer({variables: {
-            testId: Number(testId),
-            questionId: Number(qid),
-            answers: answer.join(',')
-        }});
-        console.log(response);
+
+        if(answer[0].type === CODING_TEST) {
+            const response = await submitCodingTestAnswer({variables: {input : {
+                testId: Number(testId),
+                questionId: Number(qid),
+                sourceCode: answer[0].sourceCode,
+                language: answer[0].language
+            }}});
+
+            console.log(response);
+        }
+        else {
+            const response = await submitAnswer({variables: {
+                testId: Number(testId),
+                questionId: Number(qid),
+                answers: answer.join(',')
+            }});
+
+            console.log(response);
+        }
     }
 
     const handleOnSubmit = () => {

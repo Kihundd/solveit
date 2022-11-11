@@ -19,6 +19,10 @@ export default function({question, changeAnswer, prevAnswer}) {
     const classes = useStyle();
     const [answer, setAnswer] = useState([]);
 
+    useEffect(() => {
+        setAnswer([...prevAnswer]);
+    }, []);
+
     const renderParagraph = () => {
         const lines = question.paragraph.split('\n');
         const ret = [];

@@ -12,22 +12,20 @@ import python_language from "react-syntax-highlighter/dist/cjs/languages/prism/p
 import java_language from "react-syntax-highlighter/dist/cjs/languages/prism/java";
 import c_language from "react-syntax-highlighter/dist/cjs/languages/prism/c";
 import cpp_language from "react-syntax-highlighter/dist/cjs/languages/prism/cpp";
-import language from "react-syntax-highlighter/dist/esm/languages/hljs/1c";
-import { DataGrid } from "@mui/x-data-grid";
-import { render } from "@testing-library/react";
 import Spinner from "react-spinner-material";
 import { CODING_TEST_RESULT, GRADE_TEST_CASE, SUBMIT_CODING_TEST_ANSWER } from "../../queries/queries";
 import { useLazyQuery, useMutation } from "@apollo/client";
+import { CODING_TEST } from "../test/QuestionInfo";
 
 const PADDING = 20;
 const fontHeight = 19;
 
-// C, python, java, C++
+// C, PYTHON, JAVA, CPP
 
 export default function({question, prevAnswer, testId, changeAnswer}) {
     const {paragraph, name} = question;
-    const [answer, setAnswer] = useState(prevAnswer);
-    const [progress, setProgress] = useState([]);
+    const [answer, setAnswer] = useState({type: CODING_TEST, sourceCode: "", language: "PYTHON"});
+    const progress = useRef([]);
     const ref = useRef();
     const [lineNumber, setLineNumber] = useState("1");
 
@@ -35,7 +33,7 @@ export default function({question, prevAnswer, testId, changeAnswer}) {
     const [gradeTestCase] = useMutation(GRADE_TEST_CASE);
     const [getCodingTestResult, {data, loading, error}] = useLazyQuery(CODING_TEST_RESULT);
     
-    const [languageObject, setLanguageObject] = useState({languages: {python:{}}, name: "python"});
+    const [languageObject, setLanguageObject] = useState({python:{}});
 
     useEffect(() => {
         Prism.register = (_) => {};
@@ -43,9 +41,12 @@ export default function({question, prevAnswer, testId, changeAnswer}) {
         java_language(Prism);
         c_language(Prism);
         cpp_language(Prism);
-        setLanguageObject({...languageObject, languages: Prism.languages});
+        setLanguageObject(Prism.languages);
 
-        setProgress(question.testCases.map(() => "nothing"));
+        progress.current = question.testCases.map(() => "nothing");
+        if(prevAnswer !== undefined && prevAnswer !== null && prevAnswer !== ""){
+            setAnswer(...prevAnswer);
+        }
     }, []);
 
     const getHeight = () => {
@@ -63,9 +64,9 @@ export default function({question, prevAnswer, testId, changeAnswer}) {
         }, 10);
     }
 
-    const handleChange = (answer) => {
-        setAnswer(answer);
-        changeAnswer([answer]);
+    const handleChange = (sourceCode) => {
+        setAnswer({...answer, sourceCode});
+        changeAnswer([{...answer, sourceCode}]);
 
         setNewLineNumber();
     }
@@ -74,13 +75,13 @@ export default function({question, prevAnswer, testId, changeAnswer}) {
         if(status === "nothing") {
             return <></>;
         }
-        else if (status === "waiting") {
+        else if (status === "PENDING") {
             return <Spinner visible={true} radius={30} />
         }
-        else if (status === "correct") {
+        else if (status === "SUCCESS") {
             return <CheckIcon />
         }
-        else if (status === "wrong") {
+        else if (status === "FAIL") {
             return <CloseIcon />
         }
         else {
@@ -100,7 +101,7 @@ export default function({question, prevAnswer, testId, changeAnswer}) {
                     <TableRow key={`${idx}: ${input}`}>
                         <TableCell align="center">{input}</TableCell>
                         <TableCell align="center">{outputsString}</TableCell>
-                        <TableCell align="center" className="loading-center">{renderProgress(progress[idx])}</TableCell>
+                        <TableCell align="center" className="loading-center">{renderProgress(progress.current[idx])}</TableCell>
                     </TableRow>
                 )
             });
@@ -131,15 +132,16 @@ export default function({question, prevAnswer, testId, changeAnswer}) {
 
 
     const handleLanguageChange = (languageName) => {
-        setLanguageObject({...languageObject, name: languageName});
+        setAnswer({...answer, language: languageName});
     }
 
     const handleTestCaseTest = async () => {
         const response = await submitCodingTestAnswer({variables: {input: {
             testId: Number(testId),
             questionId: Number(question.id),
-            sourceCode: answer,
-            language: languageObject.name.toUpperCase()
+            sourceCode: answer.sourceCode,
+            // language: languageObject.name.toUpperCase()
+            language: answer.language.toUpperCase()
         }}});
         
         question.testCases.forEach((ignored, idx) => {
@@ -149,36 +151,39 @@ export default function({question, prevAnswer, testId, changeAnswer}) {
                 testCaseIdx: idx
             }});
         });
-        
+
+        progress.current = [...progress.current.map(p => "PENDING")];
         waitingResult();
     };
 
-    const waitingResult = async () => {
-        setProgress(progress.map(p => "waiting"));
-        
+    const waitingResult = async () => {        
         let intervalId;
-
         intervalId = setInterval(async () => {
             let stop = true;
 
-            for(const[idx, p] of progress.entries()) {
-                if(p === "waiting") {
+            const newProgress = progress.current;
+            for(const[idx, p] of newProgress.entries()) {
+                if(p === "PENDING") {
                     stop = false;
                     const response = await getCodingTestResult({variables: {
                         testId: Number(testId),
                         questionId: Number(question.id),
                         testCaseIdx: idx
-                    }})
-                    if(response.data.getCodingTestResult.result === "SUCCESS") {
+                    }});
+                    
+                    const result = response.data.codingTestResult.result;
 
+                    if(result === "SUCCESS" || result === "FAIL") {
+                        newProgress[idx] = result;
                     }
-                    if(response.data.getCodingTestResult.result === "FAIL") {
-
+                    else if(result !== "PENDING") {
+                        newProgress[idx] = "ERROR!";
                     }
                 }
             }
-
-        }, 500)
+            progress.current = [...newProgress];
+            if(stop) clearInterval(intervalId);
+        }, 500);
     };
 
     return (
@@ -204,14 +209,14 @@ export default function({question, prevAnswer, testId, changeAnswer}) {
                         <InputLabel id="lan-select-label">언어</InputLabel>
                         <Select
                             id="lan-simple-select"
-                            value={languageObject.name}
+                            value={answer.language}
                             label="lan"
                             onChange={e => handleLanguageChange(e.target.value)}
                         >
-                            <MenuItem value={"java"}>JAVA</MenuItem>
-                            <MenuItem value={"c"}>C</MenuItem>
-                            <MenuItem value={"cpp"}>C++</MenuItem>
-                            <MenuItem value={"python"}>Python</MenuItem>
+                            <MenuItem value={"JAVA"}>JAVA</MenuItem>
+                            <MenuItem value={"C"}>C</MenuItem>
+                            <MenuItem value={"CPP"}>C++</MenuItem>
+                            <MenuItem value={"PYTHON"}>Python</MenuItem>
                         </Select>
                     </FormControl>
                 </Box>
@@ -219,10 +224,10 @@ export default function({question, prevAnswer, testId, changeAnswer}) {
             <Grid item xs={12}>
                 <div ref={ref} className={'code-editor-container'}>
                 <Editor
-                    value={answer}
+                    value={answer.sourceCode}
                     onValueChange={handleChange}
                     onChange={_ => setNewLineNumber()}
-                    highlight={answer => Prism.highlight(answer, languageObject.languages[languageObject.name], languageObject.name)}
+                    highlight={code => Prism.highlight(code, languageObject[answer.language.toLowerCase()], answer.language.toLowerCase())}
                     className={"code-editor"}
                     padding={PADDING}
                     sytle={{
