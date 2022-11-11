@@ -1,18 +1,20 @@
 import { Button, FormControlLabel, Grid, Switch, TextField } from "@mui/material";
 import {useState, useEffect, useRef} from 'react';
 import FillBlankQuestionView from "./FillBlankQuestionView";
+import MyEditor from "../editor/MyEditor";
 
 export default function({isSave, handleSave, question}) {
-    const [paragraph, setParagraph] = useState("빈칸 채우기 테스트 \n__정답1__ 은 xyz이다. __정답2__ 입니다.");
+    const [paragraph, setParagraph] = useState("");
     const [answers, setAnswers] = useState([]);
     const [explanation, setExplation] = useState("");
     const [toggleView, setToggleView] = useState(false);
     const ref = useRef();
 
+    const editorRef = useRef();
     useEffect(()=>{
         if(isSave === true) {
             handleSave({
-                paragraph,
+                paragraph: editorRef.current?.getInstance().getHTML(),
                 explanation,
                 answers
             });            
@@ -85,7 +87,7 @@ export default function({isSave, handleSave, question}) {
 
     return (
         <Grid container rowSpacing={1}>
-            <Grid item xs={12} style={{position:'relative'}}>
+            <Grid item xs={12} style={{position:'relative', textAlign: 'left'}}>
                 <FormControlLabel 
                     control={<Switch value={toggleView} onChange={e => setToggleView(e.target.checked)} />} 
                     label="미리보기" 
@@ -101,6 +103,7 @@ export default function({isSave, handleSave, question}) {
                         onChange={handleParagraphChange}
                         label="문제 내용 입력"
                     />
+                    // <MyEditor paragraph={paragraph} editorRef={editorRef} />
                 }
             </Grid>
             <Grid item xs={12}>
@@ -114,7 +117,8 @@ export default function({isSave, handleSave, question}) {
                     value={explanation}
                     onChange={e => setExplation(e.target.value)}
                     label="문제 해설 입력"
-                 />            </Grid>
+                 />            
+            </Grid>
             {/* <AnswerInput /> */}
             <Grid item xs={8}>
             
