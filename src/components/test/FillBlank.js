@@ -89,7 +89,7 @@ export default function({isSave, handleSave, question}) {
                 <FormControlLabel 
                     control={<Switch value={toggleView} onChange={e => setToggleView(e.target.checked)} />} 
                     label="미리보기" 
-                    style={{position: 'absolute', top: `-4%`, right:'0', zIndex: '9999'}}/>
+                    style={{position: 'absolute', top: `-22%`, right:'0', zIndex: '9999'}}/>
                 {
                     toggleView? <FillBlankQuestionView paragraph={paragraph} height={ref.current.offsetHeight}/> :
                         <TextField 

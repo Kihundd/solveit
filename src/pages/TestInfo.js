@@ -29,6 +29,7 @@ function TestInfo() {
     // const [unLike, {data:unLikeData, loading:unLikeLoading, error:unLikeError}] = useMutation(UNLIKE_TEST,{
     //     variables: {id: params.testId}
     // })
+    console.log(TestData)
     const {data: TagData, loading: TagLoading, error: TagError} = useQuery(GET_TAG, {
         variables: {testId: params.testId}
     })
@@ -117,7 +118,7 @@ function TestInfo() {
                 <Like userId={userId} />
                 <CreateTag />
                 <Difficulty />
-                <CreateReport testId={params.testId} testName={data.test.name} />
+                {/* <CreateReport testId={params.testId} testName={data.test.name} /> */}
                 
             </Container>
         </>

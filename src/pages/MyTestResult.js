@@ -2,7 +2,7 @@ import Appbar from "../components/home/Appbar.js";
 import QuestionNum from '../components/takeTest/QuestionNum';
 import QuestionView from "../components/takeTest/QuestionView";
 import TestName from "../components/takeTest/TestName";
-import { Container, Grid, Button } from '@mui/material'
+import { Container, Grid, Button, Box } from '@mui/material'
 import { useLazyQuery, useQuery } from "@apollo/client";
 import { useState, useEffect } from 'react';
 import { TEST_RESULT, GET_FULL_QUESTION } from "../queries/queries";
@@ -61,13 +61,21 @@ function MyTestResult(){
             <Appbar />
             <Container maxWidth="xl" >
                 <Grid container spacing={2} sx={{paddingTop: 0}}>
-                    <Grid item xs={3} sx={{border: '1px solid #c4c4c4', borderRadius: '5px'}}>
-                        <QuestionNum answerSheet={answerSheet} setIdx={setIdx}/>
-                        <Button variant="contained" >이전</Button>
-                        <Button variant="contained" sx={{marginLeft:'5px'}} onClick={handleNext}>다음</Button>
+                    <Grid item xs={2}></Grid>
+                    <Grid item xs={9}><TestName /></Grid>
+                    <Grid item xs={1}></Grid>
+
+                    <Grid item xs={2}></Grid>
+                    <Grid item xs={2}>
+                        <Box sx={{border: '1px solid #c4c4c4', borderRadius: '5px'}}>
+                             <QuestionNum answerSheet={answerSheet} setIdx={setIdx}/>
+                            <Button variant="contained" sx={{marginBottom: '10px'}}>이전</Button>
+                            <Button variant="contained" sx={{marginLeft:'5px', marginBottom: '10px'}} onClick={handleNext}>다음</Button>
+                        </Box>
+                       
                     </Grid>
-                    <Grid item xs={9} >
-                        <TestName />
+                    <Grid item xs={7} >
+                        
                         <QuestionResultView question={questionInfos[idx]} answers={answerSheet[idx]}/>
                     </Grid>
                 </Grid>

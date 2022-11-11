@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import AWS from 'aws-sdk';
 import { Button } from '@mui/material';
-
+import {ACCESS_KEY, SECRET_ACCESS_KEY, REGION, S3_BUCKET} from './FileUploadKey';
 
 AWS.config.update({
     accessKeyId: ACCESS_KEY,

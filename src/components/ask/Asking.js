@@ -34,7 +34,7 @@ function Asking(props){
     return(
 
                 
-                <Box maxWidth="xl" sx={{border:'1px solid #c4c4c4', borderRadius: '5px'}}>
+                <Box maxWidth="xl" sx={{border:'1px solid #c4c4c4', borderRadius: '5px', marginBottom: 2}}>
                     <Grid container>
                         <Grid item sx={{marginLeft: '20px'}}><h4>질문하기</h4></Grid>
                     </Grid>
@@ -66,7 +66,7 @@ function Asking(props){
                             />
                         </Grid>
                         <Grid item xs={12} sx={{marginTop: '10px'}}>
-                            <Button variant="contained" underline="none" color="primary" sx={{float: 'right', marginLeft: '10px'}} onClick={submitAsk}>확인</Button>
+                            <Button variant="contained" underline="none" color="primary" sx={{float: 'right', marginLeft: '10px', marginBottom: 1}} onClick={submitAsk}>확인</Button>
                             <Button variant="contained" underline="none" color="primary" sx={{float: 'right'}}>닫기</Button>
                         </Grid>
                     </Grid>

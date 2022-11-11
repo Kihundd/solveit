@@ -2,7 +2,7 @@ import Appbar from "../components/home/Appbar";
 import QuestionNum from '../components/takeTest/QuestionNum';
 import QuestionView from "../components/takeTest/QuestionView";
 import TestName from "../components/takeTest/TestName";
-import { Container, Grid } from '@mui/material'
+import { Container, Grid, Box } from '@mui/material'
 import { useEffect, useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { TAKE_TEST, JUDGE_ANSWERS, SUBMIT_QUESTION } from "../queries/queries";
@@ -90,13 +90,24 @@ function Test(){
     return(
         <>
             <Appbar  />
-            <Container maxWidth="xl" className='bodyContainer'>
-                <Grid container spacing={2}>
-                    <Grid item xs={3}>
-                        <QuestionNum answerSheet={answerSheet} setIdx={handleMovingIdx} submit={handleTestSubmit}/>
-                    </Grid>
-                    <Grid item xs={9}>
+            <Container maxWidth="xl" className='bodyContainer' sx={{padding: 0}}>
+                <Grid container spacing={2} >
+                    <Grid item xs={1}></Grid>
+                    <Grid item xs={10}>
                         <TestName />
+                    </Grid>
+                    <Grid item xs={1}></Grid>
+
+
+                    <Grid item xs={1}></Grid>
+                    <Grid item xs={2}>
+                        <Box sx={{border: '1px solid #c4c4c4', borderRadius: '5px'}}>
+                            <QuestionNum answerSheet={answerSheet} setIdx={handleMovingIdx} submit={handleTestSubmit}/>
+                        </Box>
+                        
+                    </Grid>
+                    <Grid item xs={8} >
+                        
                         <QuestionView 
                             row={answerSheet[idx]} 
                             testId={testId}
