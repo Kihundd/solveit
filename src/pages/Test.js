@@ -2,7 +2,7 @@ import Appbar from "../components/home/Appbar";
 import QuestionNum from '../components/takeTest/QuestionNum';
 import QuestionView from "../components/takeTest/QuestionView";
 import TestName from "../components/takeTest/TestName";
-import { Container, Grid } from '@mui/material'
+import { Box, Container, Grid } from '@mui/material'
 import { useEffect, useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { TAKE_TEST, JUDGE_ANSWERS, SUBMIT_QUESTION, SUBMIT_CODING_TEST_ANSWER } from "../queries/queries";
