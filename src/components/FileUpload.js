@@ -13,6 +13,29 @@ const myBucket = new AWS.S3({
     region: REGION,
 })
 
+const getUniqueId = () => {
+    return Date.now().toString(36) + Math.random().toString(36).substring(2);
+}
+const getImageUrl = (bucketName, questionId, fileId) => {
+    return `https://${bucketName}.s3.${REGION}.amazonaws.com/images/${questionId}/${fileId}`
+}
+
+export const IMAGE = "image";
+export const getFileUrl = async (file, questionId, type) => {
+    const fileId = getUniqueId();
+
+    const params = {
+        ACL: 'public-read',
+        Body: file,
+        Bucket: S3_BUCKET,
+        Key: `images/${fileId}`
+    };
+
+    const response = await myBucket.putObject(params).promise();
+
+    return getImageUrl(S3_BUCKET, questionId, fileId)
+}
+
 function FileUpload(props) {
     
     const [progress , setProgress] = useState(0);
@@ -23,8 +46,6 @@ function FileUpload(props) {
     }
 
     const uploadFile = (file) => {
-        console.log(file);
-
         const params = {
             ACL: 'public-read',
             Body: file,
@@ -33,12 +54,14 @@ function FileUpload(props) {
         };
 
         myBucket.putObject(params)
-            .on('httpUploadProgress', (evt) => {
-                setProgress(Math.round((evt.loaded / evt.total) * 100))
+            .on('success', (response) => {
+                console.log(response);
             })
             .send((err) => {
                 if (err) console.log(err)
             })
+
+        
     }
 
     return (
@@ -54,4 +77,3 @@ function FileUpload(props) {
 }
 
 export default FileUpload;
-

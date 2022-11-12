@@ -103,6 +103,7 @@ export default function ({isSave, handleSave, question}) {
                 <MyEditor
                     paragraph={paragraph}
                     editorRef={editorRef}
+                    questionId={question.id}
                 />
             </Grid>
             <Grid item xs={2} >

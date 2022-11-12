@@ -3,12 +3,12 @@ import HomeList from '../components/home/HomeList'
 import Grid from '@mui/material/Grid';
 import { useState } from 'react';
 import { Typography, Box, Link } from '@mui/material';
-import FileUpload from '../components/FileUpload';
 import jsCookies from 'js-cookies';
 import { useQuery } from '@apollo/client';
 import { ALLTESTLIST, ALLASKING, TESTLIST_CATEGORY, USERCATETORY, RANKINGLIST } from '../queries/queries';
 import { useEffect } from 'react';
 import Login from './isLogin';
+import FileUpload from '../components/FileUpload.js';
 
 function Home() {
 
