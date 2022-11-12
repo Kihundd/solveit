@@ -8,7 +8,6 @@ import { useQuery } from '@apollo/client';
 import { ALLTESTLIST, ALLASKING, TESTLIST_CATEGORY, USERCATETORY, RANKINGLIST } from '../queries/queries';
 import { useEffect } from 'react';
 import Login from './isLogin';
-import FileUpload from '../components/FileUpload.js';
 
 function Home() {
 
@@ -164,7 +163,6 @@ function Home() {
                 </Grid> 
                 <Grid item xs={2}></Grid>
             </Grid>
-            <FileUpload />
         </div>
         
     )

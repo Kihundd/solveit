@@ -16,64 +16,23 @@ const myBucket = new AWS.S3({
 const getUniqueId = () => {
     return Date.now().toString(36) + Math.random().toString(36).substring(2);
 }
-const getImageUrl = (bucketName, questionId, fileId) => {
-    return `https://${bucketName}.s3.${REGION}.amazonaws.com/images/${questionId}/${fileId}`
+const getImageUrl = (bucketName, fileId) => {
+    return `https://${bucketName}.s3.${REGION}.amazonaws.com/questionFiles/${fileId}`
 }
 
 export const IMAGE = "image";
-export const getFileUrl = async (file, questionId, type) => {
+export const getFileUrl = async (file, type) => {
     const fileId = getUniqueId();
 
     const params = {
         ACL: 'public-read',
         Body: file,
         Bucket: S3_BUCKET,
-        Key: `images/${fileId}`
+        Key: `questionFiles/${fileId}`
     };
 
     const response = await myBucket.putObject(params).promise();
 
-    return getImageUrl(S3_BUCKET, questionId, fileId)
+    return getImageUrl(S3_BUCKET, fileId)
 }
-
-function FileUpload(props) {
-    
-    const [progress , setProgress] = useState(0);
-    const [selectedFile, setSelectedFile] = useState(null);
-
-    const handleFileInput = (e) => {
-        setSelectedFile(e.target.files[0]);
-    }
-
-    const uploadFile = (file) => {
-        const params = {
-            ACL: 'public-read',
-            Body: file,
-            Bucket: S3_BUCKET,
-            Key: `images/${file.name}`
-        };
-
-        myBucket.putObject(params)
-            .on('success', (response) => {
-                console.log(response);
-            })
-            .send((err) => {
-                if (err) console.log(err)
-            })
-
-        
-    }
-
-    return (
-        <div style={{marginTop: '20px'}}>
-            <div>{progress}%</div>
-            <input type="file" onChange={handleFileInput}/>
-            <Button variant="contained" size="small" onClick={() => uploadFile(selectedFile)}> 사진등록</Button>
-            {/* <Button variant="contained" size="small" onClick={() => {
-                console.log()
-            }}> 사진등록</Button> */}
-        </div>
-      );
-}
-
-export default FileUpload;
+export default {};

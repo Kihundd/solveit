@@ -3,6 +3,9 @@ import {useState, useEffect, useRef} from 'react';
 import FillBlankQuestionView from "./FillBlankQuestionView";
 import MyEditor from "../editor/MyEditor";
 
+const START = "&lt;dfn&gt;";
+const END = "&lt;/dfn&gt;";
+
 export default function({isSave, handleSave, question}) {
     const [paragraph, setParagraph] = useState("");
     const [answers, setAnswers] = useState([]);
@@ -13,8 +16,10 @@ export default function({isSave, handleSave, question}) {
     const editorRef = useRef();
     useEffect(()=>{
         if(isSave === true) {
+            const newParagraph = paragraph.replace('&lt;dfn&gt;', "<dfn>").replace("&lt;/dfn&gt;", "</dfn>");
+
             handleSave({
-                paragraph: editorRef.current?.getInstance().getHTML(),
+                paragraph: newParagraph,
                 explanation,
                 answers
             });            
@@ -29,16 +34,16 @@ export default function({isSave, handleSave, question}) {
         }
     }, [question]);
 
-    const handleParagraphChange = (e) => {
-        setParagraph(e.target.value);
-        const p = e.target.value;
+    const handleParagraphChange = () => {
+        const p = editorRef.current?.getInstance().getHTML();
+        console.log(p);
+        setParagraph(p);
         //\s means "spaces" (e.g., whitespace — including newlines), and + means "one or more".
         const words = p.split(/\s+/);
         const newAnswers = [];
         words.forEach(p => {
-            // console.log(p);
-            if(p.length >= 4 && p.startsWith('__') && p.endsWith('__')) {
-                newAnswers.push(p.slice(2, p.length - 2));
+            if(p.length >= 14 && p.startsWith(START) && p.endsWith(END)) {
+                newAnswers.push(p.slice(START.length, p.length - END.length));
             }
         });
         setAnswers(newAnswers);
@@ -54,9 +59,9 @@ export default function({isSave, handleSave, question}) {
                 lines.forEach((line, lineIdx) => {
                     const words = line.split(' ');
                     words.forEach(word => {
-                        if(word.length >= 4 && word.startsWith('__') && word.endsWith('__')) {
+                        if(word.length >= 14 && word.startsWith(START) && word.endsWith(END)) {
                             if(cnt === i) {
-                                ret += `__${e.target.value}__ `;
+                                ret += `${START}${e.target.value}${END} `;
                             } else ret += word + " ";
                             cnt += 1;
                         } else ret += word + " ";
@@ -65,6 +70,7 @@ export default function({isSave, handleSave, question}) {
                         ret += "\n";
                 });
                 setParagraph(ret);
+                // editorRef.current.getInstance().insertText(ret);
                 answers[i] = e.target.value;
                 setAnswers(answers);
             };
@@ -93,17 +99,19 @@ export default function({isSave, handleSave, question}) {
                     label="미리보기" 
                     style={{position: 'absolute', top: `-22%`, right:'0', zIndex: '9999'}}/>
                 {
-                    toggleView? <FillBlankQuestionView paragraph={paragraph} height={ref.current.offsetHeight}/> :
-                        <TextField 
-                        ref={ref}
-                        rows='10'
-                        multiline
-                        fullWidth={true}
-                        value={paragraph}
-                        onChange={handleParagraphChange}
-                        label="문제 내용 입력"
-                    />
-                    // <MyEditor paragraph={paragraph} editorRef={editorRef} />
+                    toggleView? <FillBlankQuestionView paragraph={paragraph} height={ref.current != null? ref.current.offsetHeight: 300}/> :
+                    //     <TextField 
+                    //     ref={ref}
+                    //     rows='10'
+                    //     multiline
+                    //     fullWidth={true}
+                    //     value={paragraph}
+                    //     onChange={handleParagraphChange}
+                    //     label="문제 내용 입력"
+                    // />
+                    <div ref={ref}>
+                        <MyEditor paragraph={paragraph} editorRef={editorRef} onChange={handleParagraphChange}/>
+                    </div>
                 }
             </Grid>
             <Grid item xs={12}>

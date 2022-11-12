@@ -21,7 +21,7 @@ function QuestionView({row, answerChange, testId, submit}) {
             if(row !== undefined) {
                 setAnswer(row.answer);
                 const response = await getQuestion({variables: {id: row.qid}});
-                setQuestion(response.data.question);
+                setQuestion({...response.data.question, id: row.qid});
             }
         }
         setUp();
