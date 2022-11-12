@@ -70,9 +70,9 @@ export default function({isSave, handleSave, question}) {
                         ret += "\n";
                 });
                 setParagraph(ret);
-                // editorRef.current.getInstance().insertText(ret);
+                editorRef.current.getInstance().setHTML(ret, false);
                 answers[i] = e.target.value;
-                setAnswers(answers);
+                setAnswers([...answers]);
             };
 
             return (

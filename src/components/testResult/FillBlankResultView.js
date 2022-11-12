@@ -1,6 +1,7 @@
 import { Grid, Box, TextField, Typography } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import parse from 'html-react-parser';
 
 const useStyle = makeStyles(() => 
     createStyles({
@@ -17,45 +18,42 @@ export default function({question, answers}) {
         textAlign: 'start'
     }
     const classes = useStyle();
-
     const answer = answers.answer.split(',');
+    console.log("!!@#");
+    console.log(answer);
+    const answerCount = useRef(0);
 
-    const renderParagraph = () => {
-        const lines = question.paragraph.split('\n');
-        const ret = [];
+    const [paragraph, setParagraph] = useState(<></>);
 
-        let lineCnt = 0, answerCnt = 0;
-        lines.forEach(line => {
-            const words = line.split(' ');
-            words.forEach(word => {
-                if(word.length >= 4 && word.startsWith('__') && word.endsWith('__')) {
-                    const idx = answerCnt;
-                    answerCnt += 1;
-                    ret.push(
-                        <span className={`m-8`} key={`blank ${word}`}>
+    useEffect(() => {
+        const newParagraph = parse(question.paragraph, {
+            replace: domNode => {
+                if(domNode.name === "dfn") {
+                    const idx = answerCount.current;
+                    answerCount.current += 1;
+
+                    return (
+                        <span className={`m-8`}>
                             <TextField 
                                 sx={{input: {textAlign: "center"}}}
                                 InputProps={{
-                                    className: classes.input,
-                                    readOnly:true
-                                  }}
+                                    className: classes.input
+                                }}
                                 value={answer[idx]}
                                 variant="standard" />
                         </span>
-                        )
-                } else ret.push(<span key={`word ${word}`}> {word}</span>);
-            })
-            ret.push(<br key={`newLine ${lineCnt}`} />);
-            lineCnt += 1;
-        });
-        return ret;
-    };
+                    )
+                };
+            }
+        })
+        setParagraph(newParagraph);
+    }, []);
 
 
     return (
         <Grid item xs={12}>
             <Box style={style}>
-                <div>{renderParagraph()}</div>
+                <div>{paragraph}</div>
             </Box>
         </Grid>)
 
