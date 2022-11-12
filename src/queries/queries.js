@@ -77,7 +77,7 @@ export const NICKNAME = gql`
     }
 `;
 export const USERCATETORY = gql`
-    query GetMyname($ID: String) {
+    query GetMyCategory($ID: String) {
         profile(ID: $ID) {
             nickname
             ownerId

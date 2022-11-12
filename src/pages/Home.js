@@ -36,7 +36,7 @@ function Home() {
     const {loading:rankLoading, eorr:rankError, data:rankData} = useQuery(RANKINGLIST, {
         variables: {page: 1, includeAdmin: false}
     })
-    console.log(rankData)
+    // console.log(rankData)
     
     const {loading, error, data} = useQuery(USERCATETORY, {
         variables: {ID: null}
@@ -54,9 +54,12 @@ function Home() {
     }, [Login()])
     
     useEffect(() => {
-        if(data !== undefined && data.profile.favorites.length !== 0){
+        if(isLogin){
+            if(data !== undefined && data.profile.favorites.length !== 0){
             setCategoryId(Number(data.profile.favorites[0].id))
+            }
         }
+        
     }, [data])
 
     useEffect(() => {

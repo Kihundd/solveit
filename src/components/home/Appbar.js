@@ -19,6 +19,7 @@ import jsCookies from 'js-cookies';
 import { useQuery } from '@apollo/client';
 import { NICKNAME } from '../../queries/queries';
 import Logo from './Logo.js';
+import Login from '../../pages/isLogin'
 
 const darkTheme = createTheme({
     palette: {
@@ -67,11 +68,14 @@ const ResponsiveAppBar = () => {
   });
 
   useEffect(() => {
-    if(data !== undefined && data.profile.nickname !== undefined) {
-      setIsLogin(true);
-      setName(data.profile.nickname);
-      setRole(data.profile.role)
+    if(Login()){
+      if(data !== undefined && data.profile.nickname !== undefined) {
+        setIsLogin(true);
+        setName(data.profile.nickname);
+        setRole(data.profile.role)
+      }
     }
+    
   }, [data]);
   
   return (
