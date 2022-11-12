@@ -2,7 +2,6 @@ import { Button, Grid, TextField, ToggleButton, ToggleButtonGroup, Stack } from 
 import { useState, useEffect, useRef } from 'react'
 import _ from 'lodash';
 import CheckIcon from '@mui/icons-material/Check';
-// import EditorBox from "../editor/EditorBox";
 import MyEditor from "../editor/MyEditor";
 
 export default function ({isSave, handleSave, question}) {

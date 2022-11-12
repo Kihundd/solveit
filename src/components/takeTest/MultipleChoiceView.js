@@ -45,7 +45,7 @@ export default function({question, changeAnswer, prevAnswer}) {
                         readOnly:true
                     }}
                 /> */}
-                <Box sx={{textAlign:'left', border: '1px solid #eee', borderRadius: '5px', paddingLeft: '10px', paddingBottom: '100px'}} >
+                <Box sx={{textAlign:'left', border: '1px solid #c4c4c4', borderRadius: '5px', paddingLeft: '10px', paddingBottom: '100px'}} >
                     <Viewer style={{margin: '10'}} initialValue={paragraph} />
                 </Box>
                 

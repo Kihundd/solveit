@@ -1,5 +1,6 @@
-import { Button, Grid, TextField, ToggleButton, ToggleButtonGroup, Stack } from "@mui/material";
+import { Button, Grid, TextField, ToggleButton, ToggleButtonGroup, Stack, Box } from "@mui/material";
 import { useState } from "react";
+import { Viewer } from "@toast-ui/react-editor";
 
 
 export default function({question, answers}) {
@@ -29,7 +30,7 @@ export default function({question, answers}) {
     return (
         <Grid container rowSpacing={1}>
             <Grid item xs={12}>
-                <TextField 
+                {/* <TextField 
                     rows="10"
                     multiline
                     fullWidth={true} 
@@ -37,7 +38,11 @@ export default function({question, answers}) {
                     InputProps = {{
                         readOnly:true
                     }}
-                />
+                /> */}
+                <Box sx={{textAlign:'left', border: '1px solid #c4c4c4', borderRadius: '5px', paddingLeft: '10px', paddingBottom: '100px'}} >
+                    <Viewer style={{margin: '10'}} initialValue={paragraph} />
+                </Box>
+
             </Grid>
             <Grid item xs={12}>
             </Grid>

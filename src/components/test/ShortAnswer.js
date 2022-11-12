@@ -1,16 +1,18 @@
 import { Button, Grid, TextField } from "@mui/material";
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useRef} from 'react';
+import MyEditor from "../editor/MyEditor";
 
 export default function({isSave, handleSave, question}) {
     const [paragraph, setParagraph] = useState("");
     const [answer, setAnswer] = useState([""]);
     const [explanation, setExplation] = useState("");
+    const editorRef = useRef();
 
     useEffect(()=>{
         console.log(isSave);
         if(isSave === true) {
             handleSave({
-                paragraph,
+                paragraph: editorRef.current?.getInstance().getHTML(),
                 explanation,
                 answers: answer.split(",").map(str => str.trim())
             });            
@@ -27,15 +29,16 @@ export default function({isSave, handleSave, question}) {
 
     return (
         <Grid container rowSpacing={1}>
-            <Grid item xs={12}>
-                <TextField 
+            <Grid item xs={12} sx={{textAlign: 'left'}}>
+                {/* <TextField 
                     rows="10"
                     multiline
                     fullWidth={true}
                     value={paragraph}
                     onChange={e => setParagraph(e.target.value)}
                     label="문제 내용 입력"
-                 />
+                 /> */}
+                 <MyEditor paragraph={paragraph} editorRef={editorRef} />
             </Grid>
             <Grid item xs={12}>
             <TextField 
