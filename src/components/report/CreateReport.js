@@ -1,7 +1,8 @@
 import { useMutation } from '@apollo/client';
-import { Dialog, DialogActions, DialogTitle, DialogContent, Button, TextField, FormControl, InputLabel, Select, MenuItem, Typography } from "@mui/material";
+import { IconButton, Dialog, DialogActions, DialogTitle, DialogContent, Button, TextField, FormControl, InputLabel, Select, MenuItem, Typography } from "@mui/material";
 import React, { useState } from 'react'
 import { CREATE_REPORT } from '../../queries/queries'
+import FlagIcon from '@mui/icons-material/Flag';
 
 
 function CreateReport(props) {
@@ -43,9 +44,12 @@ function CreateReport(props) {
 
     return (
         <>
-            <Button variant="contained" color="error" size='small' onClick={handleClickOpen} sx={{float: 'right', marginLeft: 2, marginTop: '3px', mr: 1}}>
+            <IconButton onClick={handleClickOpen} color="secondary" sx={{float:'right'}} >
+                <FlagIcon />
+            </IconButton>
+            {/* <Button variant="contained" color="error" size='small' onClick={handleClickOpen} sx={{marginLeft: 2, marginTop: '3px', mr: 1}}>
                 신고하기
-            </Button>
+            </Button> */}
             <Dialog open={open} onClose={handleClose} maxWidth="xs">
                 <DialogTitle textAlign='center'>문제집 신고</DialogTitle>
                 <DialogContent >

@@ -5,7 +5,6 @@ import { Link, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { LIKE_TEST, UNLIKE_TEST, DIFFICULTY, TAKE_TEST, TEST_INFO, GET_TAG, GETLIKE, USER_INFO } from "../queries/queries"
 import { UpdateSharp } from "@mui/icons-material"
-import Difficulty from "../components/testResult/Difficulty"
 import CreateTag from "../components/tag/CreateTag.js";
 import CreateReport from "../components/report/CreateReport";
 import Like from "../components/like/Like";
@@ -111,14 +110,9 @@ function TestInfo() {
                         Test응시
                     </Link>
                 </Button>
-                {/* <Button variant="contained" underline="none" color="primary" size='small' onClick={handleClick} sx={{float: 'right', marginLeft: 2, marginTop: '10px'}}>
-                    좋아요
-                </Button> */}
-                <Like userId={userId} />
-                <CreateTag />
-                <Difficulty />
-                {/* <CreateReport testId={params.testId} testName={data.test.name} /> */}
-                
+                {/* <Like userId={userId} /> */}
+                {/* <CreateTag /> */}
+                {/* <Difficulty /> */}
             </Container>
         </>
     )

@@ -4,7 +4,10 @@ import { LIKE_TEST, UNLIKE_TEST, GETLIKE, LIKESCOUNT } from "../../queries/queri
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+
 function Like(props) {
 
     const [liked, setLiked] = useState(false);
@@ -22,34 +25,43 @@ function Like(props) {
     const [unLike, {data:unLikeData, loading:unLikeLoading, error:unLikeError}] = useMutation(UNLIKE_TEST,{
         variables: {id: params.testId}
     })
-    console.log(data)
+    
     useEffect(() => {
         if(data !== undefined) {
           setLiked(data.like);
         }
     },[data]);
-    // console.log(data.Like)
-    // console.log(liked)
-    console.log(liked)
+
+    const renderLike = () => {
+        if(liked === false) {
+            return <FavoriteBorderIcon color='inherit' />
+        }
+        else if(liked === true)
+            return <FavoriteIcon />
+    }
+
     const handleClick = async ()=>{
         if(liked == false){
             const response = like({variables:{id: params.testId}})
-            console.log(likeData)
+            // console.log(likeData)
             setLiked(true)
         }
         else if(liked == true){
             const response = unLike({variables:{id: params.testId}})
-            console.log(unLikeData)
+            // console.log(unLikeData)
             setLiked(false)
         } 
     }
 
     return (
-        <div>
-            <Button variant="contained" underline="none" color="primary" size='small' onClick={handleClick} sx={{float: 'right', marginLeft: 2, marginTop: '10px'}}>
+        <>
+            <IconButton onClick={handleClick} aria-label="like" color="error" sx={{float:'right'}}>
+                {renderLike()}
+            </IconButton>
+            {/* <Button variant="contained" underline="none" color="primary" size='small' onClick={handleClick} sx={{ marginLeft: 2, marginTop: '10px'}}>
                 좋아요
-            </Button>
-        </div>
+            </Button> */}
+        </>
     )
 }
 

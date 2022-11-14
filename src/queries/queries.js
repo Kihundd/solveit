@@ -201,6 +201,10 @@ export const GET_QUESTION = gql`
             name
             paragraph
             type
+            difficulty{
+                id
+                name
+            }
             ... on MultipleChoice {
                 candidates {
                     number
@@ -225,6 +229,10 @@ export const GET_FULL_QUESTION = gql`
             paragraph
             type
             explanation
+            difficulty {
+                id
+                name
+            }
             ... on MultipleChoice {
                 candidates {
                     number
