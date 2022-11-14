@@ -33,7 +33,7 @@ export default function({question, answers}) {
                     answerCount.current += 1;
 
                     return (
-                        <span className={`m-8`}>
+                        // <span className={`m-8`}>
                             <TextField 
                                 sx={{input: {textAlign: "center"}}}
                                 InputProps={{
@@ -41,7 +41,7 @@ export default function({question, answers}) {
                                 }}
                                 value={answer[idx]}
                                 variant="standard" />
-                        </span>
+                        // {/* </span> */}
                     )
                 };
             }
@@ -52,8 +52,8 @@ export default function({question, answers}) {
 
     return (
         <Grid item xs={12}>
-            <Box style={style}>
-                <div>{paragraph}</div>
+            <Box style={style} sx={{border: '1px solid #c4c4c4', borderRadius: '5px'}}>
+                {paragraph}
             </Box>
         </Grid>)
 

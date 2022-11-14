@@ -20,10 +20,11 @@ function ReviewNote(props){
     }, [props.pid])
 
     useEffect(() => {
-      if(ReviewData !== undefined){
+      if(ReviewData !== undefined && ReviewData.reviewNote !== null){
         setExplanation(ReviewData.reviewNote.explanation)
       }
     }, [ReviewData])
+    console.log(ReviewData)
     
     const onSave = async () => {
         // const questionIds = questionList.map(q => q.questionId);

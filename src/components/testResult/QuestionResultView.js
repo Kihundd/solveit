@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Button, Grid, Box, TextField, Stack } from "@mui/material";
 import MultipleChoiceResultView from "./MultipleChoiceResultView";
-import { MULTIPLE_CHOICE, SHORT_ANSWER, FILL_BLANK } from "../test/QuestionInfo";
+import { MULTIPLE_CHOICE, SHORT_ANSWER, FILL_BLANK, CODING_TEST } from "../test/QuestionInfo";
 import ShortAnswerResultView from "./ShortAnswerResultView";
 import FillBlankResultView from "./FillBlankResultView";
+import CodingTestResultView from "./CodingTestResultView";
 import Asking from "../ask/Asking";
 import ReviewNote from "./ReviewNote";
 
@@ -11,6 +12,7 @@ export default function QuestionResultView({question, answers}) {
     const [questionView, setQuestionView] = useState(<></>);
     const [view, setView] = useState(<></>);
     const [qid, setQid] = useState();
+    const [type, setType] = useState(<></>);
 
     useEffect(() => {
         setView(<></>);
@@ -25,6 +27,9 @@ export default function QuestionResultView({question, answers}) {
                 setQuestionView(<ShortAnswerResultView question={question} answers={answers}/>)
             else if(type === FILL_BLANK)
                 setQuestionView(<FillBlankResultView question={question} answers={answers}/>)
+            else if(type === CODING_TEST)
+                setQuestionView(<CodingTestResultView question={question} answers={answers}/>)
+            
         }
     }, [question]);
 
