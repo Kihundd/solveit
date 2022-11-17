@@ -35,4 +35,46 @@ export const getFileUrl = async (file, type) => {
 
     return getImageUrl(S3_BUCKET, fileId)
 }
-export default {};
+
+
+function FileUpload(props) {
+    
+    const [progress , setProgress] = useState(0);
+    const [selectedFile, setSelectedFile] = useState(null);
+
+    const handleFileInput = (e) => {
+        setSelectedFile(e.target.files[0]);
+    }
+
+    const uploadFile = (file) => {
+        console.log(file);
+
+        const params = {
+            ACL: 'public-read',
+            Body: file,
+            Bucket: S3_BUCKET,
+            Key: `images/${file.name}`
+        };
+
+        myBucket.putObject(params)
+            .on('httpUploadProgress', (evt) => {
+                setProgress(Math.round((evt.loaded / evt.total) * 100))
+            })
+            .send((err) => {
+                if (err) console.log(err)
+            })
+    }
+
+    return (
+        <div style={{marginTop: '20px'}}>
+            <div>{progress}%</div>
+            <input type="file" onChange={handleFileInput}/>
+            <Button variant="contained" size="small" onClick={() => uploadFile(selectedFile)}> 사진등록</Button>
+            {/* <Button variant="contained" size="small" onClick={() => {
+                console.log()
+            }}> 사진등록</Button> */}
+        </div>
+      );
+}
+
+export default FileUpload;

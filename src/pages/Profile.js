@@ -27,7 +27,7 @@ function Profile() {
             <ProfileHeader />
             <Container maxWidth="lg">   
                 <ProfileInfo userId={userId} />
-                <Box sx={{border:'1px solid #c4c4c4', marginTop:'20px'}}>
+                {/* <Box sx={{border:'1px solid #c4c4c4', marginTop:'20px'}}>
                     <Grid container spacing={1} sx={{marginTop:'20px'}}>
                         <Grid item xs={5}>
                             <TestStaus userId={userId} />
@@ -37,7 +37,7 @@ function Profile() {
                             <AnswerRate />
                         </Grid>
                     </Grid>
-                </Box>
+                </Box> */}
                 {/* <div style={{borderTop: "2px solid #c4c4c4"}}>
                     <Grid container>
                         <Grid item xs={2}></Grid>

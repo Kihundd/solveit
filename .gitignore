@@ -5,6 +5,7 @@
 /.pnp
 .pnp.js
 FileUploadKey.js
+OCRKey.js
 # testing
 /coverage
 

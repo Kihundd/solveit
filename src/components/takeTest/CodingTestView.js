@@ -172,6 +172,7 @@ export default function({question, prevAnswer, testId, changeAnswer}) {
                         questionId: Number(question.id),
                         testCaseIdx: idx
                     }});
+                    console.log(response);
                     
                     const result = response.data.codingTestResult.result;
 

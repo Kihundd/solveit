@@ -48,6 +48,7 @@ function ProfileInfo(props) {
     const renderCategories = () => {
         if(categoryData === undefined)
             return <MenuItem value='' key='loading' disabled={true}>Loading...</MenuItem>
+        console.log(categoryData);
         return categoryData.categories.map(category => 
             <MenuItem value={category.name} key={category.name}>{category.name}</MenuItem>);
     };
@@ -116,14 +117,14 @@ function ProfileInfo(props) {
                             </FormControl>
                         </Grid>
                     </Grid>
-                    <Grid container spacing={2} sx={{marginTop:'10px'}}>
+                    {/* <Grid container spacing={2} sx={{marginTop:'10px'}}>
                         <Grid item xs={7}>
                         <TextField size="small" fullWidth disabled={true} defaultValue={data.profile.point}></TextField>
                         </Grid>
                         <Grid item xs={5}>
                             <Button href="/Shop" fullWidth variant='contained'>상점</Button>
                         </Grid>
-                    </Grid>
+                    </Grid> */}
                 </Grid>
             </Grid>       
         </Container>
