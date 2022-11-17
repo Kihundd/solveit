@@ -26,6 +26,8 @@ export const USER_INFO = gql`
                 id
                 name
             }
+            solveCount
+            correctCount
         }
     }
 `;
@@ -48,18 +50,6 @@ export const STATISTICS = gql`
                 try_count
                 correct_count
             }
-        }
-    }
-`;
-export const My_Coupon = gql`
-    query myCoupons {
-        myCoupons {
-            coupon {
-                id
-                name
-                explanation
-            }
-            count
         }
     }
 `;
@@ -452,6 +442,37 @@ export const RANKINGLIST = gql`
             nickname
             tier
             experience
+        }
+    }
+`
+export const GET_COUPON = gql`
+    query GetCoupon{
+        coupons{
+            id
+            name
+            explanation
+            price
+        }
+    }
+`
+export const BUY_COUPON = gql`
+    mutation BuyCoupon($couponID: ID!, $count: Int!){
+        issueCoupon(couponID: $couponID, count: $count){
+            code
+            success
+            message
+        }
+    }
+`
+export const MY_COUPON = gql`
+    query MyCoupons{
+        myCoupons{
+            coupon{
+                name
+                explanation
+                price
+            }
+            count
         }
     }
 `

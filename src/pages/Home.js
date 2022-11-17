@@ -47,7 +47,7 @@ function Home() {
         variables: {id: categoryId}
     });
     // console.log(categoryData)
-
+    
     useEffect(() => {
         setIsLogin(Login())
     }, [Login()])
@@ -58,7 +58,6 @@ function Home() {
             setCategoryId(Number(data.profile.favorites[0].id))
             }
         }
-        
     }, [data])
 
     useEffect(() => {
@@ -99,6 +98,8 @@ function Home() {
     return (
         <div>
             <Appbar/>
+
+            
             <div className='main-bg'>
                 <h3 className='main-content'>Solve it</h3>
                 <p className='main-content'>여러가지 문제를 만들고 풀어볼수 있는 사이트입니다.</p>

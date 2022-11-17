@@ -112,8 +112,8 @@ export default function ({ saveQuestion, testId, question }) {
     const renderCategories = () => {
         if(data === undefined)
             return <MenuItem value='EMPTY' key='loading' disabled={true}>Loading...</MenuItem>
-        return data.categories.map(category => 
-            <MenuItem value={category.id} key={category.id}>{category.name}</MenuItem>);
+        return data?data.categories.map(category => 
+            <MenuItem value={category.id} key={category.id}>{category.name}</MenuItem>): null;
     };
 
     return (

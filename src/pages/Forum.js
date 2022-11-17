@@ -59,17 +59,6 @@ function Forum() {
             <Container maxWidth="lg">
                 <Grid container>
                     <Grid item xs={2} sx={{mb:2}}>질문목록</Grid>
-                    {/* <Grid item xs={7}></Grid>
-                    <Grid item xs={3} sx={{mb: 2}}>
-                        <FormControl sx={{width: '150px'}}>
-                            <Select value={order} onChange={handleChange} >
-                                <MenuItem value={'DATE_DESC'}>최근순</MenuItem>
-                                <MenuItem value={'DATE'}>오래된순</MenuItem>
-                                <MenuItem value={'LIKE_DESC'}>좋아요순</MenuItem>
-                                <MenuItem value={'SOLVING_COUNT_DESC'}>제출수순</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </Grid> */}
                 </Grid>
                 <Table 
                     sx={{ minWidth: 650, borderCollapse: 'inherit', border: '1px solid #c4c4c4', borderRadius: '5px', mb: 1}} 

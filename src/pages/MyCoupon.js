@@ -1,16 +1,23 @@
+import React, { useState, useEffect } from 'react'
 import { useQuery } from "@apollo/client";
-import {My_Coupon} from "../queries/queries"
+import {MY_COUPON} from "../queries/queries"
+import MyCouponList from "../components/profile/MyCouponList";
 
 function MyCoupon(){
 
-    const {loading, error, data} = useQuery(My_Coupon);
-    if(loading) return <p>Loading...</p>;
-    if(error) return <p>error..</p>;
-    console.log(data);
+    const [myCoupons, setMyCoupons] = useState([]);
+    const {loading, error, data} = useQuery(MY_COUPON);
+    console.log(data)
+    useEffect(() => {
+      if(data !== undefined){
+        setMyCoupons(data.myCoupons)
+      }
+    }, [data])
+    
 
     return (
         <div>
-            <p>d</p>
+            <MyCouponList myCoupons={myCoupons}  />
         </div>
     )
 

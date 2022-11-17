@@ -15,9 +15,12 @@ import AskingView from './pages/AskingView';
 import Shop from './pages/Shop';
 import TestResult from './pages/TestResult';
 import MyTestResult from './pages/MyTestResult';
-import Admin from "./pages/Admin";
+import Admin from './pages/Admin';
+import Report from './components/admin/Report';
+import Coupon from './components/admin/Coupon';
 import { Routes, Route, Navigate } from 'react-router-dom'
 import isLogin from './pages/isLogin';
+import isRole from './pages/isRole';
 import PrivateRoute from './components/route/PrivateRoute';
 
 
@@ -43,7 +46,9 @@ function App() {
         <Route path="/Ask/:askingId" element={ <AskingView /> } />
         <Route path='/Ranking' element={ <Ranking />} />
         <Route path="/Shop" element={ <PrivateRoute><Shop /></PrivateRoute> } />
-        <Route path="/Admin" element={ <Admin /> } />
+        <Route path="/Admin/Setting" element={ <Admin /> } />
+        <Route path='/Admin/Report' element={<Report />} />
+        <Route path='/Admin/Coupon' element={<Coupon />} />
         {/* <AuthRoute path="/Shop" element={ <Shop /> } /> */}
         <Route path="*" />
       </Routes>

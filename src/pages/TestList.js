@@ -10,7 +10,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 function TestList() {
     
     // const {testId} = useParams();
-    const [pageList, setPageList] = useState([1,2,3]);
+    const [pageList] = useState([1]);
     const [pageNum, setPageNum] = useState(1);
     const [testCnt, setTestCnt] = useState(0);
     const [testList, setTestList] = useState();
@@ -28,11 +28,14 @@ function TestList() {
     // const [GetByCategory, {loading:categoryLoading, error:categoryError, data:categoryData}] = useLazyQuery(TESTLIST_CATEGORY);
     // // console.log(categoryId)
     // // console.log(categoryData)
-    console.log(countData)
+    
     useEffect(() => {
         if(countData !== undefined && countData.allTestsCount !== undefined){
             setTestCnt(countData.allTestsCount)
-        }
+            for(let i = 2; i <= Math.ceil(countData.allTestsCount/10); i++){
+                pageList.push(i)
+            }  
+        }   
     }, [countData])
     
     useEffect(()=>{
