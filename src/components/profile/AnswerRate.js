@@ -1,25 +1,27 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState } from 'react';
+import { Box } from '@mui/material';
 import Chart from 'react-apexcharts'
 
-class AnswerRate extends Component {
+function AnswerRate(props) {
+
+  const [ tryCount, setTryCout ] = useState('');
+  const [ correct, setCorrect ] = useState('');
+  const [ icorrect, setIcorrect] = useState('');
+  const [options] = useState({labels: ['정답률', '오답률']});
+  const [series, setSeries] = useState([])
+
+  useEffect(()=> {
+      setTryCout(props.solvingData[0])
+      setCorrect(props.solvingData[1])
+      setIcorrect(props.solvingData[0]-props.solvingData[1])
+      setSeries([correct, icorrect])
+  },[props])
   
-  constructor(props) {
-    super(props);
-
-    this.state = {
-        options: {labels: ['정답률', '오답률']},
-        series: [50, 50],
-
-    }
-  }
-
-  render() {
-    return (
-      <div className="pie">
-        <Chart options={this.state.options} series={this.state.series} type="pie" width="380" />
-      </div>
-    );
-  }
+  return (
+    <Box sx={{ml: 4}}>
+      <Chart options={options} series={series} type="pie" width="330" />
+    </Box>
+  )
 }
 
-export default AnswerRate;
+export default AnswerRate

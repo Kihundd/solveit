@@ -8,7 +8,6 @@ function DeleteReport(props) {
     const [open, setOpen] = useState(false)
     const [name, setName] = useState('');
     const [deleteReport, {loading:deleteLoading, error:deleteError, data: deleteData}] = useMutation(DELETE_REPORT);
-    
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -36,7 +35,7 @@ function DeleteReport(props) {
                     <Button variant="outliend" color="primary" onClick={()=>{
                         console.log(props.reportInfo.id)
                         setOpen(false)
-                        // deleteHandler(props.reportInfo.id)
+                        deleteHandler(props.reportInfo.id)
                     }}>확인</Button>
                     <Button variant="outlined" color="primary" onClick={handleClose}>닫기</Button>
                 </DialogActions>

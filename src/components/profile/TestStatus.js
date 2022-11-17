@@ -1,4 +1,3 @@
-import ProfileHeader from './ProfileHeader'
 import * as React from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -13,35 +12,35 @@ import { STATISTICS } from '../../queries/queries';
 
 function TestStatus(props) {
 
-    const { data, loading, error } = useQuery(STATISTICS, {
-        variables:{ID: props.userId}
-    });
-    console.log(data)
     const [ tryCount, setTryCout ] = useState('');
     const [ correct, setCorrect ] = useState('');
     const [ icorrect, setIcorrect] = useState('');
 
+    // console.log(props.solvingData)
     const createData = ((name, value) => {
         return { name, value };
     })
 
-    // useEffect(()=> {
-    //     if(data.)
-    // },[])
-    
+
+    useEffect(()=> {
+        setTryCout(props.solvingData[0])
+        setCorrect(props.solvingData[1])
+        setIcorrect(props.solvingData[0]-props.solvingData[1])
+    },[props])
+
     const rows = [
-        createData('푼 문제수', 0),
-        createData('맞은 문제 수', 0),
-        // createData('틀린 문제 수', icorrect),
+        createData('푼 문제수', tryCount),
+        createData('맞은 문제 수', correct),
+        createData('틀린 문제 수', icorrect),
         // createData('부적절한 글', 0),
         // createData('공유한 문제집 수', 0),
     ];
 
     return(
-        <div>
-            <TableContainer sx={{border:'2px solid #c4c4c4', marginTop:'20px', marginLeft:'50px'}} >
-                    <h4>채점현황</h4>
-                    <Table  size="medium" aria-label="a dense table">
+        <>
+            <TableContainer sx={{border:'2px solid #c4c4c4'}} >
+                    {/* <h4>채점현황</h4> */}
+                    <Table  size="large" aria-label="a dense table">
                         <TableBody>
                         {rows.map((row) => (
                             <TableRow key={row.name} >
@@ -56,7 +55,7 @@ function TestStatus(props) {
                         </TableBody>
                     </Table>
                 </TableContainer>
-        </div>
+        </>
     )
 }
 

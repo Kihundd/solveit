@@ -56,7 +56,7 @@ const ResponsiveAppBar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-  // console.log(isLogin)
+  
   const handleLogout = () => {
     setAnchorElUser(null);
     setName(null);
@@ -80,14 +80,17 @@ const ResponsiveAppBar = () => {
         setIsLogin(true);
         setName(data.profile.nickname);
         setRole(data.profile.role)
+       
       }
     }
-    
   }, [data]);
+
+  
+  
   
   return (
 
-      <AppBar position="static" color='inherit' sx={{boxShadow: 'none', marginBottom: 5, borderBottom: '1px solid #c4c4c4'}}>
+      <AppBar position="static" color='inherit' sx={{boxShadow: 'none', mb:5, mt:1, borderBottom: '1px solid #c4c4c4'}}>
         <Container maxWidth="lg" >
             <Toolbar disableGutters>
             <Typography
@@ -119,7 +122,37 @@ const ResponsiveAppBar = () => {
                 >
                   <MenuIcon />
                 </IconButton>
+                {role?
                 <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                }}
+                keepMounted
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                    display: { xs: 'block', md: 'none' },
+                }}
+                >
+                  <MenuItem onClick={handleCloseNavMenu}>
+                    <Link href="/Admin/Setting" underline="none" color="inherit">경험치 설정</Link>
+                  </MenuItem>
+                  <MenuItem onClick={handleCloseNavMenu}>
+                    <Link href="/Admin/Report" underline="none" color="inherit">신고처리</Link>
+                  </MenuItem>
+                  <MenuItem onClick={handleCloseNavMenu}>
+                    <Link href="/Admin/Coupon" underline="none" color="inherit">쿠폰관리</Link>
+                  </MenuItem>
+                </Menu>
+
+                :<Menu
                 id="menu-appbar"
                 anchorEl={anchorElNav}
                 anchorOrigin={{
@@ -153,9 +186,15 @@ const ResponsiveAppBar = () => {
                   <MenuItem onClick={handleCloseNavMenu}>
                     <Link href="/Ranking" underline="none" color="inherit">랭킹</Link>
                   </MenuItem>
+                  <MenuItem onClick={handleCloseNavMenu}>
+                    <Link href="/Shop" underline="none" color="inherit">상점</Link>
+                  </MenuItem>
+                  
 
                 </Menu>
+            }   
             </Box>
+            
             {/* 작은화면 */}
             <Typography
                 variant="h5"
@@ -176,11 +215,20 @@ const ResponsiveAppBar = () => {
                 <Logo />
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }}}>
+              {role ?
+              <>
+              <Link href="/Admin/Setting" underline="none" color="inherit" sx={{marginLeft: 7, my: 2, fontSize: 14}}>경험치 설정</Link>
+              <Link href="/Admin/Report" underline="none" color="inherit" sx={{marginLeft: 5, my: 2, fontSize: 14}}>신고처리</Link>
+              <Link href="/Admin/Coupon" underline="none" color="inherit" sx={{marginLeft: 5, my: 2, fontSize: 14}}>쿠폰관리</Link>
+              </>
+              :<>
               <Link href="/TestList" underline="none" color="inherit" sx={{marginLeft: 7, my: 2, fontSize: 14}}>문제목록</Link>
               <Link href="/CreateTest" underline="none" color="inherit" sx={{marginLeft: 5, my: 2, fontSize: 14}}>문제생성</Link>
               <Link href="/MyTestList" underline="none" color="inherit" sx={{marginLeft: 5, my: 2, fontSize: 14}}>문제관리</Link>
               <Link href="/Forum" underline="none" color="inherit" sx={{marginLeft: 5, my: 2, fontSize: 14}}>게시판</Link>
               <Link href="/Ranking" underline="none" color="inherit" sx={{marginLeft: 5, my: 2, fontSize: 14}}>랭킹</Link>
+              <Link href="/Shop" underline="none" color="inherit" sx={{marginLeft: 5, my: 2, fontSize: 14}}>상점</Link>
+              </> }
             </Box>
               {
                 isLogin ? 
@@ -204,9 +252,7 @@ const ResponsiveAppBar = () => {
                     open={Boolean(anchorElUser)}
                     onClose={handleCloseUserMenu}
                     >
-                      {role ? <MenuItem onClick={handleCloseUserMenu}>
-                                <Link href="/Admin" underline="none" color="inherit">신고처리</Link>
-                              </MenuItem>
+                      {role ? null
                             : <MenuItem onClick={handleCloseUserMenu}>
                                 <Link href="/Profile" underline="none" color="inherit">프로필</Link>
                               </MenuItem>

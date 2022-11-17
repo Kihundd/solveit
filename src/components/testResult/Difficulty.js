@@ -1,22 +1,25 @@
 import React from 'react'
-import { Rating, Stack, Dialog, DialogActions, DialogTitle, DialogContent, Button, Box } from "@mui/material";
+import { IconButton, Rating, Stack, Dialog, DialogActions, DialogTitle, DialogContent, Button, Box } from "@mui/material";
 import { useState } from 'react';
 import { useQuery, useMutation } from "@apollo/client"
-import { DIFFICULTY, TEST_INFO } from "../../queries/queries"
+import { DIFFICULTY } from "../../queries/queries"
 import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import StarsIcon from '@mui/icons-material/Stars';
 
 
-function Difficulty() {
+function Difficulty(questionId) {
     const [difficultyNum, setDifficultyNum] = useState(0);
     const [dificlutyView, setDifficultyView] = useState(false)
-    const [open, setOpen] = useState(false)
-    const params = useParams();
-    const {data, loading, error} = useQuery(TEST_INFO, {
-        variables:{id: params.testId}
-    });
-    const [selectDifficulty,{data:difficultyData, loading:difficultyLoading, error:difficultyError}] = useMutation(DIFFICULTY,{
-        variables: {questionId: 34, difficulty: difficultyNum}
-    })
+    const [qid, setQid] = useState(0);
+    const [open, setOpen] = useState(false);
+    
+
+    useEffect(() => {
+      setQid(questionId.questionId);
+    }, [questionId])
+    
+    const [selectDifficulty, {data, loading, error}] = useMutation(DIFFICULTY)
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -28,17 +31,25 @@ function Difficulty() {
     }
 
     const handleDifficulty = async ()=> {
-        const response = await selectDifficulty({variables:{questionId:34, difficulty:difficultyNum}})
-
+        const response = await selectDifficulty({variables:{questionId:qid, difficulty:difficultyNum}})
+        console.log(response);
+        setOpen(false);
     }
+
     if(loading) return <p>Loading...</p>;
     if(error) return <p>Error!</p>;
 
     return (
-        <div>
-            <Button variant="contained" color="primary" size='small' onClick={handleClickOpen} sx={{float: 'right', marginLeft: 2, marginTop: '10px'}}>
-                난이도측정
-            </Button>
+        <>
+            <IconButton onClick={handleClickOpen} color="secondary" sx={{float:'right', verticalAlign: 'text-top'}} >
+                <StarsIcon />
+            </IconButton>
+            {/* <Stack>
+                <Button variant="outlined" startIcon={<StarsIcon />}  size='small' onClick={handleClickOpen} sx={{float: 'right', marginLeft: 2, marginTop: '10px'}}>
+                    난이도측정
+                </Button>
+            </Stack> */}
+            
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle textAlign='center'>난이도측정</DialogTitle>
                 <DialogContent>
@@ -60,7 +71,7 @@ function Difficulty() {
                     <Button variant="outlined" color="primary" onClick={handleClose}>닫기</Button>
                 </DialogActions>
             </Dialog>
-        </div>
+        </>
     )
 }
 

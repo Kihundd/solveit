@@ -45,9 +45,11 @@ function ReviewNote(props){
                 fullWidth={true}
                 value={explanation}
                 label="오답노트 내용"
+                placeholder="여기에 오답노트 내용을 작성하세요."
                 onChange={e => {
                     setExplanation(e.target.value)
                 }}
+                sx={{mt:2}}
             />
             {/* <Button variant="contained" underline="none" color="primary" onClick={onSave} sx={{float: 'right', marginTop: '10px'}}>
                 닫기
