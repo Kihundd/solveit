@@ -1,9 +1,9 @@
 import Appbar from "../components/home/Appbar.js";
-import { Grid, TableContainer, TableHead, TableCell, TableRow, Table, TableBody, Paper, Container, Box, FormControl, Select, MenuItem } from "@mui/material"
+import { Grid, TableContainer, TableHead, TableCell, TableRow, Table, TableBody, Paper, Container, Stack, Divider } from "@mui/material"
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useLazyQuery, useQuery } from "@apollo/client";
-import {GET_ASKING, ALLASKING} from '../queries/queries.js'
+import {GET_ASKING, ALLASKING, ALL_ASKING_COUNT} from '../queries/queries.js'
 import { useEffect } from "react";
 import { ButtonGroup, Button, IconButton } from "@mui/material"
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -12,25 +12,28 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 function Forum() {
 
-    const params = useParams();
+    const [pageList] = useState([1]);
     const [askingList, setAskingList] = useState([]);
-    const [pageList, setPageList] = useState([1, 2]);
     const [pageNum, setPageNum] = useState(1);
-    const [order, setOrder] = useState('DATE_DESC');
+    const {loading:countLoading, error: countError, data:countData} = useQuery(ALL_ASKING_COUNT);
     const {loading, error, data} = useQuery(ALLASKING, {
         variables: {page: pageNum}
     })
-    const [getAsking, {data:otherData, loading:otherLoading, error:otherError}] = useLazyQuery(ALLASKING);
-    console.log(data)
+
     useEffect(() => {
         if(data !== undefined){
             setAskingList(data.allAsking)
         }
     }, [data])
 
-    const handleChange = (event) => {
-        setOrder(event.target.value);
-    };
+    useEffect(() => {
+        if(countData !== undefined && countData.allAskingCount !== undefined){
+            for(let i = 2; i <= Math.ceil(countData.allAskingCount/10); i++){
+                pageList.push(i)
+            }
+        }   
+    }, [countData])
+
 
     const nextPage = () => {
         if (pageNum !== pageList[pageList.length - 1]) {
@@ -38,7 +41,6 @@ function Forum() {
             let nextPage = currentPage + 1
             setPageNum(nextPage)
         }
-        
     }
     const previousPage = () => {
         if(pageNum !== 1){
@@ -46,20 +48,20 @@ function Forum() {
             let previousPage = currentPage - 1
             setPageNum(previousPage)
         }
-        
     }
-
-    // console.log(askingList)
-    if(loading) return <p>Loading...</p>;
-    if(error) return <p>Error!</p>;
-    
     return(
         <> 
             <Appbar />
+            
             <Container maxWidth="lg">
-                <Grid container>
-                    <Grid item xs={2} sx={{mb:2}}>질문목록</Grid>
-                </Grid>
+                <Stack
+                    direction="row"
+                    divider={<Divider orientation="vertical" flexItem />}
+                    spacing={2}
+                    sx={{mb: 2}}
+                >
+                    <Button size='small' variant='standard' color="info">질문목록</Button>
+                </Stack>
                 <Table 
                     sx={{ minWidth: 650, borderCollapse: 'inherit', border: '1px solid #c4c4c4', borderRadius: '5px', mb: 1}} 
                     aria-label="simple table">
@@ -104,9 +106,6 @@ function Forum() {
                 <IconButton onClick={()=>{nextPage()}}>
                     <ChevronRightIcon />
                 </IconButton>
-                
-
-                {/* <PageButton pageList={pageList} pageNum={pageNum} /> */}
             </ Container>
         </>
     )

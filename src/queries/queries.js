@@ -31,6 +31,13 @@ export const USER_INFO = gql`
         }
     }
 `;
+export const ROLE = gql`
+    query Profile($ID: String) {
+        profile(ID: $ID){
+            role
+        }
+    }
+`
 export const UPDATE_USER_INFO =gql`
     mutation UpdateUserInfo($name: String, $favorite: [String!]!) {
         updateProfile(name: $name, favorite: $favorite){
@@ -90,17 +97,6 @@ export const ALLTESTLIST = gql`
         }
     }
 `
-// export const RANKINGLIST = gql`
-//     query GetRankingList($page: Int!) {
-//         allTests(page: $page ){
-//             id
-//             name
-//             ownerId
-//             tryCnt
-//             like
-//         }
-//     }
-// `
 export const MYTEST = gql`
     query MyTestList{
         mySolvingTests{
@@ -112,7 +108,17 @@ export const MYTEST = gql`
         }
     }
 `
-
+export const MY_LIKE_LIST = gql`
+    query MyLikeList{
+        myLikeTests{
+            id
+            name
+            ownerId
+            tryCnt
+            like
+        }
+    }
+`
 export const CREATE_TEST = gql`
     mutation CreateTest ($input: CreateTestInput) {
         createTest(input: $input) {
@@ -445,6 +451,11 @@ export const RANKINGLIST = gql`
         }
     }
 `
+export const PROFILE_COUNT = gql`
+    query ProfilesCount($includeAdmin: Boolean){
+        profilesCount(includeAdmin: $includeAdmin)
+    }
+`
 export const GET_COUPON = gql`
     query GetCoupon{
         coupons{
@@ -474,5 +485,23 @@ export const MY_COUPON = gql`
             }
             count
         }
+    }
+`
+
+export const MY_CREATE_LIST = gql`
+    query TestByCreator($id: ID!){
+        testsByCreator(id: $id){
+            id
+            name
+            ownerId
+            tryCnt
+            like
+        }
+    }
+`
+
+export const ALL_ASKING_COUNT = gql`
+    query AllAskingCount{
+        allAskingCount
     }
 `

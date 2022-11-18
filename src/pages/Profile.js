@@ -12,6 +12,7 @@ function Profile() {
     const {data: userData, loading: userLoading, error: userError} = useQuery((USER_INFO), {
         variables:{ID: null}
     });
+    
     useEffect(() => {
         if(userData !== undefined && userData.profile.ownerId !== undefined) {
           setUserId(userData.profile.ownerId);
@@ -25,7 +26,6 @@ function Profile() {
     return(
         <div>
             <ProfileAppBar />
-            {/* <ProfileHeader /> */}
             <Container maxWidth="md">   
                 <ProfileInfo userData={userData}/>
                 <Stack direction="row" justifyContent="space-between" spacing={2} sx={{mt: 2}}>

@@ -6,22 +6,18 @@ import { Link } from "react-router-dom"
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
-export default function MyTestTable() {
-  // const {testId} = useParams();
-  // console.log(testId)
-  // const [pages, setPages] = useState(1);
-  const [pageList, setPageList] = useState([1]);
+export default function MyTestTable(props) {
+
+  const [pageList, setPageList] = useState([]);
   const [pageNum, setPageNum] = useState(1);
-  const [testList, setTestList] = useState();
-  const {loading, error, data} = useQuery(MYTEST)
-  console.log(data)
-  
-  useEffect(()=>{
-    if(data !== undefined && data.mySolvingTests !== undefined){
-      setTestList(data.mySolvingTests)
+  const [testList, setTestList] = useState([]);
+
+  useEffect(() => {
+    if(props !== undefined && props.testList !== undefined){
+      setTestList(props.testList.slice(pageNum*10-10, pageNum*10))
+      setPageList(props.pageList)
     }
-  },[])
-  console.log(data)
+  }, [props, pageNum])
 
   const nextPage = () => {
     if (pageNum !== pageList[pageList.length - 1]) {
@@ -37,8 +33,7 @@ export default function MyTestTable() {
         setPageNum(previousPage)
     }
   }
-  if(loading) return <p>Loading...</p>;
-  if(error) return <p>Error!</p>;
+
   return (
     <>
       <Table 
@@ -55,17 +50,17 @@ export default function MyTestTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.mySolvingTests.map((a, index) => (
+          {testList? testList.slice(0,10).map((a, index) => (
             <TableRow key={index}
               sx={{border:'1px solid #c4c4c4'}}
             >
-              <TableCell align="center"><Link to={`/MyTestResult/${data.mySolvingTests[index].id}`} style={{ textDecoration: 'none', color: 'inherit'}}>{data.mySolvingTests[index].id}</Link></TableCell>
-              <TableCell align="center"><Link to={`/MyTestResult/${data.mySolvingTests[index].id}`} style={{ textDecoration: 'none', color: 'inherit'}}>{data.mySolvingTests[index].name}</Link></TableCell>
-              <TableCell align="center"><Link to={`/MyTestResult/${data.mySolvingTests[index].id}`} style={{ textDecoration: 'none', color: 'inherit'}}>{data.mySolvingTests[index].ownerId}</Link></TableCell>
-              <TableCell align="center"><Link to={`/MyTestResult/${data.mySolvingTests[index].id}`} style={{ textDecoration: 'none', color: 'inherit'}}>{data.mySolvingTests[index].tryCnt}</Link></TableCell>
-              <TableCell align="center"><Link to={`/MyTestResult/${data.mySolvingTests[index].id}`} style={{ textDecoration: 'none', color: 'inherit'}}>{data.mySolvingTests[index].like}</Link></TableCell>
+              <TableCell align="center"><Link to={`/MyTestResult/${a.id}`} style={{ textDecoration: 'none', color: 'inherit'}}>{a.id}</Link></TableCell>
+              <TableCell align="center"><Link to={`/MyTestResult/${a.id}`} style={{ textDecoration: 'none', color: 'inherit'}}>{a.name}</Link></TableCell>
+              <TableCell align="center"><Link to={`/MyTestResult/${a.id}`} style={{ textDecoration: 'none', color: 'inherit'}}>{a.ownerId}</Link></TableCell>
+              <TableCell align="center"><Link to={`/MyTestResult/${a.id}`} style={{ textDecoration: 'none', color: 'inherit'}}>{a.tryCnt}</Link></TableCell>
+              <TableCell align="center"><Link to={`/MyTestResult/${a.id}`} style={{ textDecoration: 'none', color: 'inherit'}}>{a.like}</Link></TableCell>
             </TableRow>
-          ))}
+          )): null}
         </TableBody>
       </Table>
 

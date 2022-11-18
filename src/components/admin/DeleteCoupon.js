@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { DELETE_COUPON } from '../../queries/adminQueries';
-import { useMutation } from '@apollo/client';
+import { useLazyQuery, useMutation } from '@apollo/client';
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { GET_COUPON } from '../../queries/queries';
 
 function DeleteCoupon(props) {
     const [open, setOpen] = useState(false);
     const [couponIds, setCouponIds] = useState([]);
     const [couponId, setCouponId] = useState(0);
     const [deleteCoupon] = useMutation(DELETE_COUPON);
+    const [regetCoupon] = useLazyQuery(GET_COUPON);
 
     useEffect(() => {
       if(props !== undefined)
@@ -16,9 +18,10 @@ function DeleteCoupon(props) {
         setCouponIds(...couponIds, props.cid)
     }, [props])
 
+
     const handleClickOpen = () => {
         setOpen(true);
-        console.log(couponId)
+        // console.log(couponId)
     };
     const handleClose = () => {
         setOpen(false);
@@ -29,6 +32,10 @@ function DeleteCoupon(props) {
         }})
         setOpen(false)
         console.log(response)
+
+        const reget = await regetCoupon(GET_COUPON);
+        props.setCoupon(reget.data.coupons)
+        console.log(reget.data.coupons)
     }
 
     return (

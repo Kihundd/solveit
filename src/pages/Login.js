@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import { useLazyQuery } from '@apollo/client';
-import { LOGIN } from '../queries/queries';
+import { LOGIN, ROLE } from '../queries/queries';
 import { useEffect, useState } from 'react';
 import useForm from '../hooks/useForm';
 import { useNavigate } from 'react-router-dom';
@@ -17,15 +17,10 @@ export default function Login() {
 
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [role, setRole] = useState(false);
 
-  // const checkEmail = (e) => {
-  //   var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
-  //   console.log('이메일 유효성 검사 :: ', regExp.test(e.target.value))
-  // }
-  // const checkPassword = (e) => {
-  //   var regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,10}$/
-  //   console.log('비밀번호 유효성 검사 :: ', regExp.test(e.target.value))
-  // };
+  const [getRole] = useLazyQuery(ROLE);
+  
 
   const {add, handleSubmit} = useForm();
 
@@ -35,14 +30,6 @@ export default function Login() {
     setFormData({...formData, [e.target.name]: e.target.value})
   };
   
-  // const handleSubmit = async e => {
-  //   e.preventDefault();
-  //   await login({variables: {
-  //     email: formData.email,
-  //     hashedPW: formData.password
-  //   }, fetchPolicy: 'no-cache'
-  //   });
-  // };
 
   const onSuccess = async (data) => {
     const response = await login({variables: {
@@ -51,9 +38,19 @@ export default function Login() {
       }, fetchPolicy: 'no-cache'
     });
 
+    const roleResponse = await getRole({variables: {
+      ID: data.email.value
+    }})
+
+    console.log(roleResponse)
     if(response.data.login !== null) {
       document.cookie = `token=${response.data.login}`;
-      navigate('/');
+      if(roleResponse.data.profile.role == 0){
+        navigate('/');
+      }
+      else{
+        navigate('/Admin/Setting')
+      }
       // setResponse([true, response.data.login]);
     }
   };

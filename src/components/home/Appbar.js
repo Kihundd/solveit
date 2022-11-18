@@ -60,9 +60,10 @@ const ResponsiveAppBar = () => {
   const handleLogout = () => {
     setAnchorElUser(null);
     setName(null);
-    setIsLogin(false);
+    setIsLogin(false);console.log('logout')
     jsCookies.removeItem('token');
     window.location.replace("/");
+    
   }
 
   const {loading, error, data} = useQuery(NICKNAME, {
@@ -88,7 +89,25 @@ const ResponsiveAppBar = () => {
       <AppBar position="static" color='inherit' sx={{boxShadow: 'none', mb:5, mt:1, borderBottom: '1px solid #c4c4c4'}}>
         <Container maxWidth="lg" >
             <Toolbar disableGutters>
-            <Typography
+              {role ? 
+              <Typography
+                variant="h6"
+                noWrap
+                component="a"
+                href="/Admin/Setting"
+                sx={{
+                mr: 2,
+                display: { xs: 'none', md: 'flex' },
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                letterSpacing: '.3rem',
+                color: 'inherit',
+                textDecoration: 'none',
+                }}
+            >
+                <Logo/>
+            </Typography>
+            :<Typography
                 variant="h6"
                 noWrap
                 component="a"
@@ -105,6 +124,7 @@ const ResponsiveAppBar = () => {
             >
                 <Logo/>
             </Typography>
+            }
 
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                 <IconButton
@@ -191,24 +211,45 @@ const ResponsiveAppBar = () => {
             </Box>
             
             {/* 작은화면 */}
+            {role ?
             <Typography
-                variant="h5"
-                noWrap
-                component="a"
-                href="/"
-                sx={{
-                mr: 2,
-                display: { xs: 'flex', md: 'none' },
-                flexGrow: 1,
-                fontFamily: 'monospace',
-                fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: 'inherit',
-                textDecoration: 'none',
-                }}
+              variant="h5"
+              noWrap
+              component="a"
+              href="/Admin/Setting"
+              sx={{
+              mr: 2,
+              display: { xs: 'flex', md: 'none' },
+              flexGrow: 1,
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+              }}
             >
-                <Logo />
+              <Logo />
             </Typography>
+            
+            :<Typography
+              variant="h5"
+              noWrap
+              component="a"
+              href="/"
+              sx={{
+              mr: 2,
+              display: { xs: 'flex', md: 'none' },
+              flexGrow: 1,
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+              }}
+          >
+              <Logo />
+            </Typography>
+            }
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }}}>
               {role ?
               <>

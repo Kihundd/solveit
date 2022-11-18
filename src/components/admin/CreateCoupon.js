@@ -1,8 +1,9 @@
-import { useMutation } from '@apollo/client';
+import { useLazyQuery, useMutation } from '@apollo/client';
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField } from '@mui/material';
 import React,{ useState, useEffect } from 'react'
 import { CREATE_COUPON } from '../../queries/adminQueries'
 import AddBoxIcon from '@mui/icons-material/AddBox';
+import { GET_COUPON } from '../../queries/queries';
 
 function CreateCoupon(props) {
     const [open, setOpen] = useState(false);
@@ -10,20 +11,15 @@ function CreateCoupon(props) {
     const [exp, setExp] = useState('');
     const [price, setPrice] = useState('');
     const [CreateCoupon,{loading, error, data}] = useMutation(CREATE_COUPON);
-    const [a, setA] = useState();
+    const [regetCoupon] = useLazyQuery(GET_COUPON);
 
-    useEffect(() => {
-      setA(props.coupons)
-    }, [props])
-    
     const handleClickOpen = () => {
         setOpen(true);
         
     };
     const handleClose = () => {
         setOpen(false);
-        a.pop()
-        console.log(a)
+        
     };
     const handleSumbit = async() => {
         const response = await CreateCoupon({variables: {
@@ -32,7 +28,11 @@ function CreateCoupon(props) {
             price: Number(price)
         }})
         setOpen(false)
-        console.log(response)
+        
+        const reget = await regetCoupon(GET_COUPON);
+        props.setCoupon(reget.data.coupons)
+        console.log(reget.data.coupons)
+
     }
 
     return (

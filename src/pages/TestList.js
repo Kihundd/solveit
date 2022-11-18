@@ -1,6 +1,6 @@
 import Appbar from '../components/home/Appbar.js'
 import { useEffect, useState } from 'react';
-import { Table,TableBody,TableCell,TableContainer,TableHead,TableRow, Paper, Container, Button, IconButton, FormControl, MenuItem, InputLabel, Select, Grid} from '@mui/material';
+import { Table,TableBody,TableCell,TableContainer,TableHead,TableRow, Paper, Container, Button, IconButton, FormControl, MenuItem, InputLabel, Select, Grid, Stack, Divider} from '@mui/material';
 import { useLazyQuery, useQuery } from '@apollo/client';
 import { ALLTESTLIST, ALLTESTSCOUNT, TESTLIST_CATEGORY } from '../queries/queries';
 import { Link } from "react-router-dom"
@@ -9,29 +9,20 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 function TestList() {
     
-    // const {testId} = useParams();
     const [pageList] = useState([1]);
     const [pageNum, setPageNum] = useState(1);
-    const [testCnt, setTestCnt] = useState(0);
     const [testList, setTestList] = useState();
     const [order, setOrder] = useState('DATE_DESC');
-    const [categoryId, setCategoryId] = useState('');
+    const [categoryId, setCategoryId] = useState(0);
     
     const {loading, error, data} = useQuery(ALLTESTLIST, {
         variables: {page: pageNum, order: order}}
     );
-
     const {data:countData, loading:countLoading, error:countError} = useQuery(ALLTESTSCOUNT);
-    const [pageNation, {loading:testLading, error: testError, data: testData}] = useLazyQuery(ALLTESTLIST);
-    
-
-    // const [GetByCategory, {loading:categoryLoading, error:categoryError, data:categoryData}] = useLazyQuery(TESTLIST_CATEGORY);
-    // // console.log(categoryId)
-    // // console.log(categoryData)
+    const [getByCategory] = useLazyQuery(TESTLIST_CATEGORY);
     
     useEffect(() => {
         if(countData !== undefined && countData.allTestsCount !== undefined){
-            setTestCnt(countData.allTestsCount)
             for(let i = 2; i <= Math.ceil(countData.allTestsCount/10); i++){
                 pageList.push(i)
             }  
@@ -43,26 +34,19 @@ function TestList() {
             setTestList(data.allTests)
         }
     },[data])
-    console.log(data)
 
-    // useEffect(()=>{
-    //     if(categoryData !== undefined && categoryData.testsByCategory !== undefined){
-    //         setTestList(categoryData.testsByCategory)
-    //     }
-    // },[categoryData])
-    // console.log(testList)
     
-    // const handleCategoryChange = async (event) => {
-    //     setCategoryId(event.target.value);
-    //     const response = await GetByCategory({variables: {id: categoryId}})
-    //     console.log(response)
-    // };
-    // console.log(categoryId)
-    
+    const handleCategoryChange = async (e) => {
+        setCategoryId(e.target.value);
+        const response = await getByCategory({variables:{
+            id: e.target.value
+        }})
+        setTestList(response.data.testsByCategory)
+        console.log(response)
+    };
     const handleSortChange = (event) => {
         setOrder(event.target.value);
     };
-    
     const nextPage = () => {
         if (pageNum !== pageList[pageList.length - 1]) {
             let currentPage = pageNum
@@ -86,20 +70,41 @@ function TestList() {
             <Appbar />
             
             <Container maxWidth="lg">
-                <Grid container >
-                    <Grid item xs={2} sx={{mt:1}}>전체</Grid>
-                    <Grid item xs={6}></Grid>
-                    <Grid item xs={4} sx={{mb: 2}}>
-                        <FormControl variant='standard'  sx={{width: '120px'}}>
-                            <Select value={order} onChange={handleSortChange} >
-                                <MenuItem value={'DATE_DESC'}>최근순</MenuItem>
-                                <MenuItem value={'DATE'}>오래된순</MenuItem>
-                                <MenuItem value={'LIKE_DESC'}>좋아요순</MenuItem>
-                                <MenuItem value={'SOLVING_COUNT_DESC'}>제출수순</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </Grid>
-                </Grid>
+            <Stack
+                direction="row"
+                justifyContent="space-between"
+                spacing={2}
+                sx={{mb: 2}}
+            >
+                <Stack
+                    direction="row"
+                    justifyContent="flex-start"
+                    alignItems="center"
+                    spacing={3}>
+                    <Button size='small' variant='standard' color="inherit">전체</Button>
+                    {/* <Button size='small' variant='standard' color="inherit" onClick={handleGetByCategory}>카테고리별</Button> */}
+                    <FormControl variant='standard' sx={{width: '120px'}}>
+                        <Select value={categoryId} onChange={handleCategoryChange} >
+                            <MenuItem value={0}>카테고리</MenuItem>
+                            <MenuItem value={1}>ENGLISH</MenuItem>
+                            <MenuItem value={2}>KOREAN</MenuItem>
+                            <MenuItem value={3}>SCIENCE</MenuItem>
+                            <MenuItem value={4}>MATH</MenuItem>
+                            <MenuItem value={5}>TOEIC</MenuItem>
+                        </Select>
+                    </FormControl>
+                </Stack>
+                <FormControl variant='standard' label="정렬순서"  sx={{width: '120px'}}>
+                    <Select value={order} onChange={handleSortChange} sx={{float: 'left'}} >
+                        <MenuItem value={'DATE_DESC'}>최근순</MenuItem>
+                        <MenuItem value={'DATE'}>오래된순</MenuItem>
+                        <MenuItem value={'LIKE_DESC'}>좋아요순</MenuItem>
+                        <MenuItem value={'SOLVING_COUNT_DESC'}>제출수순</MenuItem>
+                    </Select>
+                </FormControl>
+            </Stack>
+                
+                
                 <Table 
                     sx={{ minWidth: 650, borderCollapse: 'inherit', border: '1px solid #c4c4c4', borderRadius: '5px', mb: 1}} 
                     aria-label="simple table">

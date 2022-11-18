@@ -20,10 +20,7 @@ import Report from './components/admin/Report';
 import Coupon from './components/admin/Coupon';
 import { Routes, Route, Navigate } from 'react-router-dom'
 import isLogin from './pages/isLogin';
-import isRole from './pages/isRole';
 import PrivateRoute from './components/route/PrivateRoute';
-
-
 
 function App() {
   // console.log(isLogin())
@@ -49,7 +46,6 @@ function App() {
         <Route path="/Admin/Setting" element={ <Admin /> } />
         <Route path='/Admin/Report' element={<Report />} />
         <Route path='/Admin/Coupon' element={<Coupon />} />
-        {/* <AuthRoute path="/Shop" element={ <Shop /> } /> */}
         <Route path="*" />
       </Routes>
     </div>

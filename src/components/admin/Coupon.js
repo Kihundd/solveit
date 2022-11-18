@@ -2,7 +2,7 @@ import React,{ useState, useEffect } from 'react';
 import Appbar from '../home/Appbar';
 import CreateCoupon from './CreateCoupon';
 import DeleteCoupon from './DeleteCoupon';
-import { useMutation, useQuery } from '@apollo/client';
+import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import { Button, Card, CardActions, CardContent, CardMedia, CssBaseline, Grid, Stack, Box, Toolbar, Typography, Container, Link} from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { GET_COUPON } from '../../queries/queries';
@@ -15,8 +15,7 @@ export default function Coupon() {
         if(data !== undefined){
             setCoupon(data.coupons)
         }
-    }, [data])
-    console.log(coupon)
+    }, [data])    
     
   return (
     <>
@@ -42,7 +41,7 @@ export default function Coupon() {
             >
                 쿠폰 목록
             </Typography>
-            <CreateCoupon coupons={coupon} />
+            <CreateCoupon coupons={coupon} setCoupon={setCoupon} />
           </Container>
         </Box>
         <Container sx={{ py: 4 }} maxWidth="md">
@@ -71,7 +70,7 @@ export default function Coupon() {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <DeleteCoupon cid={a.id} />
+                    <DeleteCoupon cid={a.id} setCoupon={setCoupon} />
                   </CardActions>
                 </Card>
               </Grid>
