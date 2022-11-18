@@ -4,6 +4,7 @@ import ReactDOMServer from "react-dom/server"
 import React, { useEffect, useRef, useState } from 'react'
 import parse from 'html-react-parser';
 import { Viewer } from "@toast-ui/react-editor";
+import { queryAllByAltText } from "@testing-library/react";
 
 const useStyle = makeStyles(() => 
     createStyles({
@@ -24,11 +25,14 @@ export default function({question, changeAnswer, prevAnswer}) {
         setAnswer([...prevAnswer]);
         answerCount.current = 0;
 
+        question.paragraph = question.paragraph.replace(/<p>(.*)<\/p>/gm, "<div>$1</div>");
+        console.log(question.paragraph);
         const newParagraph = parse(question.paragraph, {
             replace: domNode => {
-                if(domNode.name === "dfn") {
-                    
+                console.log(domNode);
+                if(domNode.name === "span" && domNode.attribs.class === 'answer_making') {
                     const idx = answerCount.current;
+
                     const handleChange = e => {
                         answer[idx] = e.target.value;
                         setAnswer([...answer]);
@@ -39,6 +43,7 @@ export default function({question, changeAnswer, prevAnswer}) {
                     return (
                         <span className={`m-8`}>
                             <TextField 
+                                
                                 sx={{input: {textAlign: "center"}}}
                                 InputProps={{
                                     className: classes.input

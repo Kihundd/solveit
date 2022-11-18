@@ -1,0 +1,61 @@
+.toastui-editor-file-name {
+    width: 58%;
+    display: inline-block;
+    border-radius: 2px;
+    border: 1px solid #e1e3e9;
+    color: #dadde6;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+}
+.toastui-editor-file-name.selected {
+    color: #333;
+}
+
+.toastui-editor-file-select-button {
+    width: 33% !important;
+    margin-left: 5px !important;
+    height: 32px !important;
+    border-radius: 2px !important;
+    border: 1px solid #dadde6 !important;
+    background-color: #f7f9fc !important;
+    vertical-align: top !important;
+}
+
+button {
+    color: #333;
+    height: 28px;
+    font-size: 13px;
+    cursor: pointer;
+    border: none;
+    border-radius: 2px;
+}
+
+.toastui-editor-popup {
+    width: 400px;
+    margin-right: auto;
+    background: #fff;
+    z-index: 30;
+    position: absolute;
+    border-radius: 2px;
+    -webkit-box-shadow: 0 2px 4px 0 rgb(0 0 0 / 8%);
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 8%);
+    border: 1px solid #dadde6;
+}
+
+.toastui-editor-popup-body {
+    padding: 0 20px 20px;
+}
+
+.toastui-editor-ok-button {
+    min-width: 63px;
+    height: 32px;
+    background-color: #00a9ff;
+    color: #fff;
+    outline-color: #009bf2;
+    margin-right: 1px;
+}

@@ -1,6 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { Box, Grid, Button } from "@mui/material"
 import { useState } from "react";
+import { CODING_TEST } from "../test/QuestionInfo";
 
 function QuestionNum({answerSheet, setIdx, submit}) {
     const renderAnswer = () => {
@@ -15,9 +16,18 @@ function QuestionNum({answerSheet, setIdx, submit}) {
             if(row.correct !== undefined && row.correct === false) 
                 textColor = 'red';
             
-            return <Button onClick={() => handleOnClick()} key={row.qid} style={{display: 'block', textAlign: 'left'}} >
-                <span style={{color: textColor}}>{`${index + 1} \t ${row.answer} `}</span>
-            </Button>
+            let answer;
+            if(row.answer[0] !== undefined && row.answer[0].type !== undefined && row.answer[0].type === CODING_TEST)
+                answer = row.answer[0].sourceCode;
+            else
+                answer = row.answer;
+
+
+            return (
+                <Button onClick={() => handleOnClick()} key={row.qid} style={{display: 'block', textAlign: 'left'}} >
+                    <span style={{color: textColor}}>{`${index + 1} \t ${answer} `}</span>
+                </Button>
+            )
         });
     };
     

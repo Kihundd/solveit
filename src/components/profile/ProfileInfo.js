@@ -46,6 +46,7 @@ function ProfileInfo(props) {
     const renderCategories = () => {
         if(categoryData === undefined)
             return <MenuItem value='' key='loading' disabled={true}>Loading...</MenuItem>
+        console.log(categoryData);
         return categoryData.categories.map(category => 
             <MenuItem value={category.name} key={category.name}>{category.name}</MenuItem>);
     };

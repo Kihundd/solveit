@@ -6,6 +6,9 @@ import { Editor } from '@toast-ui/react-editor';
 import 'tui-color-picker/dist/tui-color-picker.css';
 import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
 import { getFileUrl, IMAGE } from '../FileUpload';
+import OCRContainer from './ocr/OCRPlugin';
+import OCRPlugin from './ocr/OCRPlugin';
+import FillBlankPlugin from './fillblank/FillBlankPlugin';
 
 export default function({paragraph, editorRef, onChange, options}) {
 
@@ -15,6 +18,11 @@ export default function({paragraph, editorRef, onChange, options}) {
         callback(imageURL, 'img');
     };
 
+    const plugins = [colorSyntax, OCRPlugin];
+    if(options && options.fillBlank) {
+        plugins.push(FillBlankPlugin);
+    }
+    
     return (
         <Editor
             initialValue={paragraph}
@@ -26,7 +34,7 @@ export default function({paragraph, editorRef, onChange, options}) {
             hooks={{
               addImageBlobHook  
             }}
-            plugins={[colorSyntax]}
+            plugins={plugins}
             ref={editorRef}
         />
     )

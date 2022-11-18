@@ -3,8 +3,8 @@ import {useState, useEffect, useRef} from 'react';
 import FillBlankQuestionView from "./FillBlankQuestionView";
 import MyEditor from "../editor/MyEditor";
 
-const START = "&lt;dfn&gt;";
-const END = "&lt;/dfn&gt;";
+const START = '<span class="answer_making">[';
+const END = ']</span>';
 
 export default function({isSave, handleSave, question}) {
     const [paragraph, setParagraph] = useState("");
@@ -13,10 +13,12 @@ export default function({isSave, handleSave, question}) {
     const [toggleView, setToggleView] = useState(false);
     const ref = useRef();
 
+    const answerRegExp = /<span class="answer_making">\[([^\]]*)\]<\/span>/gm;
+
     const editorRef = useRef();
     useEffect(()=>{
         if(isSave === true) {
-            const newParagraph = paragraph.replace('&lt;dfn&gt;', "<dfn>").replace("&lt;/dfn&gt;", "</dfn>");
+            const newParagraph = decodeHtml(paragraph);
 
             handleSave({
                 paragraph: newParagraph,
@@ -36,39 +38,35 @@ export default function({isSave, handleSave, question}) {
 
     const handleParagraphChange = () => {
         const p = editorRef.current?.getInstance().getHTML();
-        console.log(p);
+        // console.log(p);
         setParagraph(p);
         //\s means "spaces" (e.g., whitespace — including newlines), and + means "one or more".
-        const words = p.split(/\s+/);
         const newAnswers = [];
-        words.forEach(p => {
-            if(p.length >= 14 && p.startsWith(START) && p.endsWith(END)) {
-                newAnswers.push(p.slice(START.length, p.length - END.length));
-            }
-        });
+
+        const matches = decodeHtml(p).match(answerRegExp);
+        if(matches)
+            matches.forEach(answer => {
+                const newAnswer = decodeHtml(answer).replace(START, "").replace(END, "");
+                newAnswers.push(newAnswer);
+            });
         setAnswers(newAnswers);
     };
 
     const renderAnswers = () => {
         return answers.map((answer, i) => {
             const handleChange = e => {
-                let ret = '';
-                const lines = paragraph.split('\n');
+                const p = decodeHtml(editorRef.current?.getInstance().getHTML());
+                let match;
+                
+                for(let start = 0; start <= i; ++start) 
+                    match = answerRegExp.exec(p);
+                
+                const startIdx = match.index + START.length;
+                const endIdx = startIdx + answers[i].length;
+                
+                // const ret = replaceWithRange(startIdx, endIdx, e.target.value, p).replaceAll("<dfn>", '&lt;dfn&gt;').replaceAll("</dfn>", '&lt;/dfn&gt;');
+                const ret = replaceWithRange(startIdx, endIdx, e.target.value, p);
 
-                let cnt = 0;
-                lines.forEach((line, lineIdx) => {
-                    const words = line.split(' ');
-                    words.forEach(word => {
-                        if(word.length >= 14 && word.startsWith(START) && word.endsWith(END)) {
-                            if(cnt === i) {
-                                ret += `${START}${e.target.value}${END} `;
-                            } else ret += word + " ";
-                            cnt += 1;
-                        } else ret += word + " ";
-                    })
-                    if(lineIdx !== lines.length - 1)
-                        ret += "\n";
-                });
                 setParagraph(ret);
                 editorRef.current.getInstance().setHTML(ret, false);
                 answers[i] = e.target.value;
@@ -100,17 +98,8 @@ export default function({isSave, handleSave, question}) {
                     style={{position: 'absolute', top: `-22%`, right:'0', zIndex: '9999'}}/>
                 {
                     toggleView? <FillBlankQuestionView paragraph={paragraph} height={ref.current != null? ref.current.offsetHeight: 300}/> :
-                    //     <TextField 
-                    //     ref={ref}
-                    //     rows='10'
-                    //     multiline
-                    //     fullWidth={true}
-                    //     value={paragraph}
-                    //     onChange={handleParagraphChange}
-                    //     label="문제 내용 입력"
-                    // />
                     <div ref={ref}>
-                        <MyEditor paragraph={paragraph} editorRef={editorRef} onChange={handleParagraphChange}/>
+                        <MyEditor paragraph={paragraph} editorRef={editorRef} onChange={handleParagraphChange} options={{fillBlank: true}}/>
                     </div>
                 }
             </Grid>
@@ -133,4 +122,17 @@ export default function({isSave, handleSave, question}) {
             </Grid>
         </Grid>
     )
+}
+
+function decodeHtml(html) {
+    var txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
+}
+function encodeHtml(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function replaceWithRange(start, end, string, target) {
+    return target.substring(0, start) + string + target.substring(end);
 }

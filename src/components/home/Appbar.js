@@ -19,7 +19,7 @@ import jsCookies from 'js-cookies';
 import { useQuery } from '@apollo/client';
 import { NICKNAME } from '../../queries/queries';
 import Logo from './Logo.js';
-import Login from '../../pages/isLogin'
+import Login, { removeToken } from '../../pages/isLogin'
 import { useNavigate } from 'react-router-dom';
 
 const darkTheme = createTheme({
@@ -72,6 +72,11 @@ const ResponsiveAppBar = () => {
 
   useEffect(() => {
     if(Login()){
+      if(data !== undefined && data.profile === null) {
+        removeToken();
+        navigate('/login');
+      }
+
       if(data !== undefined && data.profile.nickname !== undefined) {
         setIsLogin(true);
         setName(data.profile.nickname);
