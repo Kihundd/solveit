@@ -9,8 +9,8 @@ import { useLazyQuery, useQuery } from '@apollo/client';
 function MyTestList(){
 
     const [userId, setUserId] = useState();
-    const [pageList] = useState([1]);
     const [testList, setTestList] = useState(); 
+    const [cnt, setCnt] = useState(1);
     const {loading:userLoading, error:userError, data:userData} = useQuery(USER_INFO, {
         variables: {ID: null}
     });
@@ -28,29 +28,27 @@ function MyTestList(){
 
     useEffect(()=>{
         if(data !== undefined && data.mySolvingTests !== undefined){
-        setTestList(data.mySolvingTests)
-        for(let i = 2; i <=  Math.ceil(data.mySolvingTests.length/10); i++){
-            pageList.push(i)
-        } 
+            setTestList(data.mySolvingTests)
+            setCnt(Math.ceil(data.mySolvingTests.length / 10))
         }
     },[data])
 
     const handleAllTest = async () => {
         const response = await getSolvingTest(MYTEST);
         setTestList(response.data.mySolvingTests)
-        // console.log(response.data.mySolvingTests)
+        setCnt(Math.ceil(response.data.mySolvingTests.length / 10))
     }
     const handleCreateTest = async () => {
         const response = await getCreateTest({variables: {id: userId}});
         setTestList(response.data.testsByCreator)
-        // console.log(response.data.testsByCreator)
+        setCnt(Math.ceil(response.data.testsByCreator.length / 10))
+
     }
     const handleLikeTest = async () => {
         const response = await getLikeTest(MY_LIKE_LIST);
         setTestList(response.data.myLikeTests)
-        console.log(response)
+        setCnt(Math.ceil(response.data.myLikeTests.length / 10))
     }
-
 
     return(
         <>
@@ -66,7 +64,7 @@ function MyTestList(){
                     <Button size='small' variant='standard' color="info" onClick={handleCreateTest}>내가 만든 문제</Button>
                     <Button size='small' variant='standard' color="info" onClick={handleLikeTest} >좋아요한 문제</Button>
                 </Stack>
-                <MyTestTable testList={testList} pageList={pageList}  />
+                <MyTestTable testList={testList} page={cnt}  />
             </ Container>
         </>
     )

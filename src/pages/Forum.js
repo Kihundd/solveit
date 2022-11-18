@@ -1,5 +1,5 @@
 import Appbar from "../components/home/Appbar.js";
-import { Grid, TableContainer, TableHead, TableCell, TableRow, Table, TableBody, Paper, Container, Stack, Divider } from "@mui/material"
+import { Grid, TableContainer, TableHead, TableCell, TableRow, Table, TableBody, Paper, Container, Stack, Divider, Pagination } from "@mui/material"
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useLazyQuery, useQuery } from "@apollo/client";
@@ -9,15 +9,15 @@ import { ButtonGroup, Button, IconButton } from "@mui/material"
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
-
 function Forum() {
-
-    const [pageList] = useState([1]);
+    
     const [askingList, setAskingList] = useState([]);
-    const [pageNum, setPageNum] = useState(1);
+    const [page, setPage] = useState(1);
+    const [cnt, setCnt] = useState(0);
+    
     const {loading:countLoading, error: countError, data:countData} = useQuery(ALL_ASKING_COUNT);
     const {loading, error, data} = useQuery(ALLASKING, {
-        variables: {page: pageNum}
+        variables: {page: page}
     })
 
     useEffect(() => {
@@ -28,31 +28,19 @@ function Forum() {
 
     useEffect(() => {
         if(countData !== undefined && countData.allAskingCount !== undefined){
-            for(let i = 2; i <= Math.ceil(countData.allAskingCount/10); i++){
-                pageList.push(i)
-            }
+            setCnt(Math.ceil(countData.allAskingCount/10))
         }   
     }, [countData])
 
+    const handlePage = (e, value) => {
+        if(value !== undefined){
+            setPage(value);
+        }
+    }
 
-    const nextPage = () => {
-        if (pageNum !== pageList[pageList.length - 1]) {
-            let currentPage = pageNum
-            let nextPage = currentPage + 1
-            setPageNum(nextPage)
-        }
-    }
-    const previousPage = () => {
-        if(pageNum !== 1){
-            let currentPage = pageNum
-            let previousPage = currentPage - 1
-            setPageNum(previousPage)
-        }
-    }
     return(
         <> 
             <Appbar />
-            
             <Container maxWidth="lg">
                 <Stack
                     direction="row"
@@ -92,20 +80,14 @@ function Forum() {
                     )})}
                     </TableBody>
                 </Table>
-                
-                <IconButton onClick={()=>{previousPage()}}>
-                    <ChevronLeftIcon />
-                </IconButton>
-                {pageList.map((a, index) => (
-                    <Button key={index} variant='inherit' onClick={()=>{
-                        setPageNum(a)
-                        console.log(a)
-                    }}>{a}</Button>
-            
-                ))}
-                <IconButton onClick={()=>{nextPage()}}>
-                    <ChevronRightIcon />
-                </IconButton>
+                <Stack direction="row" justifyContent="center" sx={{pt: 2, pb: 5}}>
+                    <Pagination 
+                    count={cnt}
+                    defaultPage={1}
+                    sx={{margin: '0 auto'}} 
+                    onChange={handlePage} 
+                    />
+                </Stack>
             </ Container>
         </>
     )

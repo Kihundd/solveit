@@ -160,6 +160,7 @@ export const TESTLIST_CATEGORY = gql`
                 id
                 name
             }
+            like
         }
     }
 `
