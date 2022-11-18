@@ -6,6 +6,7 @@ import { useEffect } from "react"
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import MyEditor from "../editor/MyEditor"
 import { useRef } from "react"
+import { Viewer } from "@toast-ui/react-editor";
 
 function Asking(props){
 
@@ -33,7 +34,7 @@ function Asking(props){
     const submitAsk = async () => {
         // const questionIds = questionList.map(q => q.questionId);
         const input = {
-            title,
+            title: title,
             content: editorRef.current?.getInstance().getHTML(),
             questionId: questionIds
         };
@@ -42,8 +43,8 @@ function Asking(props){
         setOpen(false)
     }
 
-    const handleChange = () => {
-        console.log(editorRef.current?.getInstance().getHTML())
+    const handleChange = (e) => {
+        setTitle(e.target.value)
     }
 
     return(
@@ -55,8 +56,8 @@ function Asking(props){
             <Dialog open={open} onClose={handleClose} maxWidth="mg">
                 <DialogTitle textAlign='left'>{questionIds}번 문제 질문</DialogTitle>
                 <DialogContent sx={{pb: '5px'}}>
-                    <TextField fullWidth margin='dense' label="제목" />
-                    <MyEditor editorRef={editorRef} onChange={handleChange} />
+                    <TextField fullWidth margin='dense' label="제목" value={title} onChange={handleChange} />
+                    <MyEditor editorRef={editorRef} />
                     {/* <TextField fullWidth={true} minRows={4} maxRows={8} multiline={true} margin='dense' label="기타" /> */}
                 </DialogContent>
                 <DialogActions sx={{pr: '24px'}}>
@@ -65,45 +66,6 @@ function Asking(props){
                 </DialogActions>
             </Dialog>
         </>
-                
-                // <Box maxWidth="xl" sx={{border:'1px solid #c4c4c4', borderRadius: '5px', marginBottom: 2}}>
-                //     <Grid container>
-                //         <Grid item sx={{marginLeft: '20px'}}><h4>질문하기</h4></Grid>
-                //     </Grid>
-                //     <Grid container>
-                //         <Grid item xs={12}>
-                //             <TextField 
-                //                 fullWidth={true}
-                //                 value={title}
-                //                 label="제목"
-                //                 onChange={e => {
-                //                     setTitle(e.target.value)
-                //                     console.log(title)
-                //                 }}
-                //             />
-                //         </Grid>
-                //     </Grid>
-                //     <Grid container sx={{marginTop: '10px'}}>
-                //         <Grid item xs={12}>
-                //             <TextField 
-                //                 rows="5"
-                //                 multiline
-                //                 fullWidth={true}
-                //                 value={content}
-                //                 label="질문 내용 입력"
-                //                 onChange={e => {
-                //                     setContent(e.target.value)
-                //                     console.log(content)
-                //                 }}
-                //             />
-                //         </Grid>
-                //         <Grid item xs={12} sx={{marginTop: '10px'}}>
-                //             <Button variant="contained" underline="none" color="primary" sx={{float: 'right', marginLeft: '10px', marginBottom: 1}} onClick={submitAsk}>확인</Button>
-                //             <Button variant="contained" underline="none" color="primary" sx={{float: 'right'}}>닫기</Button>
-                //         </Grid>
-                //     </Grid>
-                // </Box>
-
     )
 }
 

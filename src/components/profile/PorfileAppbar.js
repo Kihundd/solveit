@@ -19,7 +19,7 @@ import jsCookies from 'js-cookies';
 import { useQuery } from '@apollo/client';
 import { NICKNAME } from '../../queries/queries';
 import Logo from '../home/Logo.js';
-import Login from '../../pages/isLogin'
+import Login from '../route/isLogin'
 import { useNavigate } from 'react-router-dom';
 
 
@@ -51,7 +51,6 @@ const ProfileAppBar = () => {
   const handleLogout = () => {
     setAnchorElUser(null);
     setName(null);
-    setIsLogin(false);
     jsCookies.removeItem('token');
     window.location.replace("/");
   }

@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { TAKE_TEST, JUDGE_ANSWERS, SUBMIT_QUESTION, SUBMIT_CODING_TEST_ANSWER } from "../queries/queries";
 import { useNavigate, useParams } from "react-router-dom";
-import Asking from "../components/ask/Asking";
+import Asking from "../components/ask/CreateAsking";
 import { CODING_TEST } from "../components/test/QuestionInfo";
 
 function Test(){

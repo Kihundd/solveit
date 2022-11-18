@@ -49,7 +49,7 @@ export default function Login() {
         navigate('/');
       }
       else{
-        navigate('/Admin/Setting')
+        navigate('/Admin')
       }
       // setResponse([true, response.data.login]);
     }

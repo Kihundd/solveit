@@ -11,15 +11,16 @@ import TestInfo from './pages/TestInfo'
 import MyTestList from './pages/MyTestList';
 import Ranking from './pages/Ranking'
 import Forum from './pages/Forum'
-import AskingView from './pages/AskingView';
+import AskingView from './components/ask/AskingView';
 import Shop from './pages/Shop';
 import TestResult from './pages/TestResult';
 import MyTestResult from './pages/MyTestResult';
 import Admin from './pages/Admin';
 import Report from './components/admin/Report';
 import Coupon from './components/admin/Coupon';
+import Asking from './pages/Asking';
 import { Routes, Route, Navigate } from 'react-router-dom'
-import isLogin from './pages/isLogin';
+import isLogin from './components/route/isLogin';
 import PrivateRoute from './components/route/PrivateRoute';
 
 function App() {
@@ -40,12 +41,12 @@ function App() {
         <Route path="/Forum" element={ <Forum />} />
         <Route path="/MyTestList" element={ <PrivateRoute><MyTestList /></PrivateRoute> } />
         <Route path="/MyTestResult/:testId" element={ <MyTestResult /> } />
-        <Route path="/Ask/:askingId" element={ <AskingView /> } />
+        <Route path="/Ask/:askingId" element={ <Asking /> } />
         <Route path='/Ranking' element={ <Ranking />} />
         <Route path="/Shop" element={ <PrivateRoute><Shop /></PrivateRoute> } />
-        <Route path="/Admin/Setting" element={ <Admin /> } />
-        <Route path='/Admin/Report' element={<Report />} />
-        <Route path='/Admin/Coupon' element={<Coupon />} />
+        <Route path="/Admin" element={<Admin/>} /> 
+        <Route path='/Report' element={<Report />} />
+        <Route path='/Coupon' element={<Coupon />} />
         <Route path="*" />
       </Routes>
     </div>

@@ -12,6 +12,7 @@ import { ALLTESTLIST, ALLASKING } from '../../queries/queries';
 import { useQuery } from '@apollo/client';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Viewer } from '@toast-ui/react-editor';
 
 export default function HomeList(props) {
   const [dense, setDense] = useState(true);
@@ -64,7 +65,8 @@ export default function HomeList(props) {
                 onClick={e=>handleClick(x.id)}
               >
                 <ListItemText secondary={secondary ? `${x.ownerId}` : null}>
-                  {x.name}{x.content}{x.nickname}
+                  {x.name}{x.nickname}{x.title}
+                  {/* <Viewer initialValue={x.content} /> */}
                 </ListItemText>
               </ListItemButton>
             )) : null

@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react';
 import { TEST_RESULT, GET_FULL_QUESTION, USER_INFO } from "../queries/queries";
 import { useNavigate, useParams } from "react-router-dom";
 import QuestionResultView from "../components/testResult/QuestionResultView";
-import Asking from '../components/ask/Asking';
+import Asking from '../components/ask/CreateAsking';
 import ReviewNote from '../components/testResult/ReviewNote';
 
 function MyTestResult(){

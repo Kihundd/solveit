@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField, Typography } from '@mui/material';
-import { useMutation } from '@apollo/client';
+import { useLazyQuery, useMutation } from '@apollo/client';
 import { DELETE_TEST } from '../../queries/adminQueries';
+import { ALLREPORTS } from "../../queries/reportQueries"
 import DeleteIcon from '@mui/icons-material/Delete';
 
 function DeleteTest(props) {
     const [reportInfo, setReportInfo] = useState('');
     const [open, setOpen] = useState(false);
     const [deleteTest] = useMutation(DELETE_TEST);
+    const [reget] = useLazyQuery(ALLREPORTS);
 
     useEffect(() => {
         if(props !== undefined && props.reportInfo !== undefined){
@@ -25,6 +27,10 @@ function DeleteTest(props) {
         const response = await deleteTest({variables: {id: id}})
         console.log(response)
         setOpen(false)
+
+        const regetResponse = await reget({variables: {page: 1}})
+        console.log(regetResponse)
+        props.setReportList(regetResponse.data.allReports)
     }
 
     return (
@@ -34,7 +40,7 @@ function DeleteTest(props) {
             테스트삭제
         </Button> */}
         <Button variant="outlined" size='small' color="error" onClick={handleClickOpen} startIcon={<DeleteIcon />}>
-            테스트
+            테스트 삭제
         </Button>
         <Dialog open={open} onClose={handleClose} >
             <DialogTitle>
@@ -71,8 +77,7 @@ function DeleteTest(props) {
             </DialogContent>
             <DialogActions sx={{pr: '24px', pb: '16px', pt: 0}}>
                 <Button variant='contained' color='error' onClick={()=>{
-                    console.log(typeof(reportInfo.id))
-                    deleteHandler(reportInfo.id)
+                    deleteHandler(reportInfo.testId)
                     setOpen(false)
                 }}>삭제</Button>
                 <Button variant="outlined" onClick={handleClose} >닫기</Button>

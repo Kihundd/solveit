@@ -6,6 +6,7 @@ import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import { Button, Card, CardActions, CardContent, CardMedia, CssBaseline, Grid, Stack, Box, Toolbar, Typography, Container, Link} from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { GET_COUPON } from '../../queries/queries';
+import { Outlet } from 'react-router-dom';
 
 export default function Coupon() {
     const [coupon, setCoupon] = useState([]);

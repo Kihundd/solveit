@@ -34,7 +34,7 @@ function DeleteReport(props) {
                 신고삭제
             </Button> */}
             <Button variant="outlined" size='small' color="error" onClick={handleClickOpen} startIcon={<DeleteIcon />}>
-                신고
+                삭제
             </Button>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle textAlign='center'>삭제</DialogTitle>

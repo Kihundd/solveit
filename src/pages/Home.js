@@ -7,7 +7,7 @@ import jsCookies from 'js-cookies';
 import { useQuery } from '@apollo/client';
 import { ALLTESTLIST, ALLASKING, TESTLIST_CATEGORY, USERCATETORY, RANKINGLIST } from '../queries/queries';
 import { useEffect } from 'react';
-import Login from './isLogin';
+import Login from '../components/route/isLogin';
 
 function Home() {
 

@@ -5,7 +5,7 @@ import { MULTIPLE_CHOICE, SHORT_ANSWER, FILL_BLANK, CODING_TEST } from "../test/
 import ShortAnswerResultView from "./ShortAnswerResultView";
 import FillBlankResultView from "./FillBlankResultView";
 import CodingTestResultView from "./CodingTestResultView";
-import Asking from "../ask/Asking";
+import Asking from "../ask/CreateAsking";
 import ReviewNote from "./ReviewNote";
 import SetDifficulty from "./Difficulty";
 

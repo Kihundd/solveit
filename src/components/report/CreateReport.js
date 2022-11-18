@@ -16,12 +16,14 @@ function CreateReport(props) {
     const [open, setOpen] = useState(false);
     const [content, setContent] = useState('');
     const [type, setType] = useState('');
-    
 
     const [createReport, {loading, error, data}] = useMutation(CREATE_REPORT);
 
     const handleChange = (e) => {
         setType(e.target.value);
+    }
+    const handleContent = (e) => {
+        setContent(e.target.value)
     }
     
     const handleClickOpen = () => {
@@ -30,12 +32,13 @@ function CreateReport(props) {
     const handleClose = () => {
         setOpen(false);
     }
+
     
     const handleSumbit = async () => {
         const input = {
             content,
             testId: props.testId,
-            type
+            type: type
         }
         const response = await createReport({variables: {input}})
         setOpen(false)
@@ -47,9 +50,6 @@ function CreateReport(props) {
             <IconButton onClick={handleClickOpen} color="secondary" sx={{float:'right'}} >
                 <FlagIcon />
             </IconButton>
-            {/* <Button variant="contained" color="error" size='small' onClick={handleClickOpen} sx={{marginLeft: 2, marginTop: '3px', mr: 1}}>
-                신고하기
-            </Button> */}
             <Dialog open={open} onClose={handleClose} maxWidth="xs">
                 <DialogTitle textAlign='center'>문제집 신고</DialogTitle>
                 <DialogContent >
@@ -67,7 +67,7 @@ function CreateReport(props) {
                             <MenuItem value={OTHER}>기타</MenuItem>
                         </Select>
                     </FormControl>
-                    <TextField fullWidth={true} minRows={4} maxRows={8} multiline={true} margin='dense' label="기타" />
+                    <TextField fullWidth={true} minRows={4} maxRows={8} multiline={true} margin='dense' label="신고내용" value={content} onChange={handleContent} />
                 </DialogContent>
                 <DialogActions>
                     <Button variant="contained" color="primary" onClick={handleSumbit}>확인</Button>

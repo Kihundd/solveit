@@ -26,6 +26,7 @@ function Report() {
         setReportList(data.allReports)
       }
     }, [data])
+    console.log(reportList)
 
 
     return (
@@ -75,7 +76,7 @@ function Report() {
                             <TableCell align="center">
                                 <Stack direction="row" spacing={1} justifyContent="center">
                                     <DeleteTest reportInfo={a} setReportList={setReportList} />
-                                    <DeleteReport reportInfo={a} setReportList={setReportList} />
+                                    {/* <DeleteReport reportInfo={a} setReportList={setReportList} /> */}
                                 </Stack>
                             </TableCell>
                             
